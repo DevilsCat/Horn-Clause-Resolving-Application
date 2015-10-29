@@ -79,15 +79,41 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssertCommand.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandProcessor.h" />
+    <ClInclude Include="DownCommand.h" />
+    <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="PrintCommand.h" />
+    <ClInclude Include="ProcessCommand.h" />
+    <ClInclude Include="ProgramException.h" />
+    <ClInclude Include="RandomizeCommand.h" />
+    <ClInclude Include="ResolveCommand.h" />
+    <ClInclude Include="SetCommand.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="UpCommand.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssertCommand.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandProcessor.cpp" />
+    <ClCompile Include="DownCommand.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="lab3.cpp" />
+    <ClCompile Include="PrintCommand.cpp" />
+    <ClCompile Include="ProcessCommand.cpp" />
+    <ClCompile Include="ProgramException.cpp" />
+    <ClCompile Include="RandomizeCommand.cpp" />
+    <ClCompile Include="ResolveCommand.cpp" />
+    <ClCompile Include="SetCommand.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UpCommand.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

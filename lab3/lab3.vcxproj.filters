@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\CommandPattern">
+      <UniqueIdentifier>{3792f9cf-ee36-4aca-b043-9cd4cdede88a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CommandPatternImp">
+      <UniqueIdentifier>{0fbb5821-3372-4a48-86e3-53d6c3e96018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CommandPattern\Commands">
+      <UniqueIdentifier>{8cb2d768-11d8-4b65-8ee9-e811e35117fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -24,12 +33,90 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandProcessor.h">
+      <Filter>Header Files\CommandPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Header Files\CommandPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="AssertCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="DownCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="UpCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgramException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomizeCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ResolveCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SetCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PrintCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lab3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandProcessor.cpp">
+      <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessCommand.cpp">
+      <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
+    <ClCompile Include="UpCommand.cpp">
+      <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
+    <ClCompile Include="AssertCommand.cpp">
+      <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
+    <ClCompile Include="ResolveCommand.cpp">
+      <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
+    <ClCompile Include="DownCommand.cpp">
+      <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgramException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomizeCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SetCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PrintCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
