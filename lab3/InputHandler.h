@@ -10,6 +10,8 @@ public:
     InputHandler(const InputHandler&) = delete;
     InputHandler& operator= (const InputHandler&) = delete;
 
+    std::string GetInputFromStream();
+
     std::shared_ptr<Command> MakeCommand(const std::string& command);
 
 private:
@@ -28,6 +30,8 @@ private:
     std::shared_ptr<Command> MakeRandomizeCommand(const std::string& descript);
 
     std::shared_ptr<Command> MakeSetCommand(const std::string& descript);
+
+    std::shared_ptr<Command> MakePrintCommand(const std::string& descript);
 
     std::istream& is_;
 };

@@ -16,6 +16,12 @@ InputHandler::InputHandler(std::istream& is) :
     is_(is)
 {}
 
+std::string InputHandler::GetInputFromStream() {
+    std::string line;
+    getline(is_, line);
+    return line;
+}
+
 std::shared_ptr<Command> InputHandler::MakeCommand(const std::string& command) {
     if (command.empty()) { return std::shared_ptr<Command>(); }
     std::istringstream iss(command);
@@ -40,7 +46,7 @@ std::shared_ptr<Command> InputHandler::MakeCommand(const std::string& command) {
     case Command::kSet: 
         return MakeSetCommand(cmd_descript);
     case Command::kPrint: 
-        return std::make_shared<PrintCommand>();
+        return MakePrintCommand(cmd_descript);
     case Command::kUnknown: 
         return nullptr;
     default: break;
@@ -173,7 +179,7 @@ std::shared_ptr<Command> InputHandler::MakeRandomizeCommand(const std::string& d
 
     std::vector<std::string> params = Tokenize(descript);
 
-    if (params.size() > kMaxNumParams) {
+    if (params.empty() || params.size() > kMaxNumParams) {
         throw ProgramException(
             "Randomized Command Error: Not Enough Arguments.",
             ProgramException::kNumberArgsMisMatch
@@ -204,7 +210,7 @@ std::shared_ptr<Command> InputHandler::MakeSetCommand(const std::string& descrip
 
     if (params.size() != kNumParams)
         throw ProgramException(
-            "Set Command Error: Arguments.",
+            "Set Command Error: Arguments Number Mismatch.",
             ProgramException::kNumberArgsMisMatch
         );
     if (!IsNumber(params[kValuePos]))
@@ -217,4 +223,13 @@ std::shared_ptr<Command> InputHandler::MakeSetCommand(const std::string& descrip
     unsigned value = ToNumber(params[kValuePos]);
 
     return std::make_shared<SetCommand>(variable, value);
+}
+
+std::shared_ptr<Command> InputHandler::MakePrintCommand(const std::string& descript) {
+    if (!descript.empty())
+        throw ProgramException(
+        "Print Command Error: Arguments Number Mismatch.",
+        ProgramException::kNumberArgsMisMatch
+        );
+    return std::make_shared<PrintCommand>();
 }

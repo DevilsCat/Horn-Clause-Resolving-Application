@@ -34,29 +34,16 @@ int main(int argc, char** argv)
     InputHandler input_handler(std::cin);
 
     // TODO Read input and make command
-    try {
-        std::shared_ptr<Command>command_ptr = input_handler.MakeCommand(std::string("process hornclause.txt"));
-        command_ptr->Excecute(cmd_processor);
-        command_ptr = input_handler.MakeCommand(std::string("assert ( ( greater a b ) ) ( ( greater 1 x ) ( ( greater 2 y ) ) )"));
-        command_ptr->Excecute(cmd_processor);
-        command_ptr = input_handler.MakeCommand(std::string("up 10"));
-        command_ptr->Excecute(cmd_processor);
-        command_ptr = input_handler.MakeCommand(std::string("up"));
-        command_ptr->Excecute(cmd_processor);
-        command_ptr = input_handler.MakeCommand(std::string("down 10"));
-        command_ptr->Excecute(cmd_processor);
-        command_ptr = input_handler.MakeCommand(std::string("resolve 1 3"));
-        command_ptr->Excecute(cmd_processor);
-        //command_ptr = input_handler.MakeCommand(std::string("resolve 1 a")); // broken
-        //command_ptr->Excecute(cmd_processor);
-        command_ptr = input_handler.MakeCommand(std::string("randomize x 1"));
-        command_ptr->Excecute(cmd_processor);
-        command_ptr = input_handler.MakeCommand(std::string("set y 2"));
-        command_ptr->Excecute(cmd_processor);
-        command_ptr = input_handler.MakeCommand(std::string("print"));
-        command_ptr->Excecute(cmd_processor);
-    } catch (ProgramException& e) {
-        std::cerr << e.what() << " error code: " << e.code() << std::endl;
+    while (true) {
+        try {
+            std::string cmd_str = input_handler.GetInputFromStream();
+            std::shared_ptr<Command> command_ptr = input_handler.MakeCommand(cmd_str);
+            if (command_ptr)
+                command_ptr->Excecute(cmd_processor);
+        }
+        catch (ProgramException& e) {
+            std::cerr << e.what() << " with error code: " << e.code() << std::endl;
+        }
     }
 	return 0;
 }

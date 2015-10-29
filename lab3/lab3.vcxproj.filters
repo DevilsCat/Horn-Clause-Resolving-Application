@@ -110,14 +110,14 @@
     <ClCompile Include="ProgramException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PrintCommand.cpp">
+      <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
     <ClCompile Include="RandomizeCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
     <ClCompile Include="SetCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrintCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
