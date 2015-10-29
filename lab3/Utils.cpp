@@ -6,7 +6,16 @@
 
 bool IsNumber(const std::string& s) {
     return !s.empty() && std::find_if(s.begin(),
-        s.end(), [](char c) { return !std::isdigit(c); }) == s.end();
+        s.end(), [](char c) { return !isdigit(c); }) == s.end();
+}
+
+bool IsVariable(const std::string& s) {
+    if (s.empty()) return false;
+    return 
+        std::find_if_not(s.begin(), s.end(), 
+            [](char c) { return isupper(c); }) == s.end() ||
+        std::find_if_not(s.begin(), s.end(), 
+            [](char c) { return islower(c); }) == s.end();
 }
 
 unsigned ToNumber(const std::string& num_str) {

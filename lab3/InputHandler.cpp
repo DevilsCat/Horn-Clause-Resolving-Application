@@ -174,7 +174,7 @@ std::shared_ptr<Command> InputHandler::MakeResolveCommand(const std::string& des
 
 std::shared_ptr<Command> InputHandler::MakeRandomizeCommand(const std::string& descript) {
     const unsigned kMaxNumParams = 2;
-    const unsigned kVariableNumPos = 0;
+    const unsigned kVariablePos = 0;
     const unsigned kOptionalMaxPos = 1;
 
     std::vector<std::string> params = Tokenize(descript);
@@ -185,8 +185,14 @@ std::shared_ptr<Command> InputHandler::MakeRandomizeCommand(const std::string& d
             ProgramException::kNumberArgsMisMatch
         );
     } 
+    if (!IsVariable(params[kVariablePos])) {
+        throw ProgramException(
+            "Randomized Command Error: Invalid Alphabetic Varible.",
+            ProgramException::kInvalidVariable
+        );
+    }
 
-    std::string varaible(params[kVariableNumPos]);
+    std::string varaible(params[kVariablePos]);
     if (params.size() == kMaxNumParams) {
         if (IsNumber(params[kOptionalMaxPos])) {
             unsigned max_i = ToNumber(params[kOptionalMaxPos]);
@@ -218,6 +224,12 @@ std::shared_ptr<Command> InputHandler::MakeSetCommand(const std::string& descrip
             "Set Command Error: Unexpected Numeric Input.",
             ProgramException::kInvalidNumber
         );
+    if (!IsVariable(params[kVariablePos])) {
+        throw ProgramException(
+            "Randomized Command Error: Invalid Alphabetic Varible.",
+            ProgramException::kInvalidVariable
+            );
+    }
 
     std::string variable = params[kVariablePos];
     unsigned value = ToNumber(params[kValuePos]);

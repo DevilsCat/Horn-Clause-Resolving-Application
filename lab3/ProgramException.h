@@ -5,7 +5,8 @@ class ProgramException : public std::runtime_error {
 public:
     enum ExceptionCode {
         kInvalidNumber = -1,
-        kNumberArgsMisMatch= -2
+        kInvalidVariable = -2,
+        kNumberArgsMisMatch= -3
     };
 
     explicit ProgramException(const std::string& _Message, const ExceptionCode& _Code);
