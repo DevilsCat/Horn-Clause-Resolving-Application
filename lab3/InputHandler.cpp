@@ -55,6 +55,34 @@ std::shared_ptr<Command> InputHandler::MakeCommand(const std::string& command) {
     return std::shared_ptr<Command>();
 }
 
+Command::CommandType InputHandler::CheckCommandType(const std::string& command) {
+    if (command == "process") {
+        return Command::kProcess;
+    }
+    if (command == "assert") {
+        return Command::kAssert;
+    }
+    if (command == "up") {
+        return Command::kUp;
+    }
+    if (command == "down") {
+        return Command::kDown;
+    }
+    if (command == "resolve") {
+        return Command::kResolve;
+    }
+    if (command == "randomize") {
+        return Command::kRandomize;
+    }
+    if (command == "set") {
+        return Command::kSet;
+    }
+    if (command == "print") {
+        return Command::kPrint;
+    }
+    return Command::kUnknown;
+}
+
 std::shared_ptr<Command> InputHandler::MakeProcessCommand(const std::string& descript) {
     const unsigned kNumParams = 1;
     const unsigned kFileNamePos = 0;
@@ -63,8 +91,8 @@ std::shared_ptr<Command> InputHandler::MakeProcessCommand(const std::string& des
 
     if (params.size() != kNumParams)
         throw ProgramException(
-            "Process Command Error: Argument Numbers Mismatch.",
-            ProgramException::kNumberArgsMisMatch
+        "Process Command Error: Argument Numbers Mismatch.",
+        ProgramException::kNumberArgsMisMatch
         );
 
     return std::make_shared<ProcessCommand>(params[kFileNamePos]);
@@ -73,8 +101,8 @@ std::shared_ptr<Command> InputHandler::MakeProcessCommand(const std::string& des
 std::shared_ptr<Command> InputHandler::MakeAssertCommand(const std::string& descript) {
     if (descript.empty())
         throw ProgramException(
-            "Assert Command Error: Not Enough Arguments.",
-            ProgramException::kNumberArgsMisMatch
+        "Assert Command Error: Not Enough Arguments.",
+        ProgramException::kNumberArgsMisMatch
         );
     return std::make_shared<AssertCommand>(descript);
 }
@@ -87,14 +115,14 @@ std::shared_ptr<Command> InputHandler::MakeUpCommand(const std::string& descript
 
     if (params.size() > kNumParams)
         throw ProgramException(
-            "Up Command Error: Arguments Number Mismatch.",
-            ProgramException::kNumberArgsMisMatch
+        "Up Command Error: Arguments Number Mismatch.",
+        ProgramException::kNumberArgsMisMatch
         );
     if (params.size() == kNumParams) {
         if (!IsNumber(params[kOptionalNLinePos]))
             throw ProgramException(
-                "Up Command Error: Invalid Numeric Input.",
-                ProgramException::kInvalidNumber
+            "Up Command Error: Invalid Numeric Input.",
+            ProgramException::kInvalidNumber
             );
         return std::make_shared<UpCommand>(ToNumber(params[kOptionalNLinePos]));
     }
@@ -123,34 +151,6 @@ std::shared_ptr<Command> InputHandler::MakeDownCommand(const std::string& descri
     }
 
     return std::make_shared<DownCommand>();
-}
-
-Command::CommandType InputHandler::CheckCommandType(const std::string& command) {
-    if (command == "process") {
-        return Command::kProcess;
-    }
-    if (command == "assert") {
-        return Command::kAssert;
-    }
-    if (command == "up") {
-        return Command::kUp;
-    }
-    if (command == "down") {
-        return Command::kDown;
-    }
-    if (command == "resolve") {
-        return Command::kResolve;
-    }
-    if (command == "randomize") {
-        return Command::kRandomize;
-    }
-    if (command == "set") {
-        return Command::kSet;
-    }
-    if (command == "print") {
-        return Command::kPrint;
-    }
-    return Command::kUnknown;
 }
 
 std::shared_ptr<Command> InputHandler::MakeResolveCommand(const std::string& descript) {
