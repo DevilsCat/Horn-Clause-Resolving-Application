@@ -6,7 +6,8 @@ public:
     enum ExceptionCode {
         kInvalidNumber = -1,
         kInvalidVariable = -2,
-        kNumberArgsMisMatch= -3
+        kNumberArgsMisMatch = -3,
+        kFatalError = -100
     };
 
     explicit ProgramException(const std::string& _Message, const ExceptionCode& _Code);

@@ -22,6 +22,27 @@
     <Filter Include="Header Files\CommandPattern\Commands">
       <UniqueIdentifier>{8cb2d768-11d8-4b65-8ee9-e811e35117fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{422b60be-e369-4711-a3d0-dd6a1b5355e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UtilsImp">
+      <UniqueIdentifier>{efb2f786-b79e-40a4-a829-7d6dc6ccdcce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HornClauseTree">
+      <UniqueIdentifier>{aeb5bd2e-42a4-44d5-9d98-2a96944ad926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HornClauseTreeImp">
+      <UniqueIdentifier>{b6df9b18-d80a-4b0a-b63e-650556d71505}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HornClauseTree\Nodes">
+      <UniqueIdentifier>{61f1fe09-7549-4658-aa35-15bf3ae7250f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SymbolTable">
+      <UniqueIdentifier>{f567b705-5451-4b70-9907-eb19f6d8033c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SymbolTableImp">
+      <UniqueIdentifier>{472d9d55-9c4b-4e3a-aa32-c4c4a3008d7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -33,44 +54,92 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="CommandPattern\Commands\Include\AssertCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="CommandProcessor.h">
+    <ClInclude Include="CommandPattern\Commands\Include\Command.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandPattern\Include\CommandProcessor.h">
       <Filter>Header Files\CommandPattern</Filter>
     </ClInclude>
-    <ClInclude Include="InputHandler.h">
+    <ClInclude Include="CommandPattern\Commands\Include\DownCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandPattern\Include\InputHandler.h">
       <Filter>Header Files\CommandPattern</Filter>
     </ClInclude>
-    <ClInclude Include="AssertCommand.h">
+    <ClInclude Include="CommandPattern\Commands\Include\PrintCommand.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
+    <ClInclude Include="CommandPattern\Commands\Include\ProcessCommand.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="DownCommand.h">
+    <ClInclude Include="CommandPattern\Commands\Include\RandomizeCommand.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="ProcessCommand.h">
+    <ClInclude Include="CommandPattern\Commands\Include\ResolveCommand.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="UpCommand.h">
+    <ClInclude Include="CommandPattern\Commands\Include\SetCommand.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="ProgramException.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RandomizeCommand.h">
+    <ClInclude Include="CommandPattern\Commands\Include\UpCommand.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="ResolveCommand.h">
-      <Filter>Header Files\CommandPattern\Commands</Filter>
+    <ClInclude Include="HornClauseTree\Nodes\Include\Body.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="SetCommand.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="HornClauseTree\Nodes\Include\Head.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="PrintCommand.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="HornClauseTree\Nodes\Include\Hornclause.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="HornClauseTree\Nodes\Include\Label.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="HornClauseTree\Nodes\Include\Number.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="HornClauseTree\Nodes\Include\Predicate.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="HornClauseTree\Nodes\Include\Symbol.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="HornClauseTree\Nodes\Include\Token.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="HornClauseTree\Nodes\Include\TokenComparator.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="HornClauseTree\Nodes\Include\TokenRoot.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="HornClauseTree\Include\scanner.h">
+      <Filter>Header Files\HornClauseTree</Filter>
+    </ClInclude>
+    <ClInclude Include="HornClauseTree\Include\parser.h">
+      <Filter>Header Files\HornClauseTree</Filter>
+    </ClInclude>
+    <ClInclude Include="HornClauseTree\Include\Visitor.h">
+      <Filter>Header Files\HornClauseTree</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\Include\PredicateST.h">
+      <Filter>Header Files\SymbolTable</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\Include\SymbolTable.h">
+      <Filter>Header Files\SymbolTable</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\Include\Unifier.h">
+      <Filter>Header Files\SymbolTable</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Include\Utils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Include\ProgramException.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,44 +149,89 @@
     <ClCompile Include="lab3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Command.cpp">
+    <ClCompile Include="CommandPattern\Commands\AssertCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandProcessor.cpp">
+    <ClCompile Include="CommandPattern\Commands\Command.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="ProcessCommand.cpp">
+    <ClCompile Include="CommandPattern\CommandProcessor.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="UpCommand.cpp">
+    <ClCompile Include="CommandPattern\Commands\DownCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="AssertCommand.cpp">
+    <ClCompile Include="CommandPattern\InputHandler.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
+    <ClCompile Include="CommandPattern\Commands\PrintCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="ResolveCommand.cpp">
+    <ClCompile Include="CommandPattern\Commands\ProcessCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="DownCommand.cpp">
+    <ClCompile Include="CommandPattern\Commands\RandomizeCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="ProgramException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrintCommand.cpp">
+    <ClCompile Include="CommandPattern\Commands\ResolveCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="RandomizeCommand.cpp">
+    <ClCompile Include="CommandPattern\Commands\SetCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="SetCommand.cpp">
+    <ClCompile Include="CommandPattern\Commands\UpCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\Nodes\Body.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\Nodes\Head.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\Nodes\Hornclause.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\Nodes\Label.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\Nodes\Number.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\parser.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\Nodes\Predicate.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\scanner.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\Nodes\Symbol.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\Nodes\Token.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\Nodes\TokenComparator.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornClauseTree\Nodes\TokenRoot.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\SymbolTable.cpp">
+      <Filter>Source Files\SymbolTableImp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\Unifier.cpp">
+      <Filter>Source Files\SymbolTableImp</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Utils.cpp">
+      <Filter>Source Files\UtilsImp</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\ProgramException.cpp">
+      <Filter>Source Files\UtilsImp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\PrediateST.cpp">
+      <Filter>Source Files\SymbolTableImp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

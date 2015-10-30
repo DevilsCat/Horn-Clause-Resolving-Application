@@ -10,6 +10,7 @@
 #define PROGRAM_POS             0
 #define NUM_HORNCLAUSE_POS      1
 #define DEFAULT_NUM_HORNCLAUSE  10
+#define NO_ERROR                0
 #include "InputHandler.h"
 #include "ProgramException.h"
 
@@ -34,6 +35,7 @@ int main(int argc, char** argv)
     InputHandler input_handler(std::cin);
 
     // TODO Read input and make command
+    int error_code = NO_ERROR;
     while (true) {
         try {
             std::string cmd_str = input_handler.GetInputFromStream();
@@ -43,8 +45,14 @@ int main(int argc, char** argv)
         }
         catch (ProgramException& e) {
             std::cerr << e.what() << " with error code: " << e.code() << std::endl;
+            // Unrecoverable error
+            if (e.code() == ProgramException::kFatalError) {
+                error_code = e.code();
+                break;
+            }
+                
         }
     }
-	return 0;
+    return error_code;;
 }
 

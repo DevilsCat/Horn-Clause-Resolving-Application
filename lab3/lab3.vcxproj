@@ -41,6 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)\;$(ProjectDir)\Utils\Include;$(ProjectDir)\SymbolTable\Include;$(ProjectDir)\CommandPattern\Commands\Include;$(ProjectDir)\CommandPattern\Include;$(ProjectDir)\HornClauseTree\Include;$(ProjectDir)\HornClauseTree\Nodes\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -79,41 +80,72 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AssertCommand.h" />
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="CommandProcessor.h" />
-    <ClInclude Include="DownCommand.h" />
-    <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="PrintCommand.h" />
-    <ClInclude Include="ProcessCommand.h" />
-    <ClInclude Include="ProgramException.h" />
-    <ClInclude Include="RandomizeCommand.h" />
-    <ClInclude Include="ResolveCommand.h" />
-    <ClInclude Include="SetCommand.h" />
+    <ClInclude Include="CommandPattern\Commands\Include\AssertCommand.h" />
+    <ClInclude Include="CommandPattern\Commands\Include\Command.h" />
+    <ClInclude Include="CommandPattern\Commands\Include\DownCommand.h" />
+    <ClInclude Include="CommandPattern\Commands\Include\PrintCommand.h" />
+    <ClInclude Include="CommandPattern\Commands\Include\ProcessCommand.h" />
+    <ClInclude Include="CommandPattern\Commands\Include\RandomizeCommand.h" />
+    <ClInclude Include="CommandPattern\Commands\Include\ResolveCommand.h" />
+    <ClInclude Include="CommandPattern\Commands\Include\SetCommand.h" />
+    <ClInclude Include="CommandPattern\Commands\Include\UpCommand.h" />
+    <ClInclude Include="CommandPattern\Include\CommandProcessor.h" />
+    <ClInclude Include="CommandPattern\Include\InputHandler.h" />
+    <ClInclude Include="HornClauseTree\Include\parser.h" />
+    <ClInclude Include="HornClauseTree\Include\scanner.h" />
+    <ClInclude Include="HornClauseTree\Include\Visitor.h" />
+    <ClInclude Include="HornClauseTree\Nodes\Include\Body.h" />
+    <ClInclude Include="HornClauseTree\Nodes\Include\Head.h" />
+    <ClInclude Include="HornClauseTree\Nodes\Include\Hornclause.h" />
+    <ClInclude Include="HornClauseTree\Nodes\Include\Label.h" />
+    <ClInclude Include="HornClauseTree\Nodes\Include\Number.h" />
+    <ClInclude Include="HornClauseTree\Nodes\Include\Predicate.h" />
+    <ClInclude Include="HornClauseTree\Nodes\Include\Symbol.h" />
+    <ClInclude Include="HornClauseTree\Nodes\Include\Token.h" />
+    <ClInclude Include="HornClauseTree\Nodes\Include\TokenComparator.h" />
+    <ClInclude Include="HornClauseTree\Nodes\Include\TokenRoot.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SymbolTable\Include\PredicateST.h" />
+    <ClInclude Include="SymbolTable\Include\SymbolTable.h" />
+    <ClInclude Include="SymbolTable\Include\Unifier.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="UpCommand.h" />
-    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Utils\Include\ProgramException.h" />
+    <ClInclude Include="Utils\Include\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssertCommand.cpp" />
-    <ClCompile Include="Command.cpp" />
-    <ClCompile Include="CommandProcessor.cpp" />
-    <ClCompile Include="DownCommand.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="CommandPattern\CommandProcessor.cpp" />
+    <ClCompile Include="CommandPattern\Commands\AssertCommand.cpp" />
+    <ClCompile Include="CommandPattern\Commands\Command.cpp" />
+    <ClCompile Include="CommandPattern\Commands\DownCommand.cpp" />
+    <ClCompile Include="CommandPattern\Commands\PrintCommand.cpp" />
+    <ClCompile Include="CommandPattern\Commands\ProcessCommand.cpp" />
+    <ClCompile Include="CommandPattern\Commands\RandomizeCommand.cpp" />
+    <ClCompile Include="CommandPattern\Commands\ResolveCommand.cpp" />
+    <ClCompile Include="CommandPattern\Commands\SetCommand.cpp" />
+    <ClCompile Include="CommandPattern\Commands\UpCommand.cpp" />
+    <ClCompile Include="CommandPattern\InputHandler.cpp" />
+    <ClCompile Include="HornClauseTree\Nodes\Body.cpp" />
+    <ClCompile Include="HornClauseTree\Nodes\Head.cpp" />
+    <ClCompile Include="HornClauseTree\Nodes\Hornclause.cpp" />
+    <ClCompile Include="HornClauseTree\Nodes\Label.cpp" />
+    <ClCompile Include="HornClauseTree\Nodes\Number.cpp" />
+    <ClCompile Include="HornClauseTree\Nodes\Predicate.cpp" />
+    <ClCompile Include="HornClauseTree\Nodes\Symbol.cpp" />
+    <ClCompile Include="HornClauseTree\Nodes\Token.cpp" />
+    <ClCompile Include="HornClauseTree\Nodes\TokenComparator.cpp" />
+    <ClCompile Include="HornClauseTree\Nodes\TokenRoot.cpp" />
+    <ClCompile Include="HornClauseTree\parser.cpp" />
+    <ClCompile Include="HornClauseTree\scanner.cpp" />
     <ClCompile Include="lab3.cpp" />
-    <ClCompile Include="PrintCommand.cpp" />
-    <ClCompile Include="ProcessCommand.cpp" />
-    <ClCompile Include="ProgramException.cpp" />
-    <ClCompile Include="RandomizeCommand.cpp" />
-    <ClCompile Include="ResolveCommand.cpp" />
-    <ClCompile Include="SetCommand.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="UpCommand.cpp" />
-    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="SymbolTable\PrediateST.cpp" />
+    <ClCompile Include="SymbolTable\SymbolTable.cpp" />
+    <ClCompile Include="SymbolTable\Unifier.cpp" />
+    <ClCompile Include="Utils\ProgramException.cpp" />
+    <ClCompile Include="Utils\Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
