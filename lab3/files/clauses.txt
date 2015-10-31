@@ -1,0 +1,17 @@
+( ( same a a ) )                                
+( ( same 1 b ) )
+( ( same c 2 ) )                                
+( ( sametoo 1 2 ) )
+( ( sametoo 2 2 ) )                                
+( ( sametoo q q ) )                                
+( predP x y ) ( ( predP x z ) ( predP z y ) ) )      
+( ( lesser x y ) ( ( lesser x z ) ( lesser z y ) ) )  
+( ( predQ x y ) ( ( predQ x z ) ( predQ z y ) )      
+x                                              
+( ( lesser z 3 ) )      
+GIBBERISH! qwer5ty8(*&#@RY@#R* 
+( ( unifyme one two ) ( ( unifyme 1 2 ) ) )                  
+(    ( foo a b c ) ( ( foo1a b ) ) )
+( ( notsame a 1 ) )                                
+( ( notsame 2 b ) )
+( ( notsame c 3 ) )                                

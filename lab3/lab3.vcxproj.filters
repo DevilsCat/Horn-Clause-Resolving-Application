@@ -43,9 +43,27 @@
     <Filter Include="Source Files\SymbolTableImp">
       <UniqueIdentifier>{472d9d55-9c4b-4e3a-aa32-c4c4a3008d7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\files">
+      <UniqueIdentifier>{0f00cd13-e9dc-44d1-a621-ca469b2c4943}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HornClauseTree\Tokens">
+      <UniqueIdentifier>{a33e3ca1-3e82-4b15-b5ab-d4fb6705956b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HornClauseTreeImp\NodesImp">
+      <UniqueIdentifier>{9c95a6b1-a77f-49d2-9855-c83e7d6fe49f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HornClauseTreeImp\TokensImp">
+      <UniqueIdentifier>{0f1ce80a-6fe0-4f46-a0ff-d614f115c2fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HornClauseTree\Visitors">
+      <UniqueIdentifier>{1fbe3ddd-3d6b-48f5-9b0e-8b29634fa031}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="files\cleanclauses.txt">
+      <Filter>Resource Files\files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -54,92 +72,98 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CommandPattern\Commands\Include\AssertCommand.h">
+    <ClInclude Include="AssertCommand.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="CommandPattern\Commands\Include\Command.h">
+    <ClInclude Include="Command.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="CommandPattern\Include\CommandProcessor.h">
+    <ClInclude Include="CommandProcessor.h">
       <Filter>Header Files\CommandPattern</Filter>
     </ClInclude>
-    <ClInclude Include="CommandPattern\Commands\Include\DownCommand.h">
+    <ClInclude Include="DownCommand.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="CommandPattern\Include\InputHandler.h">
+    <ClInclude Include="PrintCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomizeCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ResolveCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SetCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="UpCommand.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
       <Filter>Header Files\CommandPattern</Filter>
     </ClInclude>
-    <ClInclude Include="CommandPattern\Commands\Include\PrintCommand.h">
-      <Filter>Header Files\CommandPattern\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandPattern\Commands\Include\ProcessCommand.h">
-      <Filter>Header Files\CommandPattern\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandPattern\Commands\Include\RandomizeCommand.h">
-      <Filter>Header Files\CommandPattern\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandPattern\Commands\Include\ResolveCommand.h">
-      <Filter>Header Files\CommandPattern\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandPattern\Commands\Include\SetCommand.h">
-      <Filter>Header Files\CommandPattern\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandPattern\Commands\Include\UpCommand.h">
-      <Filter>Header Files\CommandPattern\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Nodes\Include\Body.h">
-      <Filter>Header Files\HornClauseTree\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Nodes\Include\Head.h">
-      <Filter>Header Files\HornClauseTree\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Nodes\Include\Hornclause.h">
-      <Filter>Header Files\HornClauseTree\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Nodes\Include\Label.h">
-      <Filter>Header Files\HornClauseTree\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Nodes\Include\Number.h">
-      <Filter>Header Files\HornClauseTree\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Nodes\Include\Predicate.h">
-      <Filter>Header Files\HornClauseTree\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Nodes\Include\Symbol.h">
-      <Filter>Header Files\HornClauseTree\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Nodes\Include\Token.h">
-      <Filter>Header Files\HornClauseTree\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Nodes\Include\TokenComparator.h">
-      <Filter>Header Files\HornClauseTree\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Nodes\Include\TokenRoot.h">
-      <Filter>Header Files\HornClauseTree\Nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Include\scanner.h">
-      <Filter>Header Files\HornClauseTree</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Include\parser.h">
-      <Filter>Header Files\HornClauseTree</Filter>
-    </ClInclude>
-    <ClInclude Include="HornClauseTree\Include\Visitor.h">
-      <Filter>Header Files\HornClauseTree</Filter>
-    </ClInclude>
-    <ClInclude Include="SymbolTable\Include\PredicateST.h">
-      <Filter>Header Files\SymbolTable</Filter>
-    </ClInclude>
-    <ClInclude Include="SymbolTable\Include\SymbolTable.h">
-      <Filter>Header Files\SymbolTable</Filter>
-    </ClInclude>
-    <ClInclude Include="SymbolTable\Include\Unifier.h">
-      <Filter>Header Files\SymbolTable</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\Include\Utils.h">
+    <ClInclude Include="ProgramException.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\Include\ProgramException.h">
-      <Filter>Header Files\Utils</Filter>
+    <ClInclude Include="TokenComparator.h">
+      <Filter>Header Files\HornClauseTree\Tokens</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseNode.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="BodyNode.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="HeadNode.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="HornclauseNode.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="PredicateNode.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="RootNode.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="UnknownNode.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolNode.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="NameNode.h">
+      <Filter>Header Files\HornClauseTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseToken.h">
+      <Filter>Header Files\HornClauseTree\Tokens</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelToken.h">
+      <Filter>Header Files\HornClauseTree\Tokens</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberToken.h">
+      <Filter>Header Files\HornClauseTree\Tokens</Filter>
+    </ClInclude>
+    <ClInclude Include="UnBoundToken.h">
+      <Filter>Header Files\HornClauseTree\Tokens</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundToken.h">
+      <Filter>Header Files\HornClauseTree\Tokens</Filter>
+    </ClInclude>
+    <ClInclude Include="Visitor.h">
+      <Filter>Header Files\HornClauseTree\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="PrintVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser.h">
+      <Filter>Header Files\HornClauseTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Scanner.h">
+      <Filter>Header Files\HornClauseTree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -149,89 +173,98 @@
     <ClCompile Include="lab3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\Commands\AssertCommand.cpp">
+    <ClCompile Include="AssertCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\Commands\Command.cpp">
+    <ClCompile Include="Command.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\CommandProcessor.cpp">
+    <ClCompile Include="DownCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\Commands\DownCommand.cpp">
+    <ClCompile Include="PrintCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\InputHandler.cpp">
+    <ClCompile Include="ProcessCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\Commands\PrintCommand.cpp">
+    <ClCompile Include="RandomizeCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\Commands\ProcessCommand.cpp">
+    <ClCompile Include="ResolveCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\Commands\RandomizeCommand.cpp">
+    <ClCompile Include="SetCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\Commands\ResolveCommand.cpp">
+    <ClCompile Include="UpCommand.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\Commands\SetCommand.cpp">
+    <ClCompile Include="InputHandler.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPattern\Commands\UpCommand.cpp">
+    <ClCompile Include="CommandProcessor.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="HornClauseTree\Nodes\Body.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\Nodes\Head.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\Nodes\Hornclause.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\Nodes\Label.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\Nodes\Number.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\parser.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\Nodes\Predicate.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\scanner.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\Nodes\Symbol.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\Nodes\Token.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\Nodes\TokenComparator.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="HornClauseTree\Nodes\TokenRoot.cpp">
-      <Filter>Source Files\HornClauseTreeImp</Filter>
-    </ClCompile>
-    <ClCompile Include="SymbolTable\SymbolTable.cpp">
-      <Filter>Source Files\SymbolTableImp</Filter>
-    </ClCompile>
-    <ClCompile Include="SymbolTable\Unifier.cpp">
-      <Filter>Source Files\SymbolTableImp</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\Utils.cpp">
+    <ClCompile Include="ProgramException.cpp">
       <Filter>Source Files\UtilsImp</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\ProgramException.cpp">
+    <ClCompile Include="Utils.cpp">
       <Filter>Source Files\UtilsImp</Filter>
     </ClCompile>
-    <ClCompile Include="SymbolTable\PrediateST.cpp">
-      <Filter>Source Files\SymbolTableImp</Filter>
+    <ClCompile Include="BaseNode.cpp">
+      <Filter>Source Files\HornClauseTreeImp\NodesImp</Filter>
+    </ClCompile>
+    <ClCompile Include="BodyNode.cpp">
+      <Filter>Source Files\HornClauseTreeImp\NodesImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HeadNode.cpp">
+      <Filter>Source Files\HornClauseTreeImp\NodesImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornclauseNode.cpp">
+      <Filter>Source Files\HornClauseTreeImp\NodesImp</Filter>
+    </ClCompile>
+    <ClCompile Include="PredicateNode.cpp">
+      <Filter>Source Files\HornClauseTreeImp\NodesImp</Filter>
+    </ClCompile>
+    <ClCompile Include="RootNode.cpp">
+      <Filter>Source Files\HornClauseTreeImp\NodesImp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolNode.cpp">
+      <Filter>Source Files\HornClauseTreeImp\NodesImp</Filter>
+    </ClCompile>
+    <ClCompile Include="UnknownNode.cpp">
+      <Filter>Source Files\HornClauseTreeImp\NodesImp</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenComparator.cpp">
+      <Filter>Source Files\HornClauseTreeImp\TokensImp</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseToken.cpp">
+      <Filter>Source Files\HornClauseTreeImp\TokensImp</Filter>
+    </ClCompile>
+    <ClCompile Include="LabelToken.cpp">
+      <Filter>Source Files\HornClauseTreeImp\TokensImp</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberToken.cpp">
+      <Filter>Source Files\HornClauseTreeImp\TokensImp</Filter>
+    </ClCompile>
+    <ClCompile Include="NameNode.cpp">
+      <Filter>Source Files\HornClauseTreeImp\NodesImp</Filter>
+    </ClCompile>
+    <ClCompile Include="UnBoundToken.cpp">
+      <Filter>Source Files\HornClauseTreeImp\TokensImp</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundToken.cpp">
+      <Filter>Source Files\HornClauseTreeImp\TokensImp</Filter>
+    </ClCompile>
+    <ClCompile Include="PrintVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="Scanner.cpp">
+      <Filter>Source Files\HornClauseTreeImp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
