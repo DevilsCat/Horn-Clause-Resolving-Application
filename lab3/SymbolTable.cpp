@@ -4,133 +4,133 @@
 //
 #include "stdafx.h"
 #include "SymbolTable.h"
-#include "Predicate.h"
+#include "RootNode.h"
+#include "SymbolNode.h"
+#include "NameNode.h"
 #include <iostream>
 #include <algorithm>
+#include "ProgramException.h"
+#include "Utils.h"
 
-SymbolTable::SymbolTable() {}
+SymbolTable::SymbolTable() :
+    entry_buffer_pointer_(nullptr)
+{}
 
 SymbolTable::~SymbolTable() {}
 
-void SymbolTable::fill(std::shared_ptr<Token> const& root) {
-	root->accept(*this);
+void SymbolTable::Fill(std::shared_ptr<RootNode> root) {
+    root->Accept(*this);
 }
 
-void SymbolTable::start_map_iteration() {
-	map_it_ = preds_map_.begin();
+void SymbolTable::InsertIdentifier(const BaseToken& token) {
+    switch (token.type) {
+    case BaseToken::BOUND:   bounds_.insert(dynamic_cast<const BoundToken&>(token));     break;
+    case BaseToken::UNBOUND: unbounds_.insert(dynamic_cast<const UnBoundToken&>(token)); break;
+    case BaseToken::NUMBER:  constants_.insert(dynamic_cast<const NumberToken&>(token)); break;
+    default:                                                                             break;
+    }
 }
 
-bool SymbolTable::map_has_next() {
-	return map_it_ != preds_map_.end();
+void SymbolTable::InsertPredicate(const PredicateEntry& p_entry) {
+    if (ISPredicateEntryDup(p_entry)) {
+        std::cout << "Skipped Duplicated Predicate Entry : " << p_entry << std::endl;
+        return;
+    }
+    // Populate Predicate Entry.
+    const std::string p_name = p_entry.name;
+    if (!preds_map_.count(p_name)) {
+        preds_map_[p_name] = std::vector<PredicateEntry>();
+    }
+    preds_map_[p_name].push_back(p_entry);
 }
 
-std::vector<PredicateST>& SymbolTable::map_next() {
-	std::vector<PredicateST>& v = map_it_->second;
-	++map_it_;
-	return v;
+const BaseToken& SymbolTable::FindIdentifier(const BaseToken& identifer) {
+    switch (identifer.type) {
+    case BaseToken::BOUND:   return *find_if(bounds_.begin(), bounds_.end(), TokenFinder(identifer));
+    case BaseToken::UNBOUND: return *find_if(unbounds_.begin(), unbounds_.end(), TokenFinder(identifer));
+    case BaseToken::NUMBER:  return *find_if(constants_.begin(), constants_.end(), TokenFinder(identifer));
+    default:                 throw ProgramException("Cannot Find Identifier From SymbolTable", ProgramException::kFatalError);
+    }
 }
 
-void SymbolTable::insert_symbol(Token* t) {
-	if (*t != (Token::NUMBER | Token::LABEL)) { return; } // error check
-
-	if (*t == Token::NUMBER) {
-		Number constant = *dynamic_cast<Number *>(t);
-		insert_constant(constant);
-	} else if (*t == Token::LABEL) {
-		Label variable = *dynamic_cast<Label *>(t);
-		insert_variable(variable);
-	}
+bool SymbolTable::ISPredicateEntryDup(const PredicateEntry& p) {
+    if (!preds_map_.count(p.name)) { return false; } // no name inside the map.
+    const std::vector<PredicateEntry>& predicates = preds_map_[p.name];
+    for (const PredicateEntry& predicate : predicates) {
+        if (predicate.EqualsTo(p)) { return true; }
+    }
+    return false;
 }
 
-void SymbolTable::insert_variable(Label &v) {
-	variables_.insert(v);
+void SymbolTable::Print(std::ostream& os) const {
+    os << "UnBound Label : " << std::endl;
+    for (const UnBoundToken& unbound : unbounds_) {
+        os << Encode(unbound);
+    }
+    os << std::endl << "Bound Label : " << std::endl;
+    for (const BoundToken& bound : bounds_) {
+        os << Encode(bound);
+    }
+    os << std::endl << "Constants Number : " << std::endl;
+    for (const NumberToken& constant : constants_) {
+        os << Encode(constant);
+    }
+    os << std::endl << "Predicate : " << std::endl;
+    for (auto str_entries_pair: preds_map_) {
+        auto entries = str_entries_pair.second;
+        for (auto p_entry : entries)
+            os << p_entry << std::endl;
+    }
 }
 
-void SymbolTable::insert_constant(Number &n) {
-	constants_.insert(n);
+void SymbolTable::OnPreVisit(PredicateNode*) {
+    entry_buffer_pointer_ = new PredicateEntry();
 }
 
-void SymbolTable::insert_predicate(PredicateST &p) {
-	if (is_pred_dup(p)) { // check not duplicate
-        std::cout << "Skipped duplicate predicate : " << p << std::endl;
-	    return;
-	} 
-
-	// populate variables and constants
-	insert_variable(p.name); // insert name
-
-	for (Token* symbol_ptr : p.symbols) { // insert symbols
-		insert_symbol(symbol_ptr);
-	}
-
-	// populate that predicate
-	std::string label = p.name;
-	if (!preds_map_.count(label)) { // key not exist
-		preds_map_[label] = std::vector<PredicateST>();
-	}
-
-	for (Token* &sym_ptr : p.symbols) { // find unique symbol in symbol table
-		sym_ptr = find_identity(*sym_ptr);
-	}
-
-	preds_map_[label].push_back(p);
+void SymbolTable::OnPostVisit(PredicateNode*) {
+    InsertPredicate(*entry_buffer_pointer_);
+    delete entry_buffer_pointer_;
 }
 
-// uses find_if to reduce the manualy searching workload.
-Token* SymbolTable::find_identity(Token &t) {
-	Token* ptr;
-	if (t == Token::NUMBER) { 
-		ptr = const_cast<Number*>(&*find_if(constants_.begin(), constants_.end(), TokenFinder(t)));
-	}
-	else {
-		ptr = const_cast<Label*>(&*find_if(variables_.begin(), variables_.end(), TokenFinder(t)));
-	}
-	return ptr;
+void SymbolTable::OnVisit(SymbolNode* node_ptr) {
+    InsertIdentifier(*node_ptr->symbol_ptr_);
 }
 
-bool SymbolTable::is_pred_dup(const PredicateST &p) {
-	// get predicates
-	const std::string name = p.name.label;
-	if (!preds_map_.count(name)) { return false; } // no key, thus no duplicate.
-	const std::vector<PredicateST> preds = preds_map_[name];
-	return preds.end() != std::find_if(preds.begin(), preds.end(), PredicateFinder(p));
+void SymbolTable::OnPostVisit(SymbolNode* node_ptr) {
+    entry_buffer_pointer_->symbols.push_back(&FindIdentifier(*node_ptr->symbol_ptr_));
 }
 
-void SymbolTable::OnVisit(Predicate *node) {
-	std::shared_ptr<PredicateST> pred_st = node->make_predicate_st();
-	insert_predicate(*pred_st);
+void SymbolTable::OnVisit(NameNode* node_ptr) {
+    entry_buffer_pointer_->name = static_cast<std::string>(*(node_ptr->label_ptr_));
 }
 
-void SymbolTable::print() {
-	for (auto p : preds_map_) {
-		std::vector<PredicateST> preds = p.second;
-		for (PredicateST pred : preds) {
-			std::cout << pred << std::endl;
-		}
-	}
+
+
+/////////////////// Here is For PredicateEntry. /////////////////////////
+
+PredicateEntry::PredicateEntry() {}
+
+PredicateEntry::PredicateEntry(const LabelToken& name_) : name(name_) {}
+
+bool PredicateEntry::EqualsTo(const PredicateEntry& that) const{
+    if (name != that.name)                     { return false; }
+    if (symbols.size() != that.symbols.size()) { return false; }
+
+    std::vector<const BaseToken*>::const_iterator this_it = symbols.begin();
+    std::vector<const BaseToken*>::const_iterator that_it = that.symbols.begin();
+
+    for (; this_it != symbols.end(); ++this_it, ++that_it) {
+        if (**this_it != **that_it) { return false; }
+    }
+
+    return true;
 }
 
-SymbolTable::TokenFinder::TokenFinder(const Token& t): 
-	t_(t) 
-{}
-
-bool SymbolTable::TokenFinder::operator()(const Token& t) { 
-	return t.label == t_.label; 
-}
-
-SymbolTable::PredicateFinder::PredicateFinder(const PredicateST& p) : 
-	p_(p) 
-{}
-
-bool SymbolTable::PredicateFinder::operator()(const PredicateST& p) {
-	if		(p_.name != p.name)						{ return false; }
-	if (p_.symbols.size() != p.symbols.size())		{ return false; }
-
-	std::vector<Token*>::const_iterator it = p.symbols.begin();
-	std::vector<Token*>::const_iterator it_ = p_.symbols.begin();
-
-	for (; it != p.symbols.end(); ++it, ++it_) {
-		if (*(*it) != *(*it_)) { return false; } // hey, I know you will know this if you are patient enough!
-	}
-	return true;
+std::ostream& operator<<(std::ostream& os, const PredicateEntry& p) {
+    os << Encode(p.name);
+    for (const BaseToken* symbol_ptr : p.symbols) {
+        if (symbol_ptr->type == BaseToken::BOUND) os << Encode(*dynamic_cast<const BoundToken*>(symbol_ptr));
+        else                                      os << Encode(*symbol_ptr);
+    }
+    return os;
 }

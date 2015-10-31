@@ -9,17 +9,9 @@
 //	name->LABEL
 //
 struct LabelToken : BaseToken{
-    enum LabelType {
-        kBasic = 0,
-        kBound,
-        kUnBound
-    };
-
-    LabelType type_;
-
     explicit LabelToken(const std::string& s);
 
-    explicit LabelToken(const LabelType& type, const std::string& s);
+    explicit LabelToken(const TokenType& type, const std::string& s);
 };
 
 #endif

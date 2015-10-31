@@ -11,8 +11,10 @@
 #include <memory>
 #include "PredicateST.h"
 #include "Visitor.h"
-#include "TokenComparator.h"
+#include "TokenOperator.h"
 #include "NumberToken.h"
+#include "BoundToken.h"
+#include "UnBoundToken.h"
 
 //
 // class SymbolTable
@@ -25,20 +27,7 @@
 //   st.print();
 //
 class SymbolTable : Visitor {
-	typedef std::map<std::string, std::vector<PredicateST>> MapType;
-	
-	// A distinct-element container to stores unique variables.
-	std::set<LabelToken, TokenComparator> variables_;
-
-	// A distinct-element container to stores unique constants.
-	std::set<NumberToken, TokenComparator> constants_;
-
-	// A chained-map container to store predicates (might have the same key)
-	MapType preds_map_;
-
-	// An iteraotr for this map, the accessing point to map container 
-	// (via map_has_next() and map_next()).
-	MapType::iterator map_it_;
+    typedef std::map<std::string, std::vector<struct PredicateEntry>> MapType;
 
 public:
 	//
@@ -50,131 +39,78 @@ public:
 
 	// Semantically, Symbol Table should be unique. Thus does not allow
 	// copy constructor and assignment operator.
-	void operator= (SymbolTable&) = delete;
-	SymbolTable(SymbolTable&) = delete;
+	void operator= (const SymbolTable&) = delete;
+	SymbolTable(const SymbolTable&) = delete;
 
 	//
 	// fill()
 	// Fills The symbol table with Token tree.
 	//
-	void fill(std::shared_ptr<Token> const &root);
+	void Fill(std::shared_ptr<RootNode> root);
 	
-	// 
-	// start_map_iteration()
-	// Start iterating predicate map, be careful, this should be call
-	// before calling map_has_next() and map_next()
-	// Sample Usage:
-	//   SymbolTable st;
-	//   /* ...fill the symbol table... */
-	//   st.start_map_iteration();
-	//   while(st.map_has_next()) {
-	//		std::vector<PredicateST> v = st.map_next();
-	//      /* ...Now you can deal with the retrieved vector... */
-	//   }
-	//
-	void start_map_iteration();
-
-	//
-	// map_has_next()
-	// Returns true if map still have the next element. Usage see above.
-	//
-	bool map_has_next();
-
-	//
-	// map_next()
-	// Returns the reference of vector in the map, and move to next vector.
-	//
-	std::vector<PredicateST>& map_next();
-
-	virtual void OnVisit(Predicate *node) override;
-
 	//
 	// print() 
 	// Traverse the symbol table and print a seprate line for each predicate by printing its name attribute followed
 	// by the attributes of the symbols to which it points.
 	//
-	void print();
+	void Print(std::ostream&) const;
+
+    virtual void OnPreVisit(PredicateNode*) override;
+    virtual void OnVisit(SymbolNode*) override;
+    virtual void OnPostVisit(SymbolNode*) override;
+    virtual void OnVisit(NameNode*) override;
+    virtual void OnPostVisit(PredicateNode*) override;
 
 private:
-	// 
-	// struct TokenFinder
-	// Uses to find the Token inside the vector
-	//
-	struct TokenFinder {
-		//
-		// Constructor
-		// Takes a Token reference and stores it.
-		//
-		TokenFinder(const Token& t);
-
-		//
-		// operator()
-		// Returns true if Token labels are the same.
-		//
-		bool operator()(const Token& t);
-
-		// Variables to store the left hand Token.
-		const Token t_;
-	};
-
-	//
-	// struct PredicateFinder
-	// This helper struct is used to find predicate in vector.
-	//
-	struct PredicateFinder {
-		//
-		// Constructor
-		//
-		PredicateFinder(const PredicateST& p);
-
-		//
-		// operator()
-		// Returns true if and only if name and all Symbols are the same
-		// in two PredicateST.
-		//
-		bool operator()(const PredicateST& p);
-
-		// Stores left hand side PredicateST.
-		PredicateST p_;
-	};
 
 	//
 	// insert_symbol()
 	// Inserts the symbol into the symbol table. Note that it should only
 	// be either Token::Label or Token::Number, other cases will be ignored.
 	//
-	void insert_symbol(Token* t);
-
-	//
-	// insert_varaible()
-	// Inserts the variable(Token::Label) into the symbol table(variables set).
-	//
-	void insert_variable(Label &v);
-	
-	//
-	// insert_constant()
-	// Inserts the const(Token::Number) into the symbol table(constants set).
-	//
-	void insert_constant(Number &n);
+	void InsertIdentifier(const BaseToken&);
 
 	//
 	// insert_predicate()
 	// Inserts PredicateST into the symbol table.
 	//
-	void insert_predicate(PredicateST &p);
+	void InsertPredicate(const PredicateEntry&);
 
 	//
 	// find_identity()
 	// Returns pointer to the identity (Constant or Variable) inside local symbol table.
 	//
-	Token* find_identity(Token &);
+	const BaseToken& FindIdentifier(const BaseToken&);
 
 	//
 	// is_pred_dup()
 	// Returns true if two predicates are duplicated, which is used to eliminate duplication.
 	//
-	bool is_pred_dup(const PredicateST &p);
+	bool ISPredicateEntryDup(const PredicateEntry &p);
 
+    // A distinct-element container to stores unique bound labels.
+    std::set<BoundToken, TokenComparator> bounds_;
+
+    // A distinct-element container to stroes unique unbound labels.
+    std::set<UnBoundToken, TokenComparator> unbounds_;
+
+    // A distinct-element container to stores unique constants.
+    std::set<NumberToken, TokenComparator> constants_;
+
+    // A chained-map container to store predicates (might have the same key)
+    MapType preds_map_;
+
+    PredicateEntry* entry_buffer_pointer_;
+};
+
+struct PredicateEntry {
+    std::string name;
+    std::vector<const BaseToken*> symbols;
+    PredicateEntry();
+    PredicateEntry(const LabelToken& name_);
+    bool EqualsTo(const PredicateEntry&) const;
+
+    friend std::ostream& operator<<(std::ostream& os, const PredicateEntry& p);
 };
 
 #endif

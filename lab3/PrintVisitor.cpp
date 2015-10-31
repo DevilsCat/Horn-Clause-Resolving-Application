@@ -3,6 +3,7 @@
 #include "NameNode.h"
 #include "SymbolNode.h"
 #include <iostream>
+#include "Utils.h"
 
 void PrintVisitor::OnPreVisit(HornclauseNode*) {
     std::cout << Encode("(");
@@ -36,8 +37,4 @@ void PrintVisitor::OnPostVisit(BodyNode*) {
 
 void PrintVisitor::OnPostVisit(PredicateNode*) {
     std::cout << Encode(")");
-}
-
-std::string PrintVisitor::Encode(const std::string& str) {
-    return str + " ";
 }

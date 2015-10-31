@@ -95,7 +95,7 @@ std::shared_ptr<PredicateNode> Parser::ParsePredicate(){
 
 std::shared_ptr<SymbolNode> Parser::ParseSymbol(){
     SymbolNode symbol(
-        match(TokenType(TokenType::LABEL | TokenType::NUMBER)) // Warning: still return Label, but generate Unbound/bound automatically.
+        match(TokenType(TokenType::BOUND | TokenType::NUMBER | TokenType::UNBOUND)) // Warning: still return Label, but generate Unbound/bound automatically.
     );
 	return std::make_shared<SymbolNode>(symbol);
 }

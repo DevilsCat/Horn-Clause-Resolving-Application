@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Command.h"
+#include <string>
 
 class AssertCommand : public Command {
 public:

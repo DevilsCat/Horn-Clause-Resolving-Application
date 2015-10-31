@@ -25,7 +25,9 @@ struct BaseToken {
 		LEFTPAREN   = 2,
 		NUMBER      = 4,
 		RIGHTPAREN  = 8,
-		UNKNOWN     = 16
+        BOUND       = 16,
+        UNBOUND     = 32,
+		UNKNOWN     = 64
 	};
 
 	// Stores token type for this Token object
@@ -79,20 +81,19 @@ struct BaseToken {
 	// operator std::string()
 	// Convert this Token type to a string using label
 	//
-    operator std::string() const;
+    virtual operator const std::string() const;
 
 	//
 	// operator== -- lab 2
 	// Compares two Token Objects, if labels are the same, returns true.
 	//
-	bool operator==(const BaseToken& other);
+	bool operator==(const BaseToken& other) const;
 
 	//
 	// operaotr!= -- lab 2
 	// Compares two Token Objects, if labels are not the same, returns true.
 	//
-	bool operator!=(const BaseToken& other);
-
+	bool operator!=(const BaseToken& other) const;
 };
 
 #endif

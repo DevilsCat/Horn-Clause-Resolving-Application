@@ -4,6 +4,7 @@
 #include "parser.h"
 #include "ProgramException.h"
 #include "PrintVisitor.h"
+#include "SymbolTable.h"
 
 CommandProcessor::CommandProcessor() {}
 
@@ -22,6 +23,9 @@ void CommandProcessor::Process(const std::string& filename) {
     std::shared_ptr<RootNode> root = parser.root();
     PrintVisitor visitor;
     root->Accept(visitor);
+    SymbolTable st;
+    st.Fill(root);
+    st.Print(std::cout);
 }
 
 void CommandProcessor::Assert(const std::string& hornclauses) {

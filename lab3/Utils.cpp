@@ -29,3 +29,7 @@ std::vector<std::string> Tokenize(const std::string& line) {
         std::istream_iterator<std::string> {}
     };
 }
+
+std::string Encode(const std::string& str) {
+    return str + " ";
+}

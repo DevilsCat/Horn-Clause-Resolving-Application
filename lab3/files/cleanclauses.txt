@@ -4,7 +4,7 @@
 ( ( sametoo 1 2 ) )
 ( ( sametoo 2 2 ) )             
 ( ( sametoo q q ) )                                
-( ( lesser x y ) ( ( lesser x z ) ( lesser z y ) ) )  
+( ( lesser X Y ) ( ( lesser x z ) ( lesser z y ) ) )  
 ( ( lesser z 3 ) )                                
 ( ( unifyme one two ) ( ( unifyme 1 2 ) ) )                  
 ( ( notsame a 1 ) )                                

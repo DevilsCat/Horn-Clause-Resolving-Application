@@ -14,9 +14,6 @@ public:
     virtual void OnPostVisit(HeadNode*) override;
     virtual void OnPostVisit(BodyNode*) override;
     virtual void OnPostVisit(PredicateNode*) override;
-
-private:
-    std::string Encode(const std::string& str);
 };
 
 #endif

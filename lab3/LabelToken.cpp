@@ -2,9 +2,9 @@
 #include "LabelToken.h"
 
 LabelToken::LabelToken(const std::string& s) :
-    LabelToken(kBasic, s)
+    BaseToken(LABEL, s)
 {}
 
-LabelToken::LabelToken(const LabelType& type, const std::string& s) :
-    BaseToken(LABEL, s), type_(type)
+LabelToken::LabelToken(const TokenType& type, const std::string& s) :
+    BaseToken(type, s)
 {}

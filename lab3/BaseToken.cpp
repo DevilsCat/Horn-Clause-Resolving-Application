@@ -28,14 +28,14 @@ bool BaseToken::operator!=(const TokenType& t) {
 	return !(*this == t);
 }
 
-BaseToken::operator std::string() const{
+BaseToken::operator const std::string() const{
 	return label;
 }
 
-bool BaseToken::operator==(const BaseToken& other) {
+bool BaseToken::operator==(const BaseToken& other) const {
 	return label == other.label;
 }
 
-bool BaseToken::operator!=(const BaseToken& other) {
+bool BaseToken::operator!=(const BaseToken& other) const {
 	return !(*this == other);
 }

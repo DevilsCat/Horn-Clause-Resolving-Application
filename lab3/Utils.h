@@ -11,4 +11,6 @@ unsigned ToNumber(const std::string& num_str);
 
 std::vector<std::string> Tokenize(const std::string& line);
 
+std::string Encode(const std::string& str);
+
 #endif
