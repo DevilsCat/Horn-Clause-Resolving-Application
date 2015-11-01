@@ -15,6 +15,7 @@
 #include "NumberToken.h"
 #include "BoundToken.h"
 #include "UnBoundToken.h"
+#include <list>
 
 //
 // class SymbolTable
@@ -27,7 +28,7 @@
 //   st.print();
 //
 class SymbolTable : Visitor {
-    typedef std::map<std::string, std::vector<struct PredicateEntry>> MapType;
+    typedef std::map<std::string, std::list<struct PredicateEntry>> MapType;
 
 public:
 	//
@@ -101,6 +102,8 @@ private:
     MapType preds_map_;
 
     PredicateEntry* entry_buffer_pointer_;
+
+    std::vector<const PredicateEntry*> predicates_trace_;
 };
 
 struct PredicateEntry {

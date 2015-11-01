@@ -39,9 +39,10 @@ void SymbolTable::InsertPredicate(const PredicateEntry& p_entry) {
     // Populate Predicate Entry.
     const std::string p_name = p_entry.name;
     if (!preds_map_.count(p_name)) {
-        preds_map_[p_name] = std::vector<PredicateEntry>();
+        preds_map_[p_name] = std::list<PredicateEntry>();
     }
     preds_map_[p_name].push_back(p_entry);
+    predicates_trace_.push_back(&preds_map_[p_name].back());
 }
 
 const BaseToken& SymbolTable::FindIdentifier(const BaseToken& identifer) {
@@ -55,7 +56,7 @@ const BaseToken& SymbolTable::FindIdentifier(const BaseToken& identifer) {
 
 bool SymbolTable::ISPredicateEntryDup(const PredicateEntry& p) {
     if (!preds_map_.count(p.name)) { return false; } // no name inside the map.
-    const std::vector<PredicateEntry>& predicates = preds_map_[p.name];
+    const std::list<PredicateEntry>& predicates = preds_map_[p.name];
     for (const PredicateEntry& predicate : predicates) {
         if (predicate.EqualsTo(p)) { return true; }
     }
@@ -76,10 +77,8 @@ void SymbolTable::Print(std::ostream& os) const {
         os << Encode(constant);
     }
     os << std::endl << "Predicate : " << std::endl;
-    for (auto str_entries_pair: preds_map_) {
-        auto entries = str_entries_pair.second;
-        for (auto p_entry : entries)
-            os << p_entry << std::endl;
+    for (const PredicateEntry* entry_ptr : predicates_trace_) {
+        os << *entry_ptr << std::endl;
     }
 }
 
