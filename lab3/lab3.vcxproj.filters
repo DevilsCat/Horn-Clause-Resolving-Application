@@ -183,11 +183,11 @@
     <ClInclude Include="TokenOperator.h">
       <Filter>Header Files\HornClauseTree\Tokens</Filter>
     </ClInclude>
-    <ClInclude Include="PredicateEntry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DeductiveDatabase.h">
       <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="PredicateEntry.h">
+      <Filter>Header Files\SymbolTable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,11 +293,11 @@
     <ClCompile Include="SymbolTable.cpp">
       <Filter>Source Files\SymbolTableImp</Filter>
     </ClCompile>
-    <ClCompile Include="PredicateEntry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DeductiveDatabase.cpp">
       <Filter>Source Files\DatabaseImp</Filter>
+    </ClCompile>
+    <ClCompile Include="PredicateEntry.cpp">
+      <Filter>Source Files\SymbolTableImp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,12 +1,18 @@
 ﻿#include "stdafx.h"
 #include "DeductiveDatabase.h"
+#include "RootNode.h"
 #include "HeadNode.h"
 #include "BodyNode.h"
 #include "PredicateNode.h"
+#include "Utils.h"
 
 DeductiveDatabase::DeductiveDatabase(SymbolTable& symbol_table) :
     symbol_table_(symbol_table), hornclause_buffer_ptr_(nullptr)
 {}
+
+void DeductiveDatabase::FillHornclauseFromTree(std::shared_ptr<RootNode> root) {
+    root->Accept(*this);
+}
 
 void DeductiveDatabase::AddHornclauseEntry(const HornclauseDatabaseEntry& entry) {
     hornclause_entries_.push_back(entry);

@@ -4,7 +4,6 @@
 #include <vector>
 #include "PredicateEntry.h"
 #include "SymbolTable.h"
-#include "Utils.h"
 
 struct HornclauseDatabaseEntry;
 
@@ -12,6 +11,8 @@ class DeductiveDatabase : public Visitor {
 public:
 
     DeductiveDatabase(SymbolTable& symbol_table);
+
+    void FillHornclauseFromTree(std::shared_ptr<RootNode>);
 
     void AddHornclauseEntry(const HornclauseDatabaseEntry&);
 

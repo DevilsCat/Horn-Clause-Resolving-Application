@@ -7,7 +7,9 @@
 #include "SymbolTable.h"
 #include "DeductiveDatabase.h"
 
-CommandProcessor::CommandProcessor() {}
+CommandProcessor::CommandProcessor() :
+    database_(symbol_table_)
+{}
 
 CommandProcessor::~CommandProcessor() {}
 
@@ -22,14 +24,16 @@ void CommandProcessor::Process(const std::string& filename) {
         );
     }
     std::shared_ptr<RootNode> root = parser.root();
-    PrintVisitor visitor;
-    root->Accept(visitor);
-    SymbolTable st;
-    st.Fill(root);
-    st.Print(std::cout); 
-    DeductiveDatabase database(st);
-    root->Accept(database);
-    database.Display(std::cout, 0, database.size());
+
+    std::cout << "**********Test Parsing Tree Begin**********" << std::endl;
+    root->Accept(PrintVisitor());
+    symbol_table_.Fill(root);
+    std::cout << "**********Test Parsing Tree End**********" << std::endl;
+    std::cout << "**********Test Symbol Table Begin**********" << std::endl;
+    symbol_table_.Print(std::cout); 
+    std::cout << "**********Test Symbol Table End**********" << std::endl;
+    database_.FillHornclauseFromTree(root);
+    database_.Display(std::cout, 0, database_.size()); // Now display all.
 }
 
 void CommandProcessor::Assert(const std::string& hornclauses) {

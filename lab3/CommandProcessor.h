@@ -1,6 +1,8 @@
 ﻿#ifndef COMMAND_PROCESSOR_H
 #define COMMAND_PROCESSOR_H
 #include <string>
+#include "SymbolTable.h"
+#include "DeductiveDatabase.h"
 
 class CommandProcessor {
 public:
@@ -26,6 +28,10 @@ public:
     void Set(const std::string& variable, const int& value);
 
     void Print();
+private:
+    SymbolTable symbol_table_;
+
+    DeductiveDatabase database_;
 };
 
 #endif

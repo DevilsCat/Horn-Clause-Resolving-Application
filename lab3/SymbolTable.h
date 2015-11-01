@@ -47,7 +47,7 @@ public:
 	// fill()
 	// Fills The symbol table with Token tree.
 	//
-	void Fill(std::shared_ptr<RootNode> root);
+	void FillEntriesFromTree(std::shared_ptr<RootNode> root);
 	
 	//
 	// print() 
