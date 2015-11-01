@@ -19,7 +19,7 @@ SymbolTable::SymbolTable() :
 
 SymbolTable::~SymbolTable() {}
 
-void SymbolTable::Fill(std::shared_ptr<RootNode> root) {
+void SymbolTable::FillEntriesFromTree(std::shared_ptr<RootNode> root) {
     root->Accept(*this);
 }
 

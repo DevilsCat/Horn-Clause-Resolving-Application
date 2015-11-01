@@ -27,7 +27,7 @@ void CommandProcessor::Process(const std::string& filename) {
 
     std::cout << "**********Test Parsing Tree Begin**********" << std::endl;
     root->Accept(PrintVisitor());
-    symbol_table_.Fill(root);
+    symbol_table_.FillEntriesFromTree(root);
     std::cout << "**********Test Parsing Tree End**********" << std::endl;
     std::cout << "**********Test Symbol Table Begin**********" << std::endl;
     symbol_table_.Print(std::cout); 
