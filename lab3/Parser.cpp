@@ -5,8 +5,8 @@
 #include "parser.h"
 #include <string>
 
-Parser::Parser(const std::string& filename):
-	filename_(filename), ifs_(filename), scanner_(ifs_), root_(new RootNode())
+Parser::Parser(std::istream& is):
+	is_(is), scanner_(is_), root_(new RootNode())
 {}
 
 int Parser::Parse(){

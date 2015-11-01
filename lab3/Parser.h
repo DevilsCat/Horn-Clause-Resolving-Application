@@ -29,7 +29,7 @@ public:
 	// Constructor
 	// Takes a reference file name string used to open an input file stream.
 	//
-	Parser(const std::string& filename);
+	Parser(std::istream& is);
 
 	//
 	// parse()
@@ -113,11 +113,8 @@ private:
 	//
 	std::shared_ptr<SymbolNode> ParseSymbol();
 
-    // Stores the input file name which uses to initiate an ifstream 
-    std::string filename_;
-
     // An ifstream contains lines of content for extracting horn clause
-    std::ifstream ifs_;
+    std::istream& is_;
 
     // Scanner Object which uses to extract tokens from ifstream and store as a pointer
     Scanner scanner_;

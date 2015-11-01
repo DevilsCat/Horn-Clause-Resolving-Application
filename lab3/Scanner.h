@@ -4,18 +4,13 @@
 #ifndef SCANNER_H
 #define SCANNER_H
 
-#include <fstream>
+#include <istream>
 #include <memory>
 #include "BaseToken.h"
 
 class Scanner {
-private:
-	// A file stream to extract Token from.
-	std::ifstream ifs_;
 public:
-	Scanner() {}
-
-	explicit Scanner(std::ifstream& ifs);
+    explicit Scanner(std::istream& is);
 
 	//
 	// operator bool()
@@ -32,16 +27,14 @@ public:
 	Scanner& operator>> (std::shared_ptr<BaseToken>& ptr);
 
 	//
-	// move_ifs()
-	// Get(Move) ifstream after initialization
-	//
-	void move_ifs(std::ifstream&& ifs);
-
-	//
 	// is_good()
 	// Determines if the file inside this Scanner is good or not
 	//
-	bool is_good(){ return ifs_.is_open(); }
+    bool is_good();
+
+private:
+    // A file stream to extract Token from.
+    std::istream& is_;
 };
 
 #endif

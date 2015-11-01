@@ -1,5 +1,7 @@
 ﻿#include "stdafx.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include "CommandProcessor.h"
 #include "parser.h"
 #include "ProgramException.h"
@@ -15,7 +17,8 @@ CommandProcessor::~CommandProcessor() {}
 
 void CommandProcessor::Process(const std::string& filename) {
     std::cout << "Process Command with " << filename << std::endl;
-    Parser parser(filename);
+    std::ifstream ifs(filename);
+    Parser parser(ifs);
     int ret = parser.Parse();
     if (ret) {
         throw ProgramException(
@@ -38,6 +41,26 @@ void CommandProcessor::Process(const std::string& filename) {
 
 void CommandProcessor::Assert(const std::string& hornclauses) {
     std::cout << "Assert Command with " << hornclauses << std::endl;
+    std::istringstream iss(hornclauses);
+    Parser parser(iss);
+    int ret = parser.Parse();
+    if (ret) {
+        throw ProgramException(
+            "Parsing File Failed",
+            ProgramException::ExceptionCode(ret)
+            );
+    }
+    std::shared_ptr<RootNode> root = parser.root();
+
+    std::cout << "**********Test Parsing Tree Begin**********" << std::endl;
+    root->Accept(PrintVisitor());
+    symbol_table_.FillEntriesFromTree(root);
+    std::cout << "**********Test Parsing Tree End**********" << std::endl;
+    std::cout << "**********Test Symbol Table Begin**********" << std::endl;
+    symbol_table_.Print(std::cout);
+    std::cout << "**********Test Symbol Table End**********" << std::endl;
+    database_.FillHornclauseFromTree(root);
+    database_.Display(std::cout, 0, database_.size()); // Now display all.
 }
 
 void CommandProcessor::Up(const unsigned& nlines) {

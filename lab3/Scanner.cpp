@@ -16,18 +16,18 @@
 #define REG_LEFTPAREN   "^[(]$"
 #define REG_RIGHTPAREN  "^[)]$"
 
-Scanner::Scanner(std::ifstream& ifs) : 
-    ifs_(std::move(ifs)) 
+Scanner::Scanner(std::istream& is) : 
+    is_(is) 
 {}
 
 Scanner::operator bool() const{
-    return !ifs_.eof();
+    return !is_.eof();
 }
 Scanner& Scanner::operator>> (std::shared_ptr<BaseToken>& ptr){
     if (*this){
 
         std::string token_str;
-        ifs_ >> token_str;
+        is_ >> token_str;
 
         // setup patterns of regular expression
         std::regex label(REG_LABEL);
@@ -56,10 +56,11 @@ Scanner& Scanner::operator>> (std::shared_ptr<BaseToken>& ptr){
         else if (std::regex_match(token_str, rightparen)){
             ptr = std::make_shared<BaseToken>(BaseToken::RIGHTPAREN, token_str);
         }
+        else {
+            ptr = std::make_shared<BaseToken>(BaseToken::UNKNOWN, token_str);
+        }
     }
     return *this;
 }
 
-void Scanner::move_ifs(std::ifstream&& ifs) {
-    ifs_ = std::move(ifs);
-}
+bool Scanner::is_good() { return is_.good(); }
