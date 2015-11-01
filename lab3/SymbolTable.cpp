@@ -109,8 +109,7 @@ void SymbolTable::OnVisit(SymbolNode* node_ptr) {
 }
 
 void SymbolTable::OnPostVisit(SymbolNode* node_ptr) {
-    BaseToken& base_token = const_cast<BaseToken&>(FindIdentifierByToken(*node_ptr->symbol_ptr_)); // remove constant.
-    entry_buffer_pointer_->symbols.push_back(&base_token);
+    entry_buffer_pointer_->symbols.push_back(&FindIdentifierByToken(*node_ptr->symbol_ptr_));
 }
 
 void SymbolTable::OnVisit(NameNode* node_ptr) {

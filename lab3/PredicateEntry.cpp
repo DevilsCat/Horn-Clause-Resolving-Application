@@ -13,8 +13,8 @@ bool PredicateEntry::EqualsTo(const PredicateEntry& that) const{
     if (name != that.name)                     { return false; }
     if (symbols.size() != that.symbols.size()) { return false; }
 
-    std::vector<BaseToken*>::const_iterator this_it = symbols.begin();
-    std::vector<BaseToken*>::const_iterator that_it = that.symbols.begin();
+    std::vector<const BaseToken*>::const_iterator this_it = symbols.begin();
+    std::vector<const BaseToken*>::const_iterator that_it = that.symbols.begin();
 
     for (; this_it != symbols.end(); ++this_it, ++that_it) {
         if (**this_it != **that_it) { return false; }
