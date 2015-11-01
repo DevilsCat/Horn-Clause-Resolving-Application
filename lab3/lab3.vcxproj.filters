@@ -61,6 +61,12 @@
     <Filter Include="Source Files\HornClauseTreeImp\VisitorImp">
       <UniqueIdentifier>{aa45d111-8e9d-4e0d-86c0-0040a25713c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{7e568cb9-c68a-4513-8032-ced82768c7f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DatabaseImp">
+      <UniqueIdentifier>{7d4d055b-a833-4813-8e6b-076d067023f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -180,6 +186,9 @@
     <ClInclude Include="PredicateEntry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DeductiveDatabase.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -286,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="PredicateEntry.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DeductiveDatabase.cpp">
+      <Filter>Source Files\DatabaseImp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

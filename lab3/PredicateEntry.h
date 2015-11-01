@@ -6,7 +6,7 @@
 
 struct PredicateEntry {
     std::string name;
-    std::vector<const BaseToken*> symbols;
+    std::vector<BaseToken*> symbols;
     PredicateEntry();
     PredicateEntry(const LabelToken& name_);
     bool EqualsTo(const PredicateEntry&) const;

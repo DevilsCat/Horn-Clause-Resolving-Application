@@ -88,6 +88,7 @@
     <ClInclude Include="BoundToken.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandProcessor.h" />
+    <ClInclude Include="DeductiveDatabase.h" />
     <ClInclude Include="DownCommand.h" />
     <ClInclude Include="HeadNode.h" />
     <ClInclude Include="HornclauseNode.h" />
@@ -126,6 +127,7 @@
     <ClCompile Include="BoundToken.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandProcessor.cpp" />
+    <ClCompile Include="DeductiveDatabase.cpp" />
     <ClCompile Include="DownCommand.cpp" />
     <ClCompile Include="HeadNode.cpp" />
     <ClCompile Include="HornclauseNode.cpp" />

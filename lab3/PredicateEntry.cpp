@@ -13,8 +13,8 @@ bool PredicateEntry::EqualsTo(const PredicateEntry& that) const{
     if (name != that.name)                     { return false; }
     if (symbols.size() != that.symbols.size()) { return false; }
 
-    std::vector<const BaseToken*>::const_iterator this_it = symbols.begin();
-    std::vector<const BaseToken*>::const_iterator that_it = that.symbols.begin();
+    std::vector<BaseToken*>::const_iterator this_it = symbols.begin();
+    std::vector<BaseToken*>::const_iterator that_it = that.symbols.begin();
 
     for (; this_it != symbols.end(); ++this_it, ++that_it) {
         if (**this_it != **that_it) { return false; }
@@ -24,10 +24,11 @@ bool PredicateEntry::EqualsTo(const PredicateEntry& that) const{
 }
 
 std::ostream& operator<<(std::ostream& os, const PredicateEntry& p) {
-    os << Encode(p.name);
+    os << Encode("(") << Encode(p.name);
     for (const BaseToken* symbol_ptr : p.symbols) {
         if (symbol_ptr->type == BaseToken::BOUND) os << Encode(*dynamic_cast<const BoundToken*>(symbol_ptr));
         else                                      os << Encode(*symbol_ptr);
     }
+    os << Encode(")");
     return os;
 }

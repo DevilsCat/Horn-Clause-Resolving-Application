@@ -9,7 +9,6 @@
 #include <map>
 #include <vector>
 #include <memory>
-#include "PredicateST.h"
 #include "Visitor.h"
 #include "TokenOperator.h"
 #include "NumberToken.h"
@@ -57,6 +56,8 @@ public:
 	//
 	void Print(std::ostream&) const;
 
+    PredicateEntry* FindPredicateEntryByNode(const PredicateNode&);
+
     virtual void OnPreVisit(PredicateNode*) override;
     virtual void OnVisit(SymbolNode*) override;
     virtual void OnPostVisit(SymbolNode*) override;
@@ -82,7 +83,7 @@ private:
 	// find_identity()
 	// Returns pointer to the identity (Constant or Variable) inside local symbol table.
 	//
-	const BaseToken& FindIdentifier(const BaseToken&);
+	const BaseToken& FindIdentifierByToken(BaseToken&);
 
 	//
 	// is_pred_dup()

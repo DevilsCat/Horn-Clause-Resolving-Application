@@ -5,6 +5,7 @@
 #include "ProgramException.h"
 #include "PrintVisitor.h"
 #include "SymbolTable.h"
+#include "DeductiveDatabase.h"
 
 CommandProcessor::CommandProcessor() {}
 
@@ -25,7 +26,10 @@ void CommandProcessor::Process(const std::string& filename) {
     root->Accept(visitor);
     SymbolTable st;
     st.Fill(root);
-    st.Print(std::cout);
+    st.Print(std::cout); 
+    DeductiveDatabase database(st);
+    root->Accept(database);
+    database.Display(std::cout, 0, database.size());
 }
 
 void CommandProcessor::Assert(const std::string& hornclauses) {

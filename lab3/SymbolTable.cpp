@@ -6,6 +6,7 @@
 #include "SymbolTable.h"
 #include "RootNode.h"
 #include "SymbolNode.h"
+#include "PredicateNode.h"
 #include "NameNode.h"
 #include <iostream>
 #include <algorithm>
@@ -45,13 +46,25 @@ void SymbolTable::InsertPredicate(const PredicateEntry& p_entry) {
     predicates_trace_.push_back(&preds_map_[p_name].back());
 }
 
-const BaseToken& SymbolTable::FindIdentifier(const BaseToken& identifer) {
+const BaseToken& SymbolTable::FindIdentifierByToken(BaseToken& identifer) {
     switch (identifer.type) {
     case BaseToken::BOUND:   return *find_if(bounds_.begin(), bounds_.end(), TokenFinder(identifer));
     case BaseToken::UNBOUND: return *find_if(unbounds_.begin(), unbounds_.end(), TokenFinder(identifer));
     case BaseToken::NUMBER:  return *find_if(constants_.begin(), constants_.end(), TokenFinder(identifer));
     default:                 throw ProgramException("Cannot Find Identifier From SymbolTable", ProgramException::kFatalError);
     }
+}
+
+PredicateEntry* SymbolTable::FindPredicateEntryByNode(const PredicateNode& node) {
+    std::shared_ptr<PredicateEntry> tmp_entry_ptr = node.ToPredicateEntry();
+    if (!ISPredicateEntryDup(*tmp_entry_ptr)) {
+        throw ProgramException("Find Predicate Entry in Symbol Table failed", ProgramException::kFatalError);
+    } // The Predicate you're looking for is not in this symbol table, this should never happens.
+    std::list<PredicateEntry>& p_entries = preds_map_[tmp_entry_ptr->name];
+    for (PredicateEntry& p_entry : p_entries) {
+        if (p_entry.EqualsTo(*tmp_entry_ptr)) { return &p_entry; }
+    }
+    return nullptr; //This control flow should never reach, but it makes compiler happy.
 }
 
 bool SymbolTable::ISPredicateEntryDup(const PredicateEntry& p) {
@@ -96,7 +109,8 @@ void SymbolTable::OnVisit(SymbolNode* node_ptr) {
 }
 
 void SymbolTable::OnPostVisit(SymbolNode* node_ptr) {
-    entry_buffer_pointer_->symbols.push_back(&FindIdentifier(*node_ptr->symbol_ptr_));
+    BaseToken& base_token = const_cast<BaseToken&>(FindIdentifierByToken(*node_ptr->symbol_ptr_)); // remove constant.
+    entry_buffer_pointer_->symbols.push_back(&base_token);
 }
 
 void SymbolTable::OnVisit(NameNode* node_ptr) {

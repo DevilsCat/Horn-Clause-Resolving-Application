@@ -10,7 +10,7 @@ BoundToken::BoundToken(const std::string& s) :
 
 BoundToken::operator const std::string() const {
     std::ostringstream oss;
-    oss << label << "(" << value << ")";
+    oss << label << "{" << value << "}";
     return oss.str();
 }
 
