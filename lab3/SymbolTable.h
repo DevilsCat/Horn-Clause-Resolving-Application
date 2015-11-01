@@ -15,6 +15,7 @@
 #include "NumberToken.h"
 #include "BoundToken.h"
 #include "UnBoundToken.h"
+#include "PredicateEntry.h"
 #include <list>
 
 //
@@ -104,16 +105,6 @@ private:
     PredicateEntry* entry_buffer_pointer_;
 
     std::vector<const PredicateEntry*> predicates_trace_;
-};
-
-struct PredicateEntry {
-    std::string name;
-    std::vector<const BaseToken*> symbols;
-    PredicateEntry();
-    PredicateEntry(const LabelToken& name_);
-    bool EqualsTo(const PredicateEntry&) const;
-
-    friend std::ostream& operator<<(std::ostream& os, const PredicateEntry& p);
 };
 
 #endif

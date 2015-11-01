@@ -96,6 +96,7 @@
     <ClInclude Include="NameNode.h" />
     <ClInclude Include="NumberToken.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="PredicateEntry.h" />
     <ClInclude Include="PredicateNode.h" />
     <ClInclude Include="PrintCommand.h" />
     <ClInclude Include="PrintVisitor.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="NameNode.cpp" />
     <ClCompile Include="NumberToken.cpp" />
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="PredicateEntry.cpp" />
     <ClCompile Include="PredicateNode.cpp" />
     <ClCompile Include="PrintCommand.cpp" />
     <ClCompile Include="PrintVisitor.cpp" />

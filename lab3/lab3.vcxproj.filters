@@ -177,6 +177,9 @@
     <ClInclude Include="TokenOperator.h">
       <Filter>Header Files\HornClauseTree\Tokens</Filter>
     </ClInclude>
+    <ClInclude Include="PredicateEntry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -280,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="SymbolTable.cpp">
       <Filter>Source Files\SymbolTableImp</Filter>
+    </ClCompile>
+    <ClCompile Include="PredicateEntry.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
