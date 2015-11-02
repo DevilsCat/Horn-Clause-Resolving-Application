@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "CommandProcessor.h"
 #include <iostream>
+#include <Windows.h>
 
 CommandProcessor::CommandProcessor() {}
 
@@ -15,6 +16,15 @@ void CommandProcessor::Assert(const std::string& hornclauses) {
 }
 
 void CommandProcessor::Up(const unsigned& nlines) {
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	int rows, columns;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+	for (unsigned i = 0; i < min(nlines, rows); i++){
+		std::cout << std::endl;
+	}
+
     std::cout << "Up Command with " << nlines << std::endl;
 }
 
