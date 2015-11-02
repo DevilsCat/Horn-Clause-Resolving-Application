@@ -38,6 +38,7 @@ int main(int argc, char** argv)
     int error_code = NO_ERROR;
     while (true) {
         try {
+            std::cout << ">>";
             std::string cmd_str = input_handler.GetInputFromStream();
             std::shared_ptr<Command> command_ptr = input_handler.MakeCommand(cmd_str);
             if (command_ptr)
