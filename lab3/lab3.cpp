@@ -9,7 +9,6 @@
 #define MAX_ARGS                2
 #define PROGRAM_POS             0
 #define NUM_HORNCLAUSE_POS      1
-#define DEFAULT_NUM_HORNCLAUSE  10
 #define NO_ERROR                0
 #include "InputHandler.h"
 #include "ProgramException.h"

@@ -104,6 +104,24 @@ void SymbolTable::OnPostVisit(PredicateNode*) {
     delete entry_buffer_pointer_;
 }
 
+bool SymbolTable::CheckBound(const std::string& s) {
+	return std::find_if(bounds_.begin(), bounds_.end(), [&s](const BoundToken& bt)
+	{
+		return bt.label.compare(s) == 0;
+	}) != bounds_.end();
+}
+
+void SymbolTable::SetBound(std::string& s, int i) {
+	const_cast<BoundToken*>(&*std::find_if(bounds_.begin(), bounds_.end(), [&s](const BoundToken& bt)
+	{
+		return bt.label.compare(s) == 0;
+	}))->value = i;
+}
+
+void SymbolTable::AddBound(std::string& s, int i) {
+	InsertIdentifier(BoundToken(s, i));
+}
+
 void SymbolTable::OnVisit(SymbolNode* node_ptr) {
     InsertIdentifier(*node_ptr->symbol_ptr_);
 }

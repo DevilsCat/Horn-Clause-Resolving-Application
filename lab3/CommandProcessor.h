@@ -23,15 +23,17 @@ public:
 
     void Resolve(const unsigned& num_first_hornclause, const unsigned& num_second_hornclause);
 
-    void Randomize(const std::string& variable, const unsigned& max = 0);
+    void Randomize(std::string& variable, const unsigned& max = 0);
 
-    void Set(const std::string& variable, const int& value);
+    void Set(std::string& variable, const int& value);
 
     void Print();
 private:
     SymbolTable symbol_table_;
 
     DeductiveDatabase database_;
+
+	int DisplayCounter;
 };
 
 #endif

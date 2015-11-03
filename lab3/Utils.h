@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#define DEFAULT_NUM_HORNCLAUSE  10
+
 bool IsNumber(const std::string& s);
 
 bool IsVariable(const std::string& s);

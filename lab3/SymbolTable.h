@@ -64,6 +64,10 @@ public:
     virtual void OnVisit(NameNode*) override;
     virtual void OnPostVisit(PredicateNode*) override;
 
+	bool CheckBound(const std::string&);
+	void SetBound(std::string&, int);
+	void AddBound(std::string&, int = 0);
+
 private:
 
 	//
@@ -72,7 +76,6 @@ private:
 	// be either Token::Label or Token::Number, other cases will be ignored.
 	//
 	void InsertIdentifier(const BaseToken&);
-
 	//
 	// insert_predicate()
 	// Inserts PredicateST into the symbol table.

@@ -90,9 +90,6 @@
     <ClInclude Include="Command.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="CommandProcessor.h">
-      <Filter>Header Files\CommandPattern</Filter>
-    </ClInclude>
     <ClInclude Include="DownCommand.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
@@ -188,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="PredicateEntry.h">
       <Filter>Header Files\SymbolTable</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandProcessor.h">
+      <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="PredicateEntry.cpp">
       <Filter>Source Files\SymbolTableImp</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandProcessor.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
