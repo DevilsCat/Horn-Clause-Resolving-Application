@@ -37,12 +37,12 @@ private:
 
     HornclauseDatabaseEntry* hornclause_buffer_ptr_;
 
-    std::vector<PredicateEntry*> predicate_buffer_;
+    std::vector<std::shared_ptr<PredicateEntry>> predicate_buffer_;
 };
 
 struct HornclauseDatabaseEntry {
-    std::vector<PredicateEntry *> head;
-    std::vector<PredicateEntry *> body;
+    std::vector<std::shared_ptr<PredicateEntry>> head;
+    std::vector<std::shared_ptr<PredicateEntry>> body;
 
     void operator= (const HornclauseDatabaseEntry&);
 

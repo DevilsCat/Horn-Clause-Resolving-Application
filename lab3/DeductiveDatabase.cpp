@@ -49,7 +49,7 @@ void DeductiveDatabase::OnPostVisit(BodyNode*) {
 }
 
 void DeductiveDatabase::OnVisit(PredicateNode* node) {
-    predicate_buffer_.push_back(symbol_table_.FindPredicateEntryByNode(*node));
+    predicate_buffer_.push_back(std::shared_ptr<PredicateEntry>(symbol_table_.FindPredicateEntryByNode(*node)));
 }
 
 void DeductiveDatabase::Display(std::ostream& os, const unsigned& offset, const unsigned& num_entries) const {
@@ -65,15 +65,15 @@ size_t DeductiveDatabase::size() const {
 void HornclauseDatabaseEntry::operator=(const HornclauseDatabaseEntry& other) {
     head.clear();
     body.clear();
-    for (PredicateEntry* head_entry : other.head) {
-        PredicateEntry* new_entry = new PredicateEntry(head_entry->name);
+    for (std::shared_ptr<PredicateEntry> head_entry : other.head) {
+        std::shared_ptr<PredicateEntry> new_entry = std::make_shared<PredicateEntry>(head_entry->name);
         for (const BaseToken* token : head_entry->symbols) {
             new_entry->symbols.push_back(token);
         }
         head.push_back(new_entry);
     }
-    for (PredicateEntry* body_entry : other.body) {
-        PredicateEntry* new_entry = new PredicateEntry(body_entry->name);
+    for (std::shared_ptr<PredicateEntry> body_entry : other.body) {
+        std::shared_ptr<PredicateEntry> new_entry = std::make_shared<PredicateEntry>(body_entry->name);
         for (const BaseToken* token : body_entry->symbols) {
             new_entry->symbols.push_back(token);
         }
@@ -86,7 +86,7 @@ bool HornclauseDatabaseEntry::IsFact() const {
 }
 
 void HornclauseDatabaseEntry::EraseBodyAt(const unsigned& idx) {
-    std::vector<PredicateEntry*>::iterator it = body.begin();
+    std::vector<std::shared_ptr<PredicateEntry>>::iterator it = body.begin();
     body.erase(it + idx);
 }
 
@@ -94,7 +94,7 @@ std::ostream& operator<<(std::ostream& os, const HornclauseDatabaseEntry& entry)
     os << Encode("(") << *entry.head[0];
     if (!entry.body.empty()) {
         os << Encode("(");
-        for (PredicateEntry* predicate_ptr : entry.body)
+        for (std::shared_ptr<PredicateEntry> predicate_ptr : entry.body)
             os << *predicate_ptr;
         os << Encode(")");
     }

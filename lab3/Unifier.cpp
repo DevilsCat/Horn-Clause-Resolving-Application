@@ -18,8 +18,8 @@ size_t Unifier::UnifyHornclauses(
         first_hornclause_copy_ = first_hornclause;
         second_hornclause_copy_ = second_hornclause;
         // For base requirement, head contains only one predicate
-        PredicateEntry*& head_pe = first_hornclause_copy_.head.front();
-        PredicateEntry*& body_pe = second_hornclause_copy_.body[i];
+        PredicateEntry* head_pe = first_hornclause_copy_.head.front().get();
+        PredicateEntry* body_pe = second_hornclause_copy_.body[i].get();
         if (Unify(head_pe, body_pe)) {                   // Once Unification succeeds, the predicates in "i" location 
             if (first_hornclause_copy_.IsFact()) {       // changed to unified one. But we need to remove it if first 
                 second_hornclause_copy_.EraseBodyAt(i);  // hornclause is a fact.
@@ -35,11 +35,11 @@ size_t Unifier::UnifyHornclauses(
 void Unifier::ApplyAllSubstitutionsToHornclause(HornclauseDatabaseEntry& hornclause) {
     for (std::pair<const BaseToken*, const BaseToken*> token_token_pair : token_substitutions_) {
         // Substitute the head.
-        for (PredicateEntry* head_pe : hornclause.head) {
+        for (std::shared_ptr<PredicateEntry> head_pe : hornclause.head) {
             SubstituteTokensInPredicateEntry(head_pe->symbols, token_token_pair);
         }
         // Substitute the body.
-        for (PredicateEntry* body_pe : hornclause.body) {
+        for (std::shared_ptr<PredicateEntry> body_pe : hornclause.body) {
             SubstituteTokensInPredicateEntry(body_pe->symbols, token_token_pair);
         }
     }
