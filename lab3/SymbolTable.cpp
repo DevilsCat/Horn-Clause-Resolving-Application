@@ -86,15 +86,15 @@ bool SymbolTable::ISPredicateEntryDup(const PredicateEntry& p) {
 void SymbolTable::Print(std::ostream& os) const {
     os << "UnBound Label : " << std::endl;
     for (const UnBoundToken& unbound : unbounds_) {
-        os << "[" << &unbound << "]" << Encode(unbound);
+        os << Encode(unbound);
     }
     os << std::endl << "Bound Label : " << std::endl;
     for (const BoundToken& bound : bounds_) {
-        os << "["<< &bound <<"]" << Encode(bound);
+        os << Encode(bound);
     }
     os << std::endl << "Constants Number : " << std::endl;
     for (const NumberToken& constant : constants_) {
-        os << "[" << &constant << "]" << Encode(constant);
+        os << Encode(constant);
     }
     os << std::endl << "Predicate : " << std::endl;
     for (const PredicateEntry* entry_ptr : predicates_trace_) {
