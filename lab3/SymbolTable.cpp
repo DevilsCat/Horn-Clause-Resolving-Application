@@ -102,6 +102,18 @@ void SymbolTable::Print(std::ostream& os) const {
     }
 }
 
+void SymbolTable::PrintSt(std::ostream& os) const {
+	os << std::endl << "Bound Label : " << std::endl;
+	for (const BoundToken& bound : bounds_) {
+		os << Encode(bound);
+	}
+	os << std::endl << "Predicate : " << std::endl;
+	for (const PredicateEntry* entry_ptr : predicates_trace_) {
+		os << *entry_ptr << std::endl;
+	}
+}
+
+
 void SymbolTable::OnPreVisit(PredicateNode*) {
     entry_buffer_pointer_ = new PredicateEntry();
 }
@@ -109,6 +121,24 @@ void SymbolTable::OnPreVisit(PredicateNode*) {
 void SymbolTable::OnPostVisit(PredicateNode*) {
     InsertPredicate(*entry_buffer_pointer_);
     delete entry_buffer_pointer_;
+}
+
+bool SymbolTable::CheckBound(const std::string& s) {
+	return std::find_if(bounds_.begin(), bounds_.end(), [&s](const BoundToken& bt)
+	{
+		return bt.label.compare(s) == 0;
+	}) != bounds_.end();
+}
+
+void SymbolTable::SetBound(std::string& s, int i) {
+	const_cast<BoundToken*>(&*std::find_if(bounds_.begin(), bounds_.end(), [&s](const BoundToken& bt)
+	{
+		return bt.label.compare(s) == 0;
+	}))->value = i;
+}
+
+void SymbolTable::AddBound(std::string& s, int i) {
+	InsertIdentifier(BoundToken(s, i));
 }
 
 void SymbolTable::OnVisit(SymbolNode* node_ptr) {

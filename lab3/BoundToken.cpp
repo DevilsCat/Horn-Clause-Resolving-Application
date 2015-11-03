@@ -8,6 +8,10 @@ BoundToken::BoundToken(const std::string& s) :
     LabelToken(BOUND, s), value(0)
 {}
 
+BoundToken::BoundToken(const std::string& s, int i) :
+LabelToken(BOUND, s), value(i)
+{}
+
 BoundToken::operator const std::string() const {
     std::ostringstream oss;
     oss << label << "{" << value << "}";

@@ -55,6 +55,7 @@ public:
 	// by the attributes of the symbols to which it points.
 	//
 	void Print(std::ostream&) const;
+	void PrintSt(std::ostream&) const;
 
     PredicateEntry* FindPredicateEntryByNode(const PredicateNode&);
     PredicateEntry* FindPredicateEntryByPredicateEntry(const PredicateEntry&);
@@ -65,6 +66,10 @@ public:
     virtual void OnVisit(NameNode*) override;
     virtual void OnPostVisit(PredicateNode*) override;
 
+	bool CheckBound(const std::string&);
+	void SetBound(std::string&, int);
+	void AddBound(std::string&, int = 0);
+
 private:
 
 	//
@@ -73,7 +78,6 @@ private:
 	// be either Token::Label or Token::Number, other cases will be ignored.
 	//
 	void InsertIdentifier(const BaseToken&);
-
 	//
 	// insert_predicate()
 	// Inserts PredicateST into the symbol table.

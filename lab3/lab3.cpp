@@ -9,7 +9,6 @@
 #define MAX_ARGS                2
 #define PROGRAM_POS             0
 #define NUM_HORNCLAUSE_POS      1
-#define DEFAULT_NUM_HORNCLAUSE  10
 #define NO_ERROR                0
 #include "InputHandler.h"
 #include "ProgramException.h"
@@ -31,7 +30,7 @@ int main(int argc, char** argv)
     }
 
     // TODO Initialize some necessary stuffs here.
-    CommandProcessor cmd_processor;
+    CommandProcessor cmd_processor(num_hornclauses);
     InputHandler input_handler(std::cin);
 
     // TODO Read input and make command

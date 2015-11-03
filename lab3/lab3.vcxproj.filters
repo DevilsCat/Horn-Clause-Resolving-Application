@@ -99,9 +99,6 @@
     <ClInclude Include="Command.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="CommandProcessor.h">
-      <Filter>Header Files\CommandPattern</Filter>
-    </ClInclude>
     <ClInclude Include="DownCommand.h">
       <Filter>Header Files\CommandPattern\Commands</Filter>
     </ClInclude>
@@ -200,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="Unifier.h">
       <Filter>Header Files\Unifier</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandProcessor.h">
+      <Filter>Header Files\CommandPattern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

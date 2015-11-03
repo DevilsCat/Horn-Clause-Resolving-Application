@@ -62,10 +62,11 @@ void DeductiveDatabase::OnVisit(PredicateNode* node) {
     predicate_buffer_.push_back(std::shared_ptr<PredicateEntry>(symbol_table_.FindPredicateEntryByNode(*node)));
 }
 
-void DeductiveDatabase::Display(std::ostream& os, const unsigned& offset, const unsigned& num_entries) const {
-    size_t min_num = offset + num_entries < size() ? offset + num_entries : size();
-    for (size_t i = offset; i < min_num; ++i)
-        os << i + 1 << Encode(":") << hornclause_entries_[i] << std::endl;
+int DeductiveDatabase::Display(std::ostream& os, const unsigned& offset, const unsigned& num_entries) const {
+	size_t min_num = offset + num_entries < size() ? offset + num_entries : size();
+	for (size_t i = offset; i < min_num; ++i)
+		os << i + 1 << Encode(":") << hornclause_entries_[i] << std::endl;
+	return min_num - offset;
 }
 
 size_t DeductiveDatabase::size() const {
