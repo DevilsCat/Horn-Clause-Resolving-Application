@@ -8,6 +8,7 @@
 #include "PrintVisitor.h"
 #include "SymbolTable.h"
 #include "DeductiveDatabase.h"
+#include "Unifier.h"
 
 CommandProcessor::CommandProcessor() :
     database_(symbol_table_)
@@ -72,7 +73,25 @@ void CommandProcessor::Down(const unsigned& nlines) {
 }
 
 void CommandProcessor::Resolve(const unsigned& num_first_hornclause, const unsigned& num_second_hornclause) {
+    const unsigned kIndexOffset = 1;
     std::cout << "Resolve Command with " << "{" << num_first_hornclause << "," << num_second_hornclause << "}" << std::endl;
+    Unifier unifier(symbol_table_);
+    HornclauseDatabaseEntry first_hornclause;
+    HornclauseDatabaseEntry second_hornclause;
+    if (!database_.RetrieveHornclauseEntry(first_hornclause, num_first_hornclause - kIndexOffset) ||
+        !database_.RetrieveHornclauseEntry(second_hornclause, num_second_hornclause - kIndexOffset)) {
+        throw ProgramException(
+            "Cannot Retrieve Hornclause Given Index",
+            ProgramException::kInvalidHornclauseIndex
+        );
+    }
+    std::vector<HornclauseDatabaseEntry> res;
+    unifier.UnifyHornclauses(res, first_hornclause, second_hornclause);
+    
+    // Print for debug
+    for (HornclauseDatabaseEntry hornclause : res) {
+        std::cout << "Resolved : " << hornclause << std::endl;
+    }
 }
 
 void CommandProcessor::Randomize(const std::string& variable, const unsigned& max) {

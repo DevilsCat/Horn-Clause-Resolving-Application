@@ -29,7 +29,7 @@
 //
 class SymbolTable : Visitor {
     typedef std::map<std::string, std::list<struct PredicateEntry>> MapType;
-
+    friend class Unifier;
 public:
 	//
 	// Default constructor and deconstructor.

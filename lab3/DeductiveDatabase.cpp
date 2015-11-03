@@ -18,6 +18,12 @@ void DeductiveDatabase::AddHornclauseEntry(const HornclauseDatabaseEntry& entry)
     hornclause_entries_.push_back(entry);
 }
 
+bool DeductiveDatabase::RetrieveHornclauseEntry(HornclauseDatabaseEntry& result, const unsigned& idx) {
+    if (idx >= size()) { return false; }
+    result = hornclause_entries_[idx];
+    return true;
+}
+
 void DeductiveDatabase::OnPreVisit(HornclauseNode*) {
     hornclause_buffer_ptr_ = new HornclauseDatabaseEntry();
 }
@@ -54,6 +60,34 @@ void DeductiveDatabase::Display(std::ostream& os, const unsigned& offset, const 
 
 size_t DeductiveDatabase::size() const {
     return hornclause_entries_.size();
+}
+
+void HornclauseDatabaseEntry::operator=(const HornclauseDatabaseEntry& other) {
+    head.clear();
+    body.clear();
+    for (PredicateEntry* head_entry : other.head) {
+        PredicateEntry* new_entry = new PredicateEntry(head_entry->name);
+        for (const BaseToken* token : head_entry->symbols) {
+            new_entry->symbols.push_back(token);
+        }
+        head.push_back(new_entry);
+    }
+    for (PredicateEntry* body_entry : other.body) {
+        PredicateEntry* new_entry = new PredicateEntry(body_entry->name);
+        for (const BaseToken* token : body_entry->symbols) {
+            new_entry->symbols.push_back(token);
+        }
+        body.push_back(new_entry);
+    }
+}
+
+bool HornclauseDatabaseEntry::IsFact() const {
+    return !head.empty() && body.empty();
+}
+
+void HornclauseDatabaseEntry::EraseBodyAt(const unsigned& idx) {
+    std::vector<PredicateEntry*>::iterator it = body.begin();
+    body.erase(it + idx);
 }
 
 std::ostream& operator<<(std::ostream& os, const HornclauseDatabaseEntry& entry) {

@@ -8,6 +8,8 @@
 
 PredicateEntry::PredicateEntry() {}
 
+PredicateEntry::PredicateEntry(const std::string& name_) : name(name_) {}
+
 PredicateEntry::PredicateEntry(const LabelToken& name_) : name(name_) {}
 
 bool PredicateEntry::EqualsTo(const PredicateEntry& that) const{

@@ -67,6 +67,12 @@
     <Filter Include="Source Files\DatabaseImp">
       <UniqueIdentifier>{7d4d055b-a833-4813-8e6b-076d067023f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Unifier">
+      <UniqueIdentifier>{44e06784-9dbc-4960-a29b-314fe6c8aa3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UnifierImp">
+      <UniqueIdentifier>{79c95bac-7fd5-4037-8d2a-64b3f1083d77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -74,6 +80,9 @@
       <Filter>Resource Files\files</Filter>
     </Text>
     <Text Include="files\clauses.txt">
+      <Filter>Resource Files\files</Filter>
+    </Text>
+    <Text Include="files\sample.txt">
       <Filter>Resource Files\files</Filter>
     </Text>
   </ItemGroup>
@@ -189,6 +198,9 @@
     <ClInclude Include="PredicateEntry.h">
       <Filter>Header Files\SymbolTable</Filter>
     </ClInclude>
+    <ClInclude Include="Unifier.h">
+      <Filter>Header Files\Unifier</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -298,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="PredicateEntry.cpp">
       <Filter>Source Files\SymbolTableImp</Filter>
+    </ClCompile>
+    <ClCompile Include="Unifier.cpp">
+      <Filter>Source Files\UnifierImp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

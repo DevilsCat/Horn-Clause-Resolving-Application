@@ -4,6 +4,7 @@
 #ifndef UNIFIER_H
 #define UNIFIER_H
 #include "SymbolTable.h"
+#include "DeductiveDatabase.h"
 
 //
 // class Unifier
@@ -18,73 +19,33 @@
 //   unifier.unify_all();
 //
 class Unifier {
-private:
-	// A reference of Symbol Table.
-	SymbolTable& st_;
-
-    
-
-	// A container to records the substitution of one subsitution action. 
-	std::vector<std::pair<Token, Token>> subs_v_;
-	
-	// Working copy of current copy.
-	std::shared_ptr<PredicateST> cur_copy_;
-	
-	// Working copy of following copy (apprears behind current copy).
-	std::shared_ptr<PredicateST> fol_copy_;
-
 public:
-	//
-	// Constructor
-	// Takes a reference of SymbolTable and stores in member variable.
-	//
-	Unifier(SymbolTable&);
+    Unifier(SymbolTable& symbol_table);
 
-	//
-	// unify_all()
-	// Performs unifications on the whole symbol table.
-	//
-	void unify_all();
+    size_t UnifyHornclauses(std::vector<HornclauseDatabaseEntry>&, const HornclauseDatabaseEntry&, const HornclauseDatabaseEntry&);
 
 private:
 
-	//
-	// unify()
-	// Perform unification on two Predicates (PredicateST).
-	//
-	void unify(const PredicateST &, const PredicateST &);
+    bool Unify(PredicateEntry*&, PredicateEntry*&);
 
-	//
-	// compare_sub()
-	// Takes two the pointer of Token poiner, compares two token and performs
-	// substituion following unification rule.
-	// RULEs:
-	//  (1) if same variable, return;
-	//  (2) if differet constants, discard (throw runtime error);
-	//  (3) if both labels, substitute follower by current;
-	//  (4) if one label one number, substitute label by number.
-	//
-	void compare_sub(Token**, Token**);
+    void ApplyAllSubstitutionsToHornclause(HornclauseDatabaseEntry&);
 
-	//
-	// substitute()
-	// Substitutes first Token by second Token.
-	//
-	void substitute(Token**, Token**);
+    bool CanPerformSubstitution(std::pair<const BaseToken*, const BaseToken*>&, const BaseToken*, const BaseToken*);
 
-	//
-	// substitute()
-	// Substitutes Tokens in vector which match first Token by second Token. Returns
-    // true if any substition happens.
-	//
-	bool substitute(std::vector<Token*> &, Token*, Token*);
+    bool SubstituteTokensInPredicateEntry(std::vector<const BaseToken*>&, std::pair<const BaseToken*, const BaseToken*>& pair);
 
-	//
-	// print_result()
-	// Once a unification finished, you can print a formatted result.
-	//
-	void print_result(PredicateST const &cur, PredicateST const &fol);
+    void SubstituteToken(const BaseToken** dst, const BaseToken** src);
 
+    SymbolTable& symbol_table_;
+
+    // A container to records the substitution of one subsitution action. 
+    std::vector<std::pair<const BaseToken*, const BaseToken*>> token_substitutions_;
+
+    // Working copy of current copy.
+    HornclauseDatabaseEntry first_hornclause_copy_;
+
+    // Working copy of following copy (apprears behind current copy).
+    HornclauseDatabaseEntry second_hornclause_copy_;
 };
 
 #endif

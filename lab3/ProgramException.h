@@ -7,6 +7,7 @@ public:
         kInvalidNumber = -1,
         kInvalidVariable = -2,
         kNumberArgsMisMatch = -3,
+        kInvalidHornclauseIndex = -4,
         kFatalError = -100
     };
 

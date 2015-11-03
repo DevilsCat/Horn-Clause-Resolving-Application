@@ -61,21 +61,21 @@ struct BaseToken {
 	//   Token token(LABEL, std::string("my_string"));
 	//   assert(token == (Token::LABEL | Token::NUMBER));
 	//
-	bool operator==(const int& t);
+	bool operator==(const int& t) const;
 
-	bool operator!=(const int& t);
+	bool operator!=(const int& t) const;
 
 	//
 	// operator== -- overloaded
 	// Perform a token type check using token_t enum.
 	//
-    bool operator==(const TokenType& t);
+    bool operator==(const TokenType& t) const;
 
 	//
 	// operator!=
 	// Return false if this token is not the type of given token_t type
 	//
-    bool operator!=(const TokenType& t);
+    bool operator!=(const TokenType& t) const;
 
 	//
 	// operator std::string()

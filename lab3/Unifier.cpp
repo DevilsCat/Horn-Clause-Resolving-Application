@@ -5,117 +5,118 @@
 #include <iostream>
 #include "Unifier.h"
 
-Unifier::Unifier(SymbolTable& st) :
-	st_(st)
+Unifier::Unifier(SymbolTable& symbol_table) :
+    symbol_table_(symbol_table)
 {}
 
-void Unifier::unify_all() {
-	// if succeed :
-	// (1) printing out the original versions of the predicates
-	// (2) the list of substitutions (if any) that were needed to unify the predicates
-	// (3) (a single copy of) the resulting transformed unified version of the predicate(s) (with all of the substitutions applied)
-	st_.start_map_iteration();
-	while(st_.map_has_next()) {
-		/* get predicates with same name */
-		std::vector<PredicateST>& same_name_preds = st_.map_next();
-		/* iterate through each predicate */
-		for (std::vector<PredicateST>::iterator it = same_name_preds.begin(); it != same_name_preds.end(); ++it) {
-			PredicateST &current = *it;
-			/* iterate through each predicate behind current */
-			for (decltype(it) after_it = it + 1; after_it != same_name_preds.end(); ++after_it) {
-				PredicateST &follow = *after_it;
-				/* unify two predicate */
-				try {
-					unify(current, follow);
-					/* print result */
-					print_result(*it, *after_it);
-				}
-				catch (std::runtime_error& e) {
-					std::cerr << e.what() << " : " << *it << " <--> " << *after_it << std::endl << std::endl;
-				}
-				subs_v_.clear();
-			}
-		}
-	}
+size_t Unifier::UnifyHornclauses(
+        std::vector<HornclauseDatabaseEntry>& hornclause_entries,
+        const HornclauseDatabaseEntry& first_hornclause, 
+        const HornclauseDatabaseEntry& second_hornclause) {
+
+    for (size_t i = 0; i < second_hornclause.body.size(); ++i) {
+        first_hornclause_copy_ = first_hornclause;
+        second_hornclause_copy_ = second_hornclause;
+        // For base requirement, head contains only one predicate
+        PredicateEntry*& head_pe = first_hornclause_copy_.head.front();
+        PredicateEntry*& body_pe = second_hornclause_copy_.body[i];
+        if (Unify(head_pe, body_pe)) {                   // Once Unification succeeds, the predicates in "i" location 
+            if (first_hornclause_copy_.IsFact()) {       // changed to unified one. But we need to remove it if first 
+                second_hornclause_copy_.EraseBodyAt(i);  // hornclause is a fact.
+            }
+            ApplyAllSubstitutionsToHornclause(second_hornclause_copy_);
+            hornclause_entries.push_back(second_hornclause_copy_);
+        }
+        token_substitutions_.clear();
+    }
+    return hornclause_entries.size();
 }
 
-void Unifier::unify(const PredicateST& cur, const PredicateST& fol) {
-	if (cur.symbols.size() != fol.symbols.size()) {
-	    throw std::runtime_error("symbol length mismatched");
-	}
-
-	// working copies
-	cur_copy_ = std::make_shared<PredicateST>(cur);
-	fol_copy_ = std::make_shared<PredicateST>(fol);
-
-	// Point at first Token in two working copies
-	std::vector<Token*>::iterator cur_it = cur_copy_->symbols.begin();
-	std::vector<Token*>::iterator fol_it = fol_copy_->symbols.begin();
-
-	// Compare each symbol in predicates
-	for (; cur_it != cur_copy_->symbols.end(); ++cur_it, ++fol_it) {
-		Token** cur_token = &*cur_it;
-		Token** fol_token = &*fol_it;
-		compare_sub(cur_token, fol_token);
-	}
-}
-
-void Unifier::compare_sub(Token** cur, Token** fol) {
-	if (**cur == **fol) { return; }
-
-	if (**cur == Token::NUMBER && **fol == Token::NUMBER) { // different constants
-        throw std::runtime_error(
-            "constant mismatched (" +
-            std::string(**cur) +
-            " <--> " +
-            std::string(**fol) +
-            ")"
-        );
-	}
-
-    bool is_succ = false; // check if any substitution succeed.
-    Token *src, *dst;
-
-	if (**cur == Token::LABEL && **fol == Token::LABEL) { // different variables
-        src = *cur;
-        dst = *fol;
-	}
-	else { // one is constant and one is label
-		src = (**cur == Token::NUMBER) ? *cur : *fol;
-		dst = (**cur == Token::NUMBER) ? *fol : *cur;
-	}
-
-    is_succ |= substitute(cur_copy_->symbols, dst, src); // substitute on current copy
-    is_succ |= substitute(fol_copy_->symbols, dst, src); // substitute on following copy
-
-    if (is_succ) {
-        subs_v_.push_back(std::make_pair(*src, *dst)); // records this substitution action.
+void Unifier::ApplyAllSubstitutionsToHornclause(HornclauseDatabaseEntry& hornclause) {
+    for (std::pair<const BaseToken*, const BaseToken*> token_token_pair : token_substitutions_) {
+        // Substitute the head.
+        for (PredicateEntry* head_pe : hornclause.head) {
+            SubstituteTokensInPredicateEntry(head_pe->symbols, token_token_pair);
+        }
+        // Substitute the body.
+        for (PredicateEntry* body_pe : hornclause.body) {
+            SubstituteTokensInPredicateEntry(body_pe->symbols, token_token_pair);
+        }
     }
 }
 
-void Unifier::substitute(Token** dst, Token** src) {
+bool Unifier::Unify(PredicateEntry*& head_pe, PredicateEntry*& body_pe) {
+    if (head_pe->symbols.size() != body_pe->symbols.size()) { return false; }
+
+    std::vector<const BaseToken*>::iterator head_token_ptr_it = head_pe->symbols.begin();
+    std::vector<const BaseToken*>::iterator body_token_ptr_it = body_pe->symbols.begin();
+    bool any_success = false;
+    for (; head_token_ptr_it != head_pe->symbols.end(); ++head_token_ptr_it, ++body_token_ptr_it) {
+        const BaseToken* head_token_ptr = *head_token_ptr_it;
+        const BaseToken* body_token_ptr = *body_token_ptr_it;
+        std::pair<const BaseToken*, const BaseToken*> substitute_pair;
+        if (CanPerformSubstitution(substitute_pair, head_token_ptr, body_token_ptr)) {
+            any_success |= SubstituteTokensInPredicateEntry(head_pe->symbols, substitute_pair);
+            any_success |= SubstituteTokensInPredicateEntry(body_pe->symbols, substitute_pair);
+            token_substitutions_.push_back(substitute_pair);
+        }
+    }
+    return any_success;
+}
+
+bool Unifier::CanPerformSubstitution(
+        std::pair<const BaseToken*, const BaseToken*>& result, 
+        const BaseToken* head_token, 
+        const BaseToken* body_token) {
+    
+    // The pointer to tokens are they same.
+    if (*head_token == *body_token) { return false; } 
+    // Two Tokens are Different constants.
+    if (*head_token == BaseToken::NUMBER && *body_token== BaseToken::NUMBER) { return false; }
+    // Two Tokens are both Bound
+    if (*head_token == BaseToken::BOUND && *body_token == BaseToken::BOUND) { return false; }
+    
+    const BaseToken** src_token_ptr;
+    const BaseToken** dst_token_ptr;
+
+    // The rest case should contains a substitution.
+    if (*head_token == BaseToken::NUMBER) {
+        src_token_ptr = &head_token;
+        dst_token_ptr = &body_token;
+    } else if (*body_token == BaseToken::NUMBER) {
+        src_token_ptr = &body_token;
+        dst_token_ptr = &head_token;
+    } else if (*head_token == BaseToken::BOUND) {
+        src_token_ptr = &head_token;
+        dst_token_ptr = &body_token;
+    } else if (*body_token == BaseToken::BOUND) {
+        src_token_ptr = &body_token;
+        dst_token_ptr = &head_token;
+    } else {
+        src_token_ptr = &head_token;
+        dst_token_ptr = &body_token;
+    }
+    
+    result = std::make_pair(*src_token_ptr, *dst_token_ptr);
+    return true;
+}
+
+bool Unifier::SubstituteTokensInPredicateEntry(
+        std::vector<const BaseToken*>& dst_vector, 
+        std::pair<const BaseToken*, const BaseToken*>& pair) {
+    const BaseToken* substitute_for = pair.first;
+    const BaseToken* compare_with = pair.second;
+    bool is_success = false;
+    for (const BaseToken*& target : dst_vector) {
+        if (*target == *compare_with) {
+            SubstituteToken(&target, &substitute_for);
+            is_success = true;
+        }
+    }
+    return is_success;
+}
+
+void Unifier::SubstituteToken(const BaseToken** dst, const BaseToken** src) {
     *dst = *src;
 }
 
-bool Unifier::substitute(std::vector<Token*>& dst_v, Token* dst, Token* src) {
-    bool is_substituted = false; // check if is substituted.
-    for (size_t i = 0; i < dst_v.size(); ++i) {
-		if (*dst_v[i] == *dst) { // token in container matches the dst token
-			Token** dst_ptr = &dst_v[i];
-			Token** src_ptr = &src;
-			substitute(dst_ptr, src_ptr);
-            is_substituted = true;
-		}
-	}
-    return is_substituted;
-}
-
-void Unifier::print_result(PredicateST const& cur, PredicateST const& fol) {
-	std::cout << "original : " << cur << " -- " << fol << std::endl;
-	std::cout << "unified  : " << *cur_copy_ << " -- " << *fol_copy_ << std::endl;
-	std::cout << "substitution :" << " ";
-	for (auto token_token_pair : subs_v_) {
-		std::cout << "{" << std::string(token_token_pair.first) << " -> " << std::string(token_token_pair.second) << "}" << " ";
-	}
-	std::cout << std::endl << std::endl;
-}

@@ -16,6 +16,8 @@ public:
 
     void AddHornclauseEntry(const HornclauseDatabaseEntry&);
 
+    bool RetrieveHornclauseEntry(HornclauseDatabaseEntry& result, const unsigned& idx);
+
     void Display(std::ostream&, const unsigned& offset, const unsigned& num_entries = 0) const;
 
     size_t size() const;
@@ -41,6 +43,12 @@ private:
 struct HornclauseDatabaseEntry {
     std::vector<PredicateEntry *> head;
     std::vector<PredicateEntry *> body;
+
+    void operator= (const HornclauseDatabaseEntry&);
+
+    bool IsFact() const;
+
+    void EraseBodyAt(const unsigned& idx);
 
     friend std::ostream& operator<<(std::ostream& os, const HornclauseDatabaseEntry& entry);
 };

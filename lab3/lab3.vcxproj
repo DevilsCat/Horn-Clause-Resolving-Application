@@ -79,6 +79,7 @@
   <ItemGroup>
     <Text Include="files\clauses.txt" />
     <Text Include="files\cleanclauses.txt" />
+    <Text Include="files\sample.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +116,7 @@
     <ClInclude Include="BaseToken.h" />
     <ClInclude Include="TokenOperator.h" />
     <ClInclude Include="UnBoundToken.h" />
+    <ClInclude Include="Unifier.h" />
     <ClInclude Include="UnknownNode.h" />
     <ClInclude Include="UpCommand.h" />
     <ClInclude Include="Utils.h" />
@@ -157,6 +159,7 @@
     <ClCompile Include="SymbolTable.cpp" />
     <ClCompile Include="TokenComparator.cpp" />
     <ClCompile Include="UnBoundToken.cpp" />
+    <ClCompile Include="Unifier.cpp" />
     <ClCompile Include="UnknownNode.cpp" />
     <ClCompile Include="UpCommand.cpp" />
     <ClCompile Include="Utils.cpp" />
