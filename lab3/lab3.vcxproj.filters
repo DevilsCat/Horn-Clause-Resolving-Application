@@ -311,5 +311,8 @@
     <ClCompile Include="Unifier.cpp">
       <Filter>Source Files\UnifierImp</Filter>
     </ClCompile>
+    <ClCompile Include="CommandProcessor.cpp">
+      <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

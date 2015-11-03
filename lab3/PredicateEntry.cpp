@@ -29,6 +29,7 @@ bool PredicateEntry::EqualsTo(const PredicateEntry& that) const{
 std::ostream& operator<<(std::ostream& os, const PredicateEntry& p) {
     os << "[" << &p << "]" << Encode("(") << Encode(p.name); // Print Address for testing.
     for (const BaseToken* symbol_ptr : p.symbols) {
+        os << "[" << symbol_ptr << "]";
         if (symbol_ptr->type == BaseToken::BOUND) os << Encode(*dynamic_cast<const BoundToken*>(symbol_ptr));
         else                                      os << Encode(*symbol_ptr);
     }
