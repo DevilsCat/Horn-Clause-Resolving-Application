@@ -187,7 +187,7 @@
       <Filter>Header Files\SymbolTable</Filter>
     </ClInclude>
     <ClInclude Include="CommandProcessor.h">
-      <Filter>Header Files\CommandPattern\Commands</Filter>
+      <Filter>Header Files\CommandPattern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -297,7 +297,7 @@
       <Filter>Source Files\SymbolTableImp</Filter>
     </ClCompile>
     <ClCompile Include="CommandProcessor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
