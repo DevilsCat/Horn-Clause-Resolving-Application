@@ -16,7 +16,7 @@ public:
 
     void AddHornclauseEntry(const HornclauseDatabaseEntry&);
 
-    void Display(std::ostream&, const unsigned& offset, const unsigned& num_entries = 0) const;
+    int Display(std::ostream&, const unsigned& offset, const unsigned& num_entries = 0) const;
 
     size_t size() const;
 

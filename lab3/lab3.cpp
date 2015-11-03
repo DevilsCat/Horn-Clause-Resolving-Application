@@ -30,7 +30,7 @@ int main(int argc, char** argv)
     }
 
     // TODO Initialize some necessary stuffs here.
-    CommandProcessor cmd_processor;
+    CommandProcessor cmd_processor(num_hornclauses);
     InputHandler input_handler(std::cin);
 
     // TODO Read input and make command

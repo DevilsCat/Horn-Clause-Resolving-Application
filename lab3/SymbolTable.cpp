@@ -95,6 +95,18 @@ void SymbolTable::Print(std::ostream& os) const {
     }
 }
 
+void SymbolTable::PrintSt(std::ostream& os) const {
+	os << std::endl << "Bound Label : " << std::endl;
+	for (const BoundToken& bound : bounds_) {
+		os << Encode(bound);
+	}
+	os << std::endl << "Predicate : " << std::endl;
+	for (const PredicateEntry* entry_ptr : predicates_trace_) {
+		os << *entry_ptr << std::endl;
+	}
+}
+
+
 void SymbolTable::OnPreVisit(PredicateNode*) {
     entry_buffer_pointer_ = new PredicateEntry();
 }

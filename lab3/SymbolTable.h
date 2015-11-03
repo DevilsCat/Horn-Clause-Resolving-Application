@@ -55,6 +55,7 @@ public:
 	// by the attributes of the symbols to which it points.
 	//
 	void Print(std::ostream&) const;
+	void PrintSt(std::ostream&) const;
 
     PredicateEntry* FindPredicateEntryByNode(const PredicateNode&);
 

@@ -7,6 +7,7 @@
 class CommandProcessor {
 public:
     explicit CommandProcessor();
+	CommandProcessor(int);
 
     virtual ~CommandProcessor();
 
@@ -34,6 +35,9 @@ private:
     DeductiveDatabase database_;
 
 	int DisplayCounter;
+
+	int DisplayNum;
+
 };
 
 #endif

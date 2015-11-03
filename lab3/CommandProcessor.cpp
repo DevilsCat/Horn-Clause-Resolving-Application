@@ -10,11 +10,16 @@
 #include "PrintVisitor.h"
 #include "SymbolTable.h"
 #include "DeductiveDatabase.h"
+#include "Utils.h"
 
 #define REG_BOUND "[[:lower:]]"
 
 CommandProcessor::CommandProcessor() :
-database_(symbol_table_), DisplayCounter(0)
+database_(symbol_table_), DisplayCounter(0), DisplayNum(DEFAULT_NUM_HORNCLAUSE)
+{}
+
+CommandProcessor::CommandProcessor(int num) : 
+database_(symbol_table_), DisplayCounter(0), DisplayNum(num)
 {}
 
 CommandProcessor::~CommandProcessor() {}
@@ -68,38 +73,31 @@ void CommandProcessor::Assert(const std::string& hornclauses) {
 }
 
 void CommandProcessor::Up(const unsigned& nlines) {  //FIX
-    std::cout << "Up Command with " << nlines << std::endl;
-	int rows, begin;
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-	rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-
+ //   std::cout << "Up Command with " << nlines << std::endl;
+	int begin;
 	if (nlines != 0) {
 		begin = DisplayCounter - nlines > 0 ? DisplayCounter - nlines : 0;
 	} else {
-		begin = DisplayCounter - rows > 0 ? DisplayCounter - rows : 0;
+		begin = DisplayCounter - DisplayNum > 0 ? DisplayCounter - DisplayNum : 0;
 	}
-	database_.Display(std::cout, begin, DisplayCounter);
-	for (int i = DisplayCounter - begin; i < rows-1; ++i){ std::cout << std::endl; }
-
+	std::cout << "////////////////////" << std::endl;
+	for (int i = database_.Display(std::cout, begin, DisplayNum); i < DisplayNum; i++) { std::cout << std::endl; }
+	std::cout << "////////////////////" << std::endl;
+	DisplayCounter = begin;
 }
 
 void CommandProcessor::Down(const unsigned& nlines) {
-    std::cout << "Down Command with " << nlines << std::endl;
-	int rows, end;
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-	rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-	
+ //   std::cout << "Down Command with " << nlines << std::endl;
+	int begin;
 	if (nlines != 0) {
-		end = DisplayCounter + nlines > database_.size() ? database_.size() : DisplayCounter + nlines;
+		begin = DisplayCounter + nlines > database_.size() ? DisplayCounter : DisplayCounter + nlines;
 	}else{
-		end = DisplayCounter + rows > database_.size() ? database_.size() : DisplayCounter + rows;
+		begin = DisplayCounter + DisplayNum > database_.size() ? DisplayCounter : DisplayCounter + DisplayNum;
 	}
-	database_.Display(std::cout, DisplayCounter, end);
-	for (int i = end - DisplayCounter; i < rows-1; ++i) { std::cout << std::endl; }
-
-	DisplayCounter = end == database_.size() ? 0 : end;
+	std::cout << "////////////////////" << std::endl;
+	for (int i = database_.Display(std::cout, begin, DisplayNum); i < DisplayNum; i++) { std::cout << std::endl; }
+	std::cout << "////////////////////" << std::endl;
+	DisplayCounter = begin;
 }
 
 void CommandProcessor::Resolve(const unsigned& num_first_hornclause, const unsigned& num_second_hornclause) {
@@ -126,4 +124,5 @@ void CommandProcessor::Set(std::string& variable, const int& value) {
 
 void CommandProcessor::Print() {
     std::cout << "Print Command" << std::endl;
+	symbol_table_.PrintSt(std::cout);
 }
