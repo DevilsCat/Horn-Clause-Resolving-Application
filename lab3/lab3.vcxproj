@@ -128,7 +128,6 @@
     <ClCompile Include="BodyNode.cpp" />
     <ClCompile Include="BoundToken.cpp" />
     <ClCompile Include="Command.cpp" />
-    <ClCompile Include="CommandProcessor.cpp" />
     <ClCompile Include="DeductiveDatabase.cpp" />
     <ClCompile Include="DownCommand.cpp" />
     <ClCompile Include="HeadNode.cpp" />

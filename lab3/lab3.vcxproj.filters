@@ -239,9 +239,6 @@
     <ClCompile Include="InputHandler.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
-    <ClCompile Include="CommandProcessor.cpp">
-      <Filter>Source Files\CommandPatternImp</Filter>
-    </ClCompile>
     <ClCompile Include="ProgramException.cpp">
       <Filter>Source Files\UtilsImp</Filter>
     </ClCompile>
