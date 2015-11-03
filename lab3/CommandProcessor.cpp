@@ -88,10 +88,14 @@ void CommandProcessor::Resolve(const unsigned& num_first_hornclause, const unsig
     std::vector<HornclauseDatabaseEntry> res;
     unifier.UnifyHornclauses(res, first_hornclause, second_hornclause);
     
-    // Print for debug
+    // Added Hornclause to database.
     for (HornclauseDatabaseEntry hornclause : res) {
-        std::cout << "Resolved : " << hornclause << std::endl;
+        database_.AddHornclauseEntry(hornclause);
     }
+
+    // Print Out For Debug
+    symbol_table_.Print(std::cout);
+    database_.Display(std::cout, 0, database_.size()); // Now display all.
 }
 
 void CommandProcessor::Randomize(const std::string& variable, const unsigned& max) {

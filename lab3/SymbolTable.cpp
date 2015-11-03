@@ -32,18 +32,21 @@ void SymbolTable::InsertIdentifier(const BaseToken& token) {
     }
 }
 
-void SymbolTable::InsertPredicate(const PredicateEntry& p_entry) {
-    if (ISPredicateEntryDup(p_entry)) {
-        std::cout << "Skipped Duplicated Predicate Entry : " << p_entry << std::endl;
-        return;
-    }
+PredicateEntry& SymbolTable::InsertPredicate(const PredicateEntry& p_entry) {
+    if (ISPredicateEntryDup(p_entry)) { return *FindPredicateEntryByPredicateEntry(p_entry); }
+
     // Populate Predicate Entry.
     const std::string p_name = p_entry.name;
     if (!preds_map_.count(p_name)) {
         preds_map_[p_name] = std::list<PredicateEntry>();
     }
-    preds_map_[p_name].push_back(p_entry);
-    predicates_trace_.push_back(&preds_map_[p_name].back());
+    std::list<PredicateEntry>& entries = preds_map_[p_name];
+    entries.push_back(p_entry);
+    // Log the insertion to trace.
+    predicates_trace_.push_back(&entries.back());
+    // Return new insertion back to caller, so that both SymbolTable and client can
+    // keep consistent.
+    return entries.back();
 }
 
 const BaseToken& SymbolTable::FindIdentifierByToken(BaseToken& identifer) {
@@ -56,15 +59,19 @@ const BaseToken& SymbolTable::FindIdentifierByToken(BaseToken& identifer) {
 }
 
 PredicateEntry* SymbolTable::FindPredicateEntryByNode(const PredicateNode& node) {
-    std::shared_ptr<PredicateEntry> tmp_entry_ptr = node.ToPredicateEntry();
-    if (!ISPredicateEntryDup(*tmp_entry_ptr)) {
+    return FindPredicateEntryByPredicateEntry(*node.ToPredicateEntry());
+}
+
+PredicateEntry* SymbolTable::FindPredicateEntryByPredicateEntry(const PredicateEntry& pe) {
+    if (!ISPredicateEntryDup(pe)) {
         throw ProgramException("Find Predicate Entry in Symbol Table failed", ProgramException::kFatalError);
-    } // The Predicate you're looking for is not in this symbol table, this should never happens.
-    std::list<PredicateEntry>& p_entries = preds_map_[tmp_entry_ptr->name];
+    }  // The Predicate you're looking for is not in this symbol table, this should never happens.
+
+    std::list<PredicateEntry>& p_entries = preds_map_[pe.name];
     for (PredicateEntry& p_entry : p_entries) {
-        if (p_entry.EqualsTo(*tmp_entry_ptr)) { return &p_entry; }
+        if (p_entry.EqualsTo(pe)) { return &p_entry; }
     }
-    return nullptr; //This control flow should never reach, but it makes compiler happy.
+    return nullptr;  // This control flow should never reach, but it makes compiler happy.
 }
 
 bool SymbolTable::ISPredicateEntryDup(const PredicateEntry& p) {

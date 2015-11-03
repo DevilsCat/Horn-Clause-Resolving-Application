@@ -14,7 +14,17 @@ void DeductiveDatabase::FillHornclauseFromTree(std::shared_ptr<RootNode> root) {
     root->Accept(*this);
 }
 
-void DeductiveDatabase::AddHornclauseEntry(const HornclauseDatabaseEntry& entry) {
+void DeductiveDatabase::AddHornclauseEntry(HornclauseDatabaseEntry& entry) {
+    // Update: Before add hornclause into this database, populate all PredicateEntry to symbol table first.
+    for (std::shared_ptr<PredicateEntry>& pe : entry.head) {
+        if (!symbol_table_.ISPredicateEntryDup(*pe))  // Warning: To prevent Bugs when try to reproduce indetical pointer.
+            pe = std::shared_ptr<PredicateEntry>(&symbol_table_.InsertPredicate(*pe));
+    }
+    for (std::shared_ptr<PredicateEntry>& pe : entry.body) {
+        if (!symbol_table_.ISPredicateEntryDup(*pe))
+            pe = std::shared_ptr<PredicateEntry>(&symbol_table_.InsertPredicate(*pe));
+    }
+
     hornclause_entries_.push_back(entry);
 }
 

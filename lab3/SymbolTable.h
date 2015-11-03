@@ -29,7 +29,7 @@
 //
 class SymbolTable : Visitor {
     typedef std::map<std::string, std::list<struct PredicateEntry>> MapType;
-    friend class Unifier;
+    friend class DeductiveDatabase;
 public:
 	//
 	// Default constructor and deconstructor.
@@ -57,6 +57,7 @@ public:
 	void Print(std::ostream&) const;
 
     PredicateEntry* FindPredicateEntryByNode(const PredicateNode&);
+    PredicateEntry* FindPredicateEntryByPredicateEntry(const PredicateEntry&);
 
     virtual void OnPreVisit(PredicateNode*) override;
     virtual void OnVisit(SymbolNode*) override;
@@ -77,7 +78,7 @@ private:
 	// insert_predicate()
 	// Inserts PredicateST into the symbol table.
 	//
-	void InsertPredicate(const PredicateEntry&);
+	PredicateEntry& InsertPredicate(const PredicateEntry&);
 
 	//
 	// find_identity()

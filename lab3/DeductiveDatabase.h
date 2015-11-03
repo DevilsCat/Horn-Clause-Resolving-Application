@@ -14,7 +14,7 @@ public:
 
     void FillHornclauseFromTree(std::shared_ptr<RootNode>);
 
-    void AddHornclauseEntry(const HornclauseDatabaseEntry&);
+    void AddHornclauseEntry(HornclauseDatabaseEntry&);
 
     bool RetrieveHornclauseEntry(HornclauseDatabaseEntry& result, const unsigned& idx);
 
