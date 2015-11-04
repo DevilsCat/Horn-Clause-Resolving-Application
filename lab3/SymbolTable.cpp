@@ -103,7 +103,7 @@ void SymbolTable::Print(std::ostream& os) const {
 }
 
 void SymbolTable::PrintSt(std::ostream& os) const {
-	os << std::endl << "Bound Label : " << std::endl;
+	os << "Bound Label : " << std::endl;
 	for (const BoundToken& bound : bounds_) {
 		os << Encode(bound);
 	}

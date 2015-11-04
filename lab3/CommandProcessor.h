@@ -18,7 +18,7 @@ public:
 
     void Assert(const std::string& hornclauses);
 
-    void Up(const int& nlines = 0);
+    void Up(const unsigned& nlines = 0);
 
     void Down(const unsigned& nlines = 0);
 
@@ -29,14 +29,17 @@ public:
     void Set(std::string& variable, const int& value);
 
     void Print();
+
 private:
+    void DisplayDatabaseEntries(const unsigned& begin);
+
     SymbolTable symbol_table_;
 
     DeductiveDatabase database_;
 
-	int DisplayCounter;
+	int display_counter_;
 
-	int DisplayNum;
+	int display_num_;
 
 };
 

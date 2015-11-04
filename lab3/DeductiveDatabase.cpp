@@ -5,6 +5,7 @@
 #include "BodyNode.h"
 #include "PredicateNode.h"
 #include "Utils.h"
+#include <algorithm>
 
 DeductiveDatabase::DeductiveDatabase(SymbolTable& symbol_table) :
     symbol_table_(symbol_table), hornclause_buffer_ptr_(nullptr)
@@ -63,10 +64,10 @@ void DeductiveDatabase::OnVisit(PredicateNode* node) {
 }
 
 int DeductiveDatabase::Display(std::ostream& os, const unsigned& offset, const unsigned& num_entries) const {
-	size_t min_num = offset + num_entries < size() ? offset + num_entries : size();
-	for (size_t i = offset; i < min_num; ++i)
+    size_t upper_bound = std::min(offset + num_entries, size());
+	for (size_t i = offset; i < upper_bound; ++i)
 		os << i + 1 << Encode(":") << hornclause_entries_[i] << std::endl;
-	return min_num - offset;
+	return upper_bound - offset;  // Returns the number of lines that in fact prints out.
 }
 
 size_t DeductiveDatabase::size() const {

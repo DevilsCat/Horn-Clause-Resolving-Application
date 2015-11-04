@@ -23,7 +23,7 @@ int main(int argc, char** argv)
     }
     
     if (argc == MAX_ARGS) {
-        if (IsNumber(argv[NUM_HORNCLAUSE_POS]))
+        if (is_number(argv[NUM_HORNCLAUSE_POS]))
             num_hornclauses = atoi(argv[NUM_HORNCLAUSE_POS]);
         else
             std::cout << "Usage : " << argv[PROGRAM_POS] << " <Number of Honr Clause> " << std::endl;

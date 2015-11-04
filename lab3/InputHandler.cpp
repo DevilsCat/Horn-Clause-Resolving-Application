@@ -119,12 +119,12 @@ std::shared_ptr<Command> InputHandler::MakeUpCommand(const std::string& descript
         ProgramException::kNumberArgsMisMatch
         );
     if (params.size() == kNumParams) {
-        if (!IsNumber(params[kOptionalNLinePos]))
+        if (!is_number(params[kOptionalNLinePos]))
             throw ProgramException(
             "Up Command Error: Invalid Numeric Input.",
             ProgramException::kInvalidNumber
             );
-        return std::make_shared<UpCommand>(ToNumber(params[kOptionalNLinePos]));
+        return std::make_shared<UpCommand>(to_number(params[kOptionalNLinePos]));
     }
 
     return std::make_shared<UpCommand>();
@@ -142,12 +142,12 @@ std::shared_ptr<Command> InputHandler::MakeDownCommand(const std::string& descri
         ProgramException::kNumberArgsMisMatch
         );
     if (params.size() == kNumParams) {
-        if (!IsNumber(params[kOptionalNLinePos]))
+        if (!is_number(params[kOptionalNLinePos]))
             throw ProgramException(
             "Down Command Error: Invalid Numeric Input.",
             ProgramException::kInvalidNumber
             );
-        return std::make_shared<DownCommand>(ToNumber(params[kOptionalNLinePos]));
+        return std::make_shared<DownCommand>(to_number(params[kOptionalNLinePos]));
     }
 
     return std::make_shared<DownCommand>();
@@ -160,14 +160,14 @@ std::shared_ptr<Command> InputHandler::MakeResolveCommand(const std::string& des
     
     std::vector<std::string> params = Tokenize(descript);
 
-    if (params.size() != kNumParams || !IsNumber(params[kFirstNumPos]) || !IsNumber(params[kSecondNumPos]))
+    if (params.size() != kNumParams || !is_number(params[kFirstNumPos]) || !is_number(params[kSecondNumPos]))
         throw ProgramException(
             "Resolve Command Error: Unexpeted Numberic Input",
             ProgramException::kInvalidNumber
         );
 
-    unsigned first_num = ToNumber(params[kFirstNumPos]);
-    unsigned second_num = ToNumber(params[kSecondNumPos]);
+    unsigned first_num = to_number(params[kFirstNumPos]);
+    unsigned second_num = to_number(params[kSecondNumPos]);
     
     return std::make_shared<ResolveCommand>(first_num, second_num);
 }
@@ -185,17 +185,17 @@ std::shared_ptr<Command> InputHandler::MakeRandomizeCommand(const std::string& d
             ProgramException::kNumberArgsMisMatch
         );
     } 
-    if (!IsVariable(params[kVariablePos])) {
+    if (!is_variable(params[kVariablePos])) {
         throw ProgramException(
-            "Randomized Command Error: Invalid Alphabetic Varible.",
+            "Randomized Command Error: Invalid Alphabetic Variable.",
             ProgramException::kInvalidVariable
         );
     }
 
     std::string varaible(params[kVariablePos]);
     if (params.size() == kMaxNumParams) {
-        if (IsNumber(params[kOptionalMaxPos])) {
-            unsigned max_i = ToNumber(params[kOptionalMaxPos]);
+        if (is_number(params[kOptionalMaxPos])) {
+            unsigned max_i = to_number(params[kOptionalMaxPos]);
             return std::make_shared<RandomizeCommand>(varaible, max_i);
         }
         throw ProgramException(
@@ -219,20 +219,20 @@ std::shared_ptr<Command> InputHandler::MakeSetCommand(const std::string& descrip
             "Set Command Error: Arguments Number Mismatch.",
             ProgramException::kNumberArgsMisMatch
         );
-    if (!IsNumber(params[kValuePos]))
+    if (!is_number(params[kValuePos]))
         throw ProgramException(
             "Set Command Error: Unexpected Numeric Input.",
             ProgramException::kInvalidNumber
         );
-    if (!IsVariable(params[kVariablePos])) {
+    if (!is_variable(params[kVariablePos])) {
         throw ProgramException(
-            "Randomized Command Error: Invalid Alphabetic Varible.",
+            "Randomized Command Error: Invalid Alphabetic Variable.",
             ProgramException::kInvalidVariable
             );
     }
 
     std::string variable = params[kVariablePos];
-    unsigned value = ToNumber(params[kValuePos]);
+    unsigned value = to_number(params[kValuePos]);
 
     return std::make_shared<SetCommand>(variable, value);
 }
