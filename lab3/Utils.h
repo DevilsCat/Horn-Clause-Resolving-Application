@@ -15,4 +15,14 @@ std::vector<std::string> Tokenize(const std::string& line);
 
 std::string Encode(const std::string& str);
 
+namespace Output {
+    int DisplayHeader(std::ostream& os);
+    int DisplayFooter(std::ostream& os);
+    int GetWindowsSize(short& width, short& height);
+
+    void DisplayProgram(std::ostream& os, void (*DisplayPredicate)(const int& max_nlines));
+
+
+}
+
 #endif

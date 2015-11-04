@@ -97,9 +97,15 @@ bool HornclauseDatabaseEntry::IsFact() const {
     return !head.empty() && body.empty();
 }
 
-void HornclauseDatabaseEntry::EraseBodyAt(const unsigned& idx) {
-    std::vector<std::shared_ptr<PredicateEntry>>::iterator it = body.begin();
-    body.erase(it + idx);
+HornclauseDatabaseEntry::PredicateEntryIterator HornclauseDatabaseEntry::EraseBodyAt(const unsigned& idx) {
+    PredicateEntryIterator it = body.begin();
+    return body.erase(it + idx);
+
+}
+
+void HornclauseDatabaseEntry::InsertBodyAt(const unsigned& idx, PredicateEntryIterator first, PredicateEntryIterator last) {
+    PredicateEntryIterator it = EraseBodyAt(idx);
+    body.insert(it, first, last);
 }
 
 std::ostream& operator<<(std::ostream& os, const HornclauseDatabaseEntry& entry) {

@@ -111,6 +111,7 @@ private:
     PredicateEntry* entry_buffer_pointer_;
 
     std::vector<const PredicateEntry*> predicates_trace_;
+
 };
 
 #endif

@@ -3,3 +3,5 @@
 ( ( ascending 2 3 ) )
 
 ( ( ascending x Z ) ( ( ascending x Y ) ( ascending Y Z ) ) )
+
+( ( ascending 4 5 ) ( ( ascending 1 U ) ) )

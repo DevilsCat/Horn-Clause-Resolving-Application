@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <windows.h>
 #include <regex>
 #include "CommandProcessor.h"
 #include "parser.h"
@@ -11,6 +10,14 @@
 #include "DeductiveDatabase.h"
 #include "Unifier.h"
 #include "Utils.h"
+
+#ifndef MAX
+#define MAX(a,b)            (((a) > (b)) ? (a) : (b))
+#endif
+
+#ifndef MIN
+#define MIN(a,b)            (((a) < (b)) ? (a) : (b))
+#endif
 
 CommandProcessor::CommandProcessor() :
 database_(symbol_table_), display_counter_(0), display_num_(DEFAULT_NUM_HORNCLAUSE)
@@ -63,9 +70,9 @@ void CommandProcessor::Assert(const std::string& hornclauses) {
 void CommandProcessor::Up(const unsigned& nlines) {
     int begin;
     if (nlines != 0) {
-        begin = max(int(display_counter_ - nlines), 0);
+        begin = MAX(int(display_counter_ - nlines), 0);
     } else {
-        begin = max(int(display_counter_ - display_num_), 0);
+        begin = MAX(int(display_counter_ - display_num_), 0);
     }
 
     DisplayDatabaseEntries(display_counter_ = begin);  // By Yu, I refract this Database Display method, so that we can
@@ -75,9 +82,9 @@ void CommandProcessor::Up(const unsigned& nlines) {
 void CommandProcessor::Down(const unsigned& nlines) {
     int begin;
     if (nlines != 0) {
-        begin = min(display_counter_ + nlines, int(database_.size()));
-    }else{
-        begin = min(display_counter_ + display_num_, int(database_.size()));
+        begin = MIN(display_counter_ + nlines, int(database_.size()));
+    } else {
+        begin = MIN(display_counter_ + display_num_, int(database_.size()));
     }
 
     DisplayDatabaseEntries(display_counter_ = begin);
@@ -128,10 +135,15 @@ void CommandProcessor::Print() {
     symbol_table_.PrintSt(std::cout);
 }
 
-void CommandProcessor::DisplayDatabaseEntries(const unsigned& begin) {
+void CommandProcessor::DisplayDatabaseEntries(const unsigned& begin) { 
+    Output::DisplayHeader(std::cout);
     std::cout << "////////////////////" << std::endl;
     for (int i = database_.Display(std::cout, begin, display_num_); i < display_num_; i++) {  
         std::cout << std::endl;
     }
     std::cout << "////////////////////" << std::endl;
+}
+
+void CommandProcessor::DisplayDatabaseEntriesPredicate(const unsigned& max_nline) {
+    
 }

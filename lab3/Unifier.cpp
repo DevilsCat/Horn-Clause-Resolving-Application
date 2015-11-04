@@ -23,6 +23,10 @@ size_t Unifier::UnifyHornclauses(
         if (Unify(head_pe, body_pe)) {                   // Once Unification succeeds, the predicates in "i" location 
             if (first_hornclause_copy_.IsFact()) {       // changed to unified one. But we need to remove it if first 
                 second_hornclause_copy_.EraseBodyAt(i);  // hornclause is a fact.
+            } else {
+                second_hornclause_copy_.InsertBodyAt(i, 
+                    first_hornclause_copy_.body.begin(), 
+                    first_hornclause_copy_.body.end());
             }
             ApplyAllSubstitutionsToHornclause(second_hornclause_copy_);
             hornclause_entries.push_back(second_hornclause_copy_);
@@ -50,18 +54,19 @@ bool Unifier::Unify(PredicateEntry*& head_pe, PredicateEntry*& body_pe) {
 
     std::vector<const BaseToken*>::iterator head_token_ptr_it = head_pe->symbols.begin();
     std::vector<const BaseToken*>::iterator body_token_ptr_it = body_pe->symbols.begin();
-    bool any_success = false;
     for (; head_token_ptr_it != head_pe->symbols.end(); ++head_token_ptr_it, ++body_token_ptr_it) {
         const BaseToken* head_token_ptr = *head_token_ptr_it;
         const BaseToken* body_token_ptr = *body_token_ptr_it;
         std::pair<const BaseToken*, const BaseToken*> substitute_pair;
         if (CanPerformSubstitution(substitute_pair, head_token_ptr, body_token_ptr)) {
-            any_success |= SubstituteTokensInPredicateEntry(head_pe->symbols, substitute_pair);
-            any_success |= SubstituteTokensInPredicateEntry(body_pe->symbols, substitute_pair);
+            SubstituteTokensInPredicateEntry(head_pe->symbols, substitute_pair);
+            SubstituteTokensInPredicateEntry(body_pe->symbols, substitute_pair);
             token_substitutions_.push_back(substitute_pair);
+        } else {
+            return false;
         }
     }
-    return any_success;
+    return true;
 }
 
 bool Unifier::CanPerformSubstitution(
@@ -75,7 +80,15 @@ bool Unifier::CanPerformSubstitution(
     if (*head_token == BaseToken::NUMBER && *body_token== BaseToken::NUMBER) { return false; }
     // Two Tokens are both Bound
     if (*head_token == BaseToken::BOUND && *body_token == BaseToken::BOUND) { return false; }
-    
+    // One is Constant another is Bound, but with different value.
+    if (*head_token == BaseToken::NUMBER && *body_token == BaseToken::BOUND) {
+        if (dynamic_cast<const BoundToken*>(body_token)->value != dynamic_cast<const NumberToken*>(head_token)->number)
+            return false;
+    }
+    if (*head_token == BaseToken::BOUND && *body_token == BaseToken::NUMBER) {
+        if (dynamic_cast<const BoundToken*>(head_token)->value != dynamic_cast<const NumberToken*>(body_token)->number)
+            return false;
+    }
     const BaseToken** src_token_ptr;
     const BaseToken** dst_token_ptr;
 

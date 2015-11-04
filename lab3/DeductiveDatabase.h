@@ -41,6 +41,7 @@ private:
 };
 
 struct HornclauseDatabaseEntry {
+    typedef std::vector<std::shared_ptr<PredicateEntry>>::iterator PredicateEntryIterator;
     std::vector<std::shared_ptr<PredicateEntry>> head;
     std::vector<std::shared_ptr<PredicateEntry>> body;
 
@@ -48,7 +49,9 @@ struct HornclauseDatabaseEntry {
 
     bool IsFact() const;
 
-    void EraseBodyAt(const unsigned& idx);
+    PredicateEntryIterator EraseBodyAt(const unsigned& idx);
+
+    void InsertBodyAt(const unsigned& idx, PredicateEntryIterator first, PredicateEntryIterator last);
 
     friend std::ostream& operator<<(std::ostream& os, const HornclauseDatabaseEntry& entry);
 };
