@@ -75,7 +75,7 @@ bool Unifier::CanPerformSubstitution(
         const BaseToken* body_token) {
     
     // The pointer to tokens are they same.
-    if (*head_token == *body_token) { return false; } 
+    if (*head_token == *body_token) { return true; }  // Since they're already unified. 
     // Two Tokens are Different constants.
     if (*head_token == BaseToken::NUMBER && *body_token== BaseToken::NUMBER) { return false; }
     // Two Tokens are both Bound
