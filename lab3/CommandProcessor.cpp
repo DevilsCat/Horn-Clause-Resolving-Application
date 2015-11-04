@@ -136,7 +136,7 @@ void CommandProcessor::Print() {
 }
 
 void CommandProcessor::DisplayDatabaseEntries(const unsigned& begin) { 
-    Output::DisplayHeader(std::cout);
+    //Output::DisplayHeader(std::cout);
     std::cout << "////////////////////" << std::endl;
     for (int i = database_.Display(std::cout, begin, display_num_); i < display_num_; i++) {  
         std::cout << std::endl;

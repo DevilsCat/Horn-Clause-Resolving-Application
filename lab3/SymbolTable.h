@@ -108,7 +108,7 @@ private:
     // A chained-map container to store predicates (might have the same key)
     MapType preds_map_;
 
-    PredicateEntry* entry_buffer_pointer_;
+    std::shared_ptr<PredicateEntry> entry_buffer_pointer_;
 
     std::vector<const PredicateEntry*> predicates_trace_;
 

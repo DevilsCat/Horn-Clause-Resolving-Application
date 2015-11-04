@@ -31,6 +31,8 @@ public:
     virtual void OnVisit(PredicateNode*) override;
     
 private:
+    bool IsHornclauseEntryDup(const HornclauseDatabaseEntry&) const;
+
     SymbolTable& symbol_table_;
 
     std::vector<HornclauseDatabaseEntry> hornclause_entries_;
@@ -42,6 +44,7 @@ private:
 
 struct HornclauseDatabaseEntry {
     typedef std::vector<std::shared_ptr<PredicateEntry>>::iterator PredicateEntryIterator;
+
     std::vector<std::shared_ptr<PredicateEntry>> head;
     std::vector<std::shared_ptr<PredicateEntry>> body;
 
@@ -52,6 +55,8 @@ struct HornclauseDatabaseEntry {
     PredicateEntryIterator EraseBodyAt(const unsigned& idx);
 
     void InsertBodyAt(const unsigned& idx, PredicateEntryIterator first, PredicateEntryIterator last);
+
+    bool EqualsTo(const HornclauseDatabaseEntry&) const;
 
     friend std::ostream& operator<<(std::ostream& os, const HornclauseDatabaseEntry& entry);
 };

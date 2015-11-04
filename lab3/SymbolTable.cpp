@@ -115,12 +115,11 @@ void SymbolTable::PrintSt(std::ostream& os) const {
 
 
 void SymbolTable::OnPreVisit(PredicateNode*) {
-    entry_buffer_pointer_ = new PredicateEntry();
+    entry_buffer_pointer_ = std::make_shared<PredicateEntry>();
 }
 
 void SymbolTable::OnPostVisit(PredicateNode*) {
     InsertPredicate(*entry_buffer_pointer_);
-    delete entry_buffer_pointer_;
 }
 
 bool SymbolTable::CheckBound(const std::string& s) {

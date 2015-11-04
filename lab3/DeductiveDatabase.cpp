@@ -16,6 +16,8 @@ void DeductiveDatabase::FillHornclauseFromTree(std::shared_ptr<RootNode> root) {
 }
 
 void DeductiveDatabase::AddHornclauseEntry(HornclauseDatabaseEntry& entry) {
+    if (IsHornclauseEntryDup(entry)) { return; }
+
     // Update: Before add hornclause into this database, populate all PredicateEntry to symbol table first.
     for (std::shared_ptr<PredicateEntry>& pe : entry.head) {
         if (!symbol_table_.ISPredicateEntryDup(*pe))  // Warning: To prevent Bugs when try to reproduce indetical pointer.
@@ -63,6 +65,13 @@ void DeductiveDatabase::OnVisit(PredicateNode* node) {
     predicate_buffer_.push_back(std::shared_ptr<PredicateEntry>(symbol_table_.FindPredicateEntryByNode(*node)));
 }
 
+bool DeductiveDatabase::IsHornclauseEntryDup(const HornclauseDatabaseEntry& me) const {
+    return std::find_if(hornclause_entries_.begin(), hornclause_entries_.end(), 
+            [&me](const HornclauseDatabaseEntry& other) -> bool {
+        return me.EqualsTo(other);
+    }) != hornclause_entries_.end();
+}
+
 int DeductiveDatabase::Display(std::ostream& os, const unsigned& offset, const unsigned& num_entries) const {
     size_t upper_bound = std::min(offset + num_entries, size());
 	for (size_t i = offset; i < upper_bound; ++i)
@@ -106,6 +115,17 @@ HornclauseDatabaseEntry::PredicateEntryIterator HornclauseDatabaseEntry::EraseBo
 void HornclauseDatabaseEntry::InsertBodyAt(const unsigned& idx, PredicateEntryIterator first, PredicateEntryIterator last) {
     PredicateEntryIterator it = EraseBodyAt(idx);
     body.insert(it, first, last);
+}
+
+bool HornclauseDatabaseEntry::EqualsTo(const HornclauseDatabaseEntry& other) const {
+    if (head.size() != other.head.size() || body.size() != other.body.size()) { return false; }
+
+    // Create a PredicateEntry labda, though I really want to compare the address, but somehow insert predicate is buggy.
+    auto PredicateEntryComparator = [](std::shared_ptr<PredicateEntry> lhs, std::shared_ptr<PredicateEntry> rhs)->bool {
+        return lhs->EqualsTo(*rhs);
+    };
+    return equal(head.begin(), head.end(), other.head.begin(), PredicateEntryComparator) &&
+           equal(body.begin(), body.end(), other.body.begin(), PredicateEntryComparator);
 }
 
 std::ostream& operator<<(std::ostream& os, const HornclauseDatabaseEntry& entry) {
