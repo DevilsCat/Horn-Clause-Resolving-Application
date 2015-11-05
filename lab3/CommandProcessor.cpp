@@ -72,7 +72,7 @@ void CommandProcessor::Up(const unsigned& nlines) {
     if (nlines != 0) {
         begin = MAX(int(display_counter_ - nlines), 0);
     } else {
-        begin = MAX(int(display_counter_ - display_num_), 0);
+        begin = MAX(int(display_counter_ - Output::GetPrintableZoneHeight()), 0);
     }
 
     DisplayDatabaseEntries(display_counter_ = begin);  // By Yu, I refract this Database Display method, so that we can
@@ -81,12 +81,12 @@ void CommandProcessor::Up(const unsigned& nlines) {
 
 void CommandProcessor::Down(const unsigned& nlines) {
     int begin;
-    if (nlines != 0) {
-        begin = MIN(display_counter_ + nlines, int(database_.size()));
+    unsigned scroll_lines = !nlines ? Output::GetPrintableZoneHeight() : nlines;
+    if (display_counter_ + scroll_lines >= int(database_.size())) {  // Scrolling out of database size bound.
+        begin = display_counter_;
     } else {
-        begin = MIN(display_counter_ + display_num_, int(database_.size()));
+        begin = display_counter_ + scroll_lines;
     }
-
     DisplayDatabaseEntries(display_counter_ = begin);
 }
 
@@ -132,18 +132,16 @@ void CommandProcessor::Set(std::string& variable, const int& value) {
 }
 
 void CommandProcessor::Print() {
-    symbol_table_.PrintSt(std::cout);
+    auto Predicate = [this](const unsigned& max_nlines)->unsigned {
+        return symbol_table_.PrintSt(std::cout);
+    };
+    Output::DisplayProgram(std::cout, Predicate);
 }
 
 void CommandProcessor::DisplayDatabaseEntries(const unsigned& begin) { 
-    //Output::DisplayHeader(std::cout);
-    std::cout << "////////////////////" << std::endl;
-    for (int i = database_.Display(std::cout, begin, display_num_); i < display_num_; i++) {  
-        std::cout << std::endl;
-    }
-    std::cout << "////////////////////" << std::endl;
-}
-
-void CommandProcessor::DisplayDatabaseEntriesPredicate(const unsigned& max_nline) {
-    
+    auto Predicate = [&begin, this](const unsigned& max_nlines)->unsigned {
+        unsigned nlines_display = display_num_ == DEFAULT_NUM_HORNCLAUSE ? max_nlines : display_num_;
+        return database_.Display(std::cout, begin, nlines_display);
+    };
+    Output::DisplayProgram(std::cout, Predicate);
 }

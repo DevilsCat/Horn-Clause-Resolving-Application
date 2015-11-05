@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#define DEFAULT_NUM_HORNCLAUSE  10
+#define DEFAULT_NUM_HORNCLAUSE  -1
 
 bool is_number(const std::string& s);
 
@@ -16,12 +16,32 @@ std::vector<std::string> Tokenize(const std::string& line);
 std::string Encode(const std::string& str);
 
 namespace Output {
-    int DisplayHeader(std::ostream& os);
-    int DisplayFooter(std::ostream& os);
-    int GetWindowsSize(short& width, short& height);
+    const std::string sTitleInfo = "CSE 425 Lab 3: Resolving Horn Clause in C++";
+    const std::string sCopyRight = "By Anqi Zhang, Yu Xiao. ALL RIGHTS RESERVED";
+    const short iNumLineUsed = 2;
 
-    void DisplayProgram(std::ostream& os, void (*DisplayPredicate)(const int& max_nlines));
+    int DisplayHeader(std::ostream& os, const short& width);
+    int GetWindowSize(short& width, short& height);
+    short GetPrintableZoneHeight();
+    std::string center(const std::string s, const int w);
+    void gotoxy(const short& x, const short& y);
 
+    template<typename Func>
+    void DisplayProgram(std::ostream& os, Func f) {
+        system("cls");
+        short width, height;
+        int ret = GetWindowSize(width, height);
+        if (!ret) { // Get Windows Size fail.
+            return;
+        }
+        int n_header = DisplayHeader(os, width);
+        
+        short n_usage = f(height - n_header - 1);  // One line is for next prompt
+        
+        if (n_usage < height - n_header - 1) { // Some Line is not used, Move the cursor to the bottom.
+            gotoxy(0, height - 1);
+        }
+    }
 
 }
 

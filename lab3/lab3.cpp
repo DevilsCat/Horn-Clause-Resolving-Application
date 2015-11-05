@@ -5,17 +5,17 @@
 #include <iostream>
 #include "Utils.h"
 #include "Command.h"
+#include "InputHandler.h"
+#include "ProgramException.h"
 
 #define MAX_ARGS                2
 #define PROGRAM_POS             0
 #define NUM_HORNCLAUSE_POS      1
 #define NO_ERROR                0
-#include "InputHandler.h"
-#include "ProgramException.h"
 
 int main(int argc, char** argv)
 {
-    unsigned num_hornclauses = DEFAULT_NUM_HORNCLAUSE;
+    int num_hornclauses = DEFAULT_NUM_HORNCLAUSE;
     
     if (argc > MAX_ARGS) {
         std::cout << "Usage : " << argv[PROGRAM_POS] << " <Number of Horn Clause> " << std::endl;
@@ -35,6 +35,7 @@ int main(int argc, char** argv)
 
     // TODO Read input and make command
     int error_code = NO_ERROR;
+    Output::DisplayProgram(std::cout, [](const unsigned&)->unsigned{ return 0; }); // Print out the empty template.
     while (true) {
         try {
             std::cout << ">>";

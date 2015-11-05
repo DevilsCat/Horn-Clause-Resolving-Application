@@ -33,8 +33,6 @@ public:
 private:
     void DisplayDatabaseEntries(const unsigned& begin);
 
-    void DisplayDatabaseEntriesPredicate(const unsigned& max_nline);
-
     SymbolTable symbol_table_;
 
     DeductiveDatabase database_;

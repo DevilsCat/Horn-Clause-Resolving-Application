@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iostream>
 #include <windows.h>
+#include <functional>
 
 bool is_number(const std::string& s) {
     return !s.empty() && std::find_if(s.begin(),
@@ -36,23 +37,14 @@ std::string Encode(const std::string& str) {
     return str + " ";
 }
 
-int Output::DisplayHeader(std::ostream& os) {
+int Output::DisplayHeader(std::ostream& os, const short& width) {
     const int line_use = 2;
-    const std::string sTitleInfo = "CSE 425 Lab 3: Resolving Horn Clause in C++";
-    const std::string sCopyRight = "Anqi Zhang, Yu Xiao. ALL RIGHTS RESERVED";
-    std::cout << sTitleInfo << std::endl;
-    std::cout << sCopyRight << std::endl;
+    std::cout << center(sTitleInfo, width - 1) << std::endl;
+    std::cout << center(sCopyRight, width - 1) << std::endl;
     return line_use;
 }
 
-int Output::DisplayFooter(std::ostream& os) {
-    const int line_use = 1;
-    const std::string sPrompt = ">>";
-    std::cout << sPrompt;
-    return line_use;
-}
-
-int Output::GetWindowsSize(short& width, short& height) {
+int Output::GetWindowSize(short& width, short& height) {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     int ret = GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
     if (ret) {
@@ -62,13 +54,24 @@ int Output::GetWindowsSize(short& width, short& height) {
     return ret;
 }
 
-void Output::DisplayProgram(std::ostream& os, void(* DisplayPredicate)(const int& max_nlines)) {
+short Output::GetPrintableZoneHeight() {
     short width, height;
-    int ret = GetWindowsSize(width, height);
-    if (!ret) { // Get Windows Size fail.
-        return;
-    } 
-    int n_header = DisplayHeader(os);
-    DisplayPredicate(height - n_header - 1);  // One line is for footer using.
-    DisplayFooter(os);
+    GetWindowSize(width, height);
+    return height < iNumLineUsed ? 0 : height - iNumLineUsed;
+}
+
+std::string Output::center(const std::string s, const int w) {
+    std::stringstream ss, spaces;
+    int padding = w - s.size();                 // count excess room to pad
+    for (int i = 0; i<padding / 2; ++i)
+        spaces << " ";
+    ss << spaces.str() << s << spaces.str();    // format with padding
+    if (padding>0 && padding % 2 != 0)               // if odd #, add 1 space
+        ss << " ";
+    return ss.str();
+}
+
+void Output::gotoxy(const short& x, const short& y) {
+    COORD homeCoords = { x, y };
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), homeCoords);
 }
