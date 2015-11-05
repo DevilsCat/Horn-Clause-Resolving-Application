@@ -33,6 +33,8 @@ public:
 private:
     void DisplayDatabaseEntries(const unsigned& begin);
 
+    short GetDefaultDisplayNum() const;
+
     SymbolTable symbol_table_;
 
     DeductiveDatabase database_;

@@ -69,11 +69,9 @@ void CommandProcessor::Assert(const std::string& hornclauses) {
 
 void CommandProcessor::Up(const unsigned& nlines) {
     int begin;
-    if (nlines != 0) {
-        begin = MAX(int(display_counter_ - nlines), 0);
-    } else {
-        begin = MAX(int(display_counter_ - Output::GetPrintableZoneHeight()), 0);
-    }
+    unsigned scroll_lines = nlines ? nlines : GetDefaultDisplayNum();
+    
+    begin = MAX(int(display_counter_ - scroll_lines), 0);
 
     DisplayDatabaseEntries(display_counter_ = begin);  // By Yu, I refract this Database Display method, so that we can
                                                        // reuse it in other place, as well as seal the format building procedure.
@@ -81,12 +79,11 @@ void CommandProcessor::Up(const unsigned& nlines) {
 
 void CommandProcessor::Down(const unsigned& nlines) {
     int begin;
-    unsigned scroll_lines = !nlines ? Output::GetPrintableZoneHeight() : nlines;
-    if (display_counter_ + scroll_lines >= int(database_.size())) {  // Scrolling out of database size bound.
-        begin = display_counter_;
-    } else {
-        begin = display_counter_ + scroll_lines;
-    }
+    unsigned scroll_lines = nlines ? nlines : GetDefaultDisplayNum();
+
+    begin = display_counter_ + scroll_lines >= int(database_.size()) ?  // Scrolling out of database size bound? 
+        display_counter_ : display_counter_ + scroll_lines;
+    
     DisplayDatabaseEntries(display_counter_ = begin);
 }
 
@@ -144,4 +141,8 @@ void CommandProcessor::DisplayDatabaseEntries(const unsigned& begin) {
         return database_.Display(std::cout, begin, nlines_display);
     };
     Output::DisplayProgram(std::cout, Predicate);
+}
+
+short CommandProcessor::GetDefaultDisplayNum() const {
+    return display_num_ ? display_num_ : Output::GetPrintableZoneHeight();
 }
