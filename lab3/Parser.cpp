@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "parser.h"
 #include <string>
+#include "Utils.h"
 
 Parser::Parser(std::istream& is):
 	is_(is), scanner_(is_), root_(new RootNode())
@@ -20,9 +21,11 @@ int Parser::Parse(){
 			root_->AddNode(ParseHornclause());
 		}
 		catch(std::invalid_argument &e){
-			std::cerr << e.what() << std::endl;
+            output_handler.LogError(e.what());
+			//std::cerr << e.what() << std::endl;
 		} catch (std::bad_alloc& e) { // make_shared might failed.
-			std::cerr << e.what() << std::endl;
+            output_handler.LogError(e.what());
+			//std::cerr << e.what() << std::endl;
 			throw; // re-throw this exception. Main function should handle (possibly force quit).
 		}
 	}

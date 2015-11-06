@@ -40,7 +40,6 @@ int main(int argc, char** argv)
         try {
             output_handler.DisplayPrompt();
             std::string cmd_str = input_handler.GetInputFromStream();
-            output_handler.CursorBackToPrompt();
             std::shared_ptr<Command> command_ptr = input_handler.MakeCommand(cmd_str);
             if (command_ptr)
                 command_ptr->Excecute(cmd_processor);

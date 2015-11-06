@@ -202,7 +202,7 @@
       <Filter>Header Files\CommandPattern</Filter>
     </ClInclude>
     <ClInclude Include="OutputHandler.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -318,7 +318,7 @@
       <Filter>Source Files\CommandPatternImp</Filter>
     </ClCompile>
     <ClCompile Include="OutputHandler.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\UtilsImp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

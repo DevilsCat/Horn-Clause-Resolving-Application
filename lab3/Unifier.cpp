@@ -18,6 +18,7 @@ size_t Unifier::UnifyHornclauses(
         first_hornclause_copy_ = first_hornclause;
         second_hornclause_copy_ = second_hornclause;
         // For base requirement, head contains only one predicate
+        // Updated for extra credit.
         PredicateEntry* head_pe = first_hornclause_copy_.head.front().get();
         PredicateEntry* body_pe = second_hornclause_copy_.body[i].get();
         if (Unify(head_pe, body_pe)) {                   // Once Unification succeeds, the predicates in "i" location 
