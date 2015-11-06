@@ -201,6 +201,9 @@
     <ClInclude Include="CommandProcessor.h">
       <Filter>Header Files\CommandPattern</Filter>
     </ClInclude>
+    <ClInclude Include="OutputHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -313,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="CommandProcessor.cpp">
       <Filter>Source Files\CommandPatternImp</Filter>
+    </ClCompile>
+    <ClCompile Include="OutputHandler.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

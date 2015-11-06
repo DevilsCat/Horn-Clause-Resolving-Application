@@ -129,20 +129,20 @@ void CommandProcessor::Set(std::string& variable, const int& value) {
 }
 
 void CommandProcessor::Print() {
-    auto Predicate = [this](const unsigned& max_nlines)->unsigned {
-        return symbol_table_.PrintSt(std::cout);
+    auto Predicate = [this](const short&) {
+        symbol_table_.PrintSt();
     };
-    Output::DisplayProgram(std::cout, Predicate);
+    output_handler.DisplayProgram(Predicate, "Symbol Table Entries");
 }
 
 void CommandProcessor::DisplayDatabaseEntries(const unsigned& begin) { 
-    auto Predicate = [&begin, this](const unsigned& max_nlines)->unsigned {
+    auto Predicate = [&begin, this](const short& max_nlines) {
         unsigned nlines_display = display_num_ == DEFAULT_NUM_HORNCLAUSE ? max_nlines : display_num_;
-        return database_.Display(std::cout, begin, nlines_display);
+        database_.Display(begin, nlines_display);
     };
-    Output::DisplayProgram(std::cout, Predicate);
+    output_handler.DisplayProgram(Predicate, "Horn Clause Database");
 }
 
 short CommandProcessor::GetDefaultDisplayNum() const {
-    return display_num_ ? display_num_ : Output::GetPrintableZoneHeight();
+    return display_num_ != DEFAULT_NUM_HORNCLAUSE ? display_num_ : output_handler.GetPrintableZoneHeight();
 }

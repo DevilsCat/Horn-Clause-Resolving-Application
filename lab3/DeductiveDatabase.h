@@ -18,7 +18,7 @@ public:
 
     bool RetrieveHornclauseEntry(HornclauseDatabaseEntry& result, const unsigned& idx);
 
-    int Display(std::ostream&, const unsigned& offset, const unsigned& num_entries = 0) const;
+    int Display(const unsigned& offset, const unsigned& num_entries = 0) const;
 
     size_t size() const;
 

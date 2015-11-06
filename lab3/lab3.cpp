@@ -35,17 +35,19 @@ int main(int argc, char** argv)
 
     // TODO Read input and make command
     int error_code = NO_ERROR;
-    Output::DisplayProgram(std::cout, [](const unsigned&)->unsigned{ return 0; }); // Print out the empty template.
+    output_handler.DisplayProgram([](const short&){});  // Print out the empty template.
     while (true) {
         try {
-            std::cout << ">>";
+            output_handler.DisplayPrompt();
             std::string cmd_str = input_handler.GetInputFromStream();
+            output_handler.CursorBackToPrompt();
             std::shared_ptr<Command> command_ptr = input_handler.MakeCommand(cmd_str);
             if (command_ptr)
                 command_ptr->Excecute(cmd_processor);
         }
         catch (ProgramException& e) {
-            std::cerr << e.what() << " with error code: " << e.code() << std::endl;
+            output_handler.DisplayHint(e.what());
+            //std::cerr << e.what() << " with error code: " << e.code() << std::endl;
             // Unrecoverable error
             if (e.code() == ProgramException::kFatalError) {
                 error_code = e.code();

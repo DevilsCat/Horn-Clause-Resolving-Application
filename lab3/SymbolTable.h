@@ -54,7 +54,7 @@ public:
 	// Traverse the symbol table and print a seprate line for each predicate by printing its name attribute followed
 	// by the attributes of the symbols to which it points.
 	//
-	unsigned PrintSt(std::ostream&) const;
+	void PrintSt() const;
 
     PredicateEntry* FindPredicateEntryByNode(const PredicateNode&);
     PredicateEntry* FindPredicateEntryByPredicateEntry(const PredicateEntry&);

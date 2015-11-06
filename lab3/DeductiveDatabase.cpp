@@ -72,10 +72,13 @@ bool DeductiveDatabase::IsHornclauseEntryDup(const HornclauseDatabaseEntry& me) 
     }) != hornclause_entries_.end();
 }
 
-int DeductiveDatabase::Display(std::ostream& os, const unsigned& offset, const unsigned& num_entries) const {
+int DeductiveDatabase::Display(const unsigned& offset, const unsigned& num_entries) const {
     size_t upper_bound = std::min(offset + num_entries, size());
-	for (size_t i = offset; i < upper_bound; ++i)
-		os << i + 1 << Encode(":") << hornclause_entries_[i] << std::endl;
+    for (size_t i = offset; i < upper_bound; ++i) {
+        std::ostringstream oss;
+        oss << i + 1 << Encode(":") << hornclause_entries_[i];
+        output_handler << oss.str() << std::endl;
+    }
 	return upper_bound - offset;  // Returns the number of lines that in fact prints out.
 }
 
