@@ -59,7 +59,7 @@ public:
 	// Get the token tree data structure this Parser.
 	// This method is for the after processing of input horn clauses.
 	//
-	std::shared_ptr<RootNode> root();
+	std::shared_ptr<RootNode> root() const;
 
 private:
 	//
@@ -68,12 +68,6 @@ private:
 	// next token, otherwise throws an runtime error.
 	//
 	std::shared_ptr<BaseToken> match(TokenType type);
-
-	//
-	// next_token()
-	// Returns the old Token and extracts the next Token.
-	//
-    std::shared_ptr<BaseToken> NextToken();
 
 	//
 	// parse_hornclauses()
@@ -118,9 +112,6 @@ private:
 
     // Scanner Object which uses to extract tokens from ifstream and store as a pointer
     Scanner scanner_;
-
-    // A Toke pointer stores the latest token pointer extracted from ifstream using Scanner object
-    std::shared_ptr<BaseToken> token_ptr_;
 
     // A Token Tree entering point.
     std::shared_ptr<RootNode> root_;

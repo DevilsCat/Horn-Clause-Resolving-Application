@@ -3,7 +3,6 @@
 //
 #include "stdafx.h"
 #include "parser.h"
-#include <string>
 #include "Utils.h"
 
 Parser::Parser(std::istream& is):
@@ -15,7 +14,6 @@ int Parser::Parse(){
 		return errno;
 	}
 
-	scanner_ >> token_ptr_;
 	while (scanner_){
 		try {
 			root_->AddNode(ParseHornclause());
@@ -33,34 +31,27 @@ int Parser::Parse(){
 	return 0;
 }
 
-std::shared_ptr<RootNode> Parser::root() {
+std::shared_ptr<RootNode> Parser::root() const{
 	return root_;
 }
 
 std::shared_ptr<BaseToken> Parser::match(BaseToken::TokenType type){
-	if (*token_ptr_ != type) {
-		throw std::invalid_argument("Unexpected token [" + token_ptr_->label + "]");
+	if (*scanner_.Peek() != type) {
+		throw std::invalid_argument("Unexpected token [" + scanner_.Peek()->label + "]");
 	}
-	std::shared_ptr<BaseToken> res = NextToken();
-	return res;
-}
-
-std::shared_ptr<BaseToken> Parser::NextToken(){
-	std::shared_ptr<BaseToken> res = token_ptr_;
-	scanner_ >> token_ptr_;
-	return res;
+	return scanner_.NextToken();
 }
 
 std::shared_ptr<HornclauseNode> Parser::ParseHornclause(){
-	if (*token_ptr_ != TokenType::LEFTPAREN){ // error check at first beging, and make sure a token discard.
-		throw std::invalid_argument("Unexpected token [" + NextToken()->label + "]");
+	if (*scanner_.Peek() != TokenType::LEFTPAREN){ // error check at first beging, and make sure a token discard.
+		throw std::invalid_argument("Unexpected token [" + scanner_.NextToken()->label + "]");
 	}
     
     HornclauseNode hornclause;
 
 	match(TokenType::LEFTPAREN);
 	hornclause.AddNode(ParseHead()); // parse head.
-	if (*token_ptr_ == TokenType::LEFTPAREN){
+	if (*scanner_.Peek() == TokenType::LEFTPAREN){
 		hornclause.AddNode(ParseBody()); // parse body.
 	}
 	match(TokenType::RIGHTPAREN);
@@ -78,7 +69,7 @@ std::shared_ptr<BodyNode> Parser::ParseBody(){
 	match(TokenType::LEFTPAREN);
 	do{		
 		body.AddNode(ParsePredicate());
-	} while (*token_ptr_ == TokenType::LEFTPAREN); // may have multiple predicates
+	} while (*scanner_.Peek() == TokenType::LEFTPAREN); // may have multiple predicates
 	match(TokenType::RIGHTPAREN);
 	return std::make_shared<BodyNode>(body);
 }
@@ -87,10 +78,10 @@ std::shared_ptr<PredicateNode> Parser::ParsePredicate(){
     PredicateNode predicate;
     match(TokenType::LEFTPAREN);
     predicate.AddNode(ParseName());
-    if (*token_ptr_ != TokenType::RIGHTPAREN){ // may have no symbol.
+    if (*scanner_.Peek() != TokenType::RIGHTPAREN){ // may have no symbol.
         do {
             predicate.AddNode(ParseSymbol());
-        } while (*token_ptr_ != TokenType::RIGHTPAREN);
+        } while (*scanner_.Peek() != TokenType::RIGHTPAREN);
     }
     match(TokenType::RIGHTPAREN);
     return std::make_shared<PredicateNode>(predicate);

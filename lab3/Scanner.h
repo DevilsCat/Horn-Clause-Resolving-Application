@@ -7,8 +7,11 @@
 #include <istream>
 #include <memory>
 #include "BaseToken.h"
+#include <deque>
 
 class Scanner {
+    const size_t kMaxQueueSize = 2;
+
 public:
     explicit Scanner(std::istream& is);
 
@@ -19,22 +22,33 @@ public:
 	//
 	operator bool() const;
 
-	// 
-	// operator>>
-	// An extraction operator (operator>>) that takes a reference to a token object and returns a reference to the Scanner 
-	// class object on which the extraction operator was invoked.*/
-	//
-	Scanner& operator>> (std::shared_ptr<BaseToken>& ptr);
+    std::shared_ptr<BaseToken> Peek() const;
+    std::shared_ptr<BaseToken> Peek(const size_t& idx) const;
+
+    std::shared_ptr<BaseToken> NextToken();
 
 	//
 	// is_good()
 	// Determines if the file inside this Scanner is good or not
 	//
-    bool is_good();
+    bool is_good() const;
 
 private:
+    // 
+    // operator>>
+    // An extraction operator (operator>>) that takes a reference to a token object and returns a reference to the Scanner 
+    // class object on which the extraction operator was invoked.*/
+    //
+    Scanner& operator>> (std::shared_ptr<BaseToken>& ptr);
+
+    std::shared_ptr<BaseToken> PopFromTokenQueue_();
+    void PushToTokenQueue_(std::shared_ptr<BaseToken> t);
+
     // A file stream to extract Token from.
     std::istream& is_;
+
+    // token queue for caching certain numbers {kMaxQueueSize} of elements
+    std::deque<std::shared_ptr<BaseToken>> token_queue_;
 };
 
 #endif
