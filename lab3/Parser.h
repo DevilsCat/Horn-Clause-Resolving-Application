@@ -78,10 +78,12 @@ private:
 	std::shared_ptr<HornclauseNode> ParseHornclause();
 
 	//
-	// parse_head()
+	// ParseSinglePredHead()
 	// Parses the head and returns a node of Head.
 	//
-	std::shared_ptr<HeadNode> ParseHead();
+	std::shared_ptr<HeadNode> ParseSinglePredHead();
+
+    std::shared_ptr<HeadNode> ParseMultiPredHead();
 
 	//
 	// parse_body()

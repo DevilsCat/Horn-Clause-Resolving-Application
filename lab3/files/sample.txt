@@ -7,3 +7,7 @@
 ( ( ascending x Z ) ( ( ascending x Y ) ( ascending Y Z ) ) )
 
 ( ( ascending 4 5 ) ( ( ascending 1 U ) ) )
+
+( ( ( descending 3 4 ) ( descending m n ) ) )
+
+( ( ( descending 1 2 ) ( descending x Y ) ) ( ( descending 5 6 ) ( descending 9 10 ) ) )

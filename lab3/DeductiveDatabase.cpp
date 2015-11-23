@@ -132,7 +132,14 @@ bool HornclauseDatabaseEntry::EqualsTo(const HornclauseDatabaseEntry& other) con
 }
 
 std::ostream& operator<<(std::ostream& os, const HornclauseDatabaseEntry& entry) {
-    os << Encode("(") << *entry.head[0];
+    os << Encode("(");
+    if (entry.head.size() == 1)  // single predicate head
+        os << *entry.head.front();
+    else {                       // multiple predicates head
+        os << Encode("(");
+        std::for_each(entry.head.begin(), entry.head.end(), [&os](std::shared_ptr<PredicateEntry> p){ os << *p; });
+        os << Encode(")");
+    }
     if (!entry.body.empty()) {
         os << Encode("(");
         for (std::shared_ptr<PredicateEntry> predicate_ptr : entry.body)
