@@ -79,6 +79,7 @@
   <ItemGroup>
     <Text Include="files\clauses.txt" />
     <Text Include="files\cleanclauses.txt" />
+    <Text Include="files\extra.txt" />
     <Text Include="files\sample.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>

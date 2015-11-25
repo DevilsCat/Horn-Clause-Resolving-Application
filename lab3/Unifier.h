@@ -25,6 +25,7 @@ public:
     size_t UnifyHornclauses(std::vector<HornclauseDatabaseEntry>&, const HornclauseDatabaseEntry&, const HornclauseDatabaseEntry&);
 
 private:
+    size_t UnifyOnePredInHeadWithBody(std::vector<HornclauseDatabaseEntry>&, const PredicateEntry* head_pe, const HornclauseDatabaseEntry&);
 
     bool Unify(PredicateEntry*&, PredicateEntry*&);
 

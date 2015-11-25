@@ -1,0 +1,5 @@
+( ( ( descending 1 2 ) ( descending 3 4 ) ) )
+
+( ( descending w z ) ( ( descending E F ) ) )
+
+( ( descending x y ) ( ( descending A B ) ( descending C D ) ) )

@@ -13,26 +13,26 @@ size_t Unifier::UnifyHornclauses(
         std::vector<HornclauseDatabaseEntry>& hornclause_entries,
         const HornclauseDatabaseEntry& first_hornclause, 
         const HornclauseDatabaseEntry& second_hornclause) {
-
-    for (size_t i = 0; i < second_hornclause.body.size(); ++i) {
-        first_hornclause_copy_ = first_hornclause;
-        second_hornclause_copy_ = second_hornclause;
-        // For base requirement, head contains only one predicate
-        // Updated for extra credit.
-        PredicateEntry* head_pe = first_hornclause_copy_.head.front().get();
-        PredicateEntry* body_pe = second_hornclause_copy_.body[i].get();
-        if (Unify(head_pe, body_pe)) {                   // Once Unification succeeds, the predicates in "i" location 
-            if (first_hornclause_copy_.IsFact()) {       // changed to unified one. But we need to remove it if first 
-                second_hornclause_copy_.EraseBodyAt(i);  // hornclause is a fact.
-            } else {
-                second_hornclause_copy_.InsertBodyAt(i, 
-                    first_hornclause_copy_.body.begin(), 
-                    first_hornclause_copy_.body.end());
+    // Updated to extra credits.
+    for (size_t i = 0; i < first_hornclause.head.size(); ++i) {
+        for (size_t j = 0; j < second_hornclause.body.size(); ++j) {
+            first_hornclause_copy_ = first_hornclause;
+            second_hornclause_copy_ = second_hornclause;
+            PredicateEntry* head_pe = first_hornclause_copy_.head[i].get();
+            PredicateEntry* body_pe = second_hornclause_copy_.body[j].get();
+            if (Unify(head_pe, body_pe)) {                   // Once Unification succeeds, the head and body predicates
+                if (first_hornclause_copy_.IsFact())         // unify to the same. We need to remove "j" position body  
+                    second_hornclause_copy_.EraseBodyAt(j);  // if first hornclause is a fact.
+                else
+                    second_hornclause_copy_.InsertBodyAt(    // Otherwise, subustitude it.
+                        j,
+                        first_hornclause_copy_.body.begin(),
+                        first_hornclause_copy_.body.end());
+                ApplyAllSubstitutionsToHornclause(second_hornclause_copy_);
+                hornclause_entries.push_back(second_hornclause_copy_);
             }
-            ApplyAllSubstitutionsToHornclause(second_hornclause_copy_);
-            hornclause_entries.push_back(second_hornclause_copy_);
+            token_substitutions_.clear();
         }
-        token_substitutions_.clear();
     }
     return hornclause_entries.size();
 }
