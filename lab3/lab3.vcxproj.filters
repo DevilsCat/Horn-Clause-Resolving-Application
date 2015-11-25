@@ -88,6 +88,9 @@
     <Text Include="files\extra.txt">
       <Filter>Resource Files\files</Filter>
     </Text>
+    <Text Include="files\lab3_testcase.txt">
+      <Filter>Resource Files\files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
