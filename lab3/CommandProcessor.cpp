@@ -39,7 +39,9 @@ void CommandProcessor::init(const int& num_hornclauses) {
 }
 
 CommandProcessor::CommandProcessor(int num) : 
-    database_(symbol_table_), display_counter_(0), display_num_(num)
+    symbol_table_(*SymbolTable::instance()),
+    database_(*DeductiveDatabase::instance()), 
+    display_counter_(0), display_num_(num)
 {}
 
 void CommandProcessor::Process(const std::string& filename) {

@@ -34,8 +34,10 @@ int main(int argc, char** argv)
     }
 
     // Initialize some necessary stuffs here.
-    CommandProcessor::init(num_hornclauses);
+    SymbolTable::init();
+    DeductiveDatabase::init(*SymbolTable::instance());
     InputHandler::init(std::cin);
+    CommandProcessor::init(num_hornclauses);
 
     // Read input and make command
     int error_code;

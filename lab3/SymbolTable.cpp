@@ -7,8 +7,21 @@
 #include "HornclauseASTNodes.h"
 #include "ProgramException.h"
 #include "Utils.h"
-#include <iostream>
 #include <algorithm>
+
+std::shared_ptr<SymbolTable> SymbolTable::symbol_table_ = nullptr;
+
+std::shared_ptr<SymbolTable> SymbolTable::instance() {
+    if (symbol_table_ == nullptr)
+        throw ProgramException("SymbolTable singleton not initialized.",
+                               ProgramException::kFatalError);
+    return symbol_table_;
+}
+
+void SymbolTable::init() {
+    if (symbol_table_ == nullptr)
+        symbol_table_ = std::shared_ptr<SymbolTable>(new SymbolTable);
+}
 
 SymbolTable::SymbolTable() :
     entry_buffer_pointer_(nullptr)

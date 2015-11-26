@@ -3,6 +3,21 @@
 #include "HornclauseASTNodes.h"
 #include "Utils.h"
 #include <algorithm>
+#include "ProgramException.h"
+
+std::shared_ptr<DeductiveDatabase> DeductiveDatabase::deductive_database_ = nullptr;
+
+std::shared_ptr<DeductiveDatabase> DeductiveDatabase::instance() {
+    if (deductive_database_ == nullptr)
+        throw ProgramException("DeductiveDatabase not initialized.", 
+                                ProgramException::kFatalError);
+    return deductive_database_;
+}
+
+void DeductiveDatabase::init(SymbolTable& symbol_table) {
+    if (deductive_database_ == nullptr)
+        deductive_database_ = std::shared_ptr<DeductiveDatabase>(new DeductiveDatabase(symbol_table));
+}
 
 DeductiveDatabase::DeductiveDatabase(SymbolTable& symbol_table) :
     symbol_table_(symbol_table), hornclause_buffer_ptr_(nullptr)

@@ -117,9 +117,9 @@ private:
     short GetMaxDisplayNum() const;
 
     // Stores all boudned varialbes and predicates that recognized by processor.
-    SymbolTable symbol_table_;
+    SymbolTable& symbol_table_;
     // Stores all processed and resolved hornclauses.
-    DeductiveDatabase database_;
+    DeductiveDatabase& database_;
     // Stores the current display start point.
     int display_counter_;
     // Stores the numbers of line to display the horn clauses.

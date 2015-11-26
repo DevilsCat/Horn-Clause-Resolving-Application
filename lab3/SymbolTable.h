@@ -24,15 +24,13 @@
 //   st.fill(tree);
 //   st.print();
 //
-class SymbolTable : Visitor {
+class SymbolTable : public Visitor {
     typedef std::map<std::string, std::list<struct PredicateEntry>> MapType;
     friend class DeductiveDatabase;
 public:
-	//
-	// Default constructor and deconstructor.
-	//
-	SymbolTable();
-
+    static std::shared_ptr<SymbolTable> instance();
+    static void init();
+	
 	~SymbolTable();
 
 	// Semantically, Symbol Table should be unique. Thus does not allow
@@ -67,6 +65,10 @@ public:
 	void AddBound(std::string&, int = 0);
 
 private:
+    //
+    // Default constructor and deconstructor.
+    //
+    SymbolTable();
 
 	//
 	// insert_symbol()
@@ -108,6 +110,7 @@ private:
 
     std::vector<const PredicateEntry*> predicates_trace_;
 
+    static std::shared_ptr<SymbolTable> symbol_table_;
 };
 
 #endif
