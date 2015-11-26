@@ -4,7 +4,7 @@
 #ifndef COMMAND_PROCESSOR_H
 #define COMMAND_PROCESSOR_H
 #include "SymbolTable.h"
-#include "DeductiveDatabase.h"
+#include "HornclauseDatabase.h"
 #include <mutex>
 
 //
@@ -119,7 +119,7 @@ private:
     // Stores all boudned varialbes and predicates that recognized by processor.
     SymbolTable& symbol_table_;
     // Stores all processed and resolved hornclauses.
-    DeductiveDatabase& database_;
+    HornclauseDatabase& database_;
     // Stores the current display start point.
     int display_counter_;
     // Stores the numbers of line to display the horn clauses.

@@ -4,7 +4,7 @@
 #ifndef UNIFIER_H
 #define UNIFIER_H
 #include "SymbolTable.h"
-#include "DeductiveDatabase.h"
+#include "HornclauseDatabase.h"
 
 //
 // class Unifier
@@ -22,14 +22,14 @@ class Unifier {
 public:
     Unifier(SymbolTable& symbol_table);
 
-    size_t UnifyHornclauses(std::vector<HornclauseDatabaseEntry>&, const HornclauseDatabaseEntry&, const HornclauseDatabaseEntry&);
+    size_t UnifyHornclauses(std::vector<HornclauseDatabase::Entry>&, const HornclauseDatabase::Entry&, const HornclauseDatabase::Entry&);
 
 private:
-    size_t UnifyOnePredInHeadWithBody(std::vector<HornclauseDatabaseEntry>&, const PredicateEntry* head_pe, const HornclauseDatabaseEntry&);
+    size_t UnifyOnePredInHeadWithBody(std::vector<HornclauseDatabase::Entry>&, const PredicateEntry* head_pe, const HornclauseDatabase::Entry&);
 
     bool Unify(PredicateEntry*&, PredicateEntry*&);
 
-    void ApplyAllSubstitutionsToHornclause(HornclauseDatabaseEntry&);
+    void ApplyAllSubstitutionsToHornclause(HornclauseDatabase::Entry&);
 
     bool CanPerformSubstitution(std::pair<const BaseToken*, const BaseToken*>&, const BaseToken*, const BaseToken*);
 
@@ -43,10 +43,10 @@ private:
     std::vector<std::pair<const BaseToken*, const BaseToken*>> token_substitutions_;
 
     // Working copy of current copy.
-    HornclauseDatabaseEntry first_hornclause_copy_;
+    HornclauseDatabase::Entry first_hornclause_copy_;
 
     // Working copy of following copy (apprears behind current copy).
-    HornclauseDatabaseEntry second_hornclause_copy_;
+    HornclauseDatabase::Entry second_hornclause_copy_;
 };
 
 #endif

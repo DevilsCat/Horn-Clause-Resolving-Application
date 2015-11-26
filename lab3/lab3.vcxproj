@@ -87,7 +87,7 @@
   <ItemGroup>
     <ClInclude Include="CommandProcessor.h" />
     <ClInclude Include="Commands.h" />
-    <ClInclude Include="DeductiveDatabase.h" />
+    <ClInclude Include="HornclauseDatabase.h" />
     <ClInclude Include="HornclauseASTNodes.h" />
     <ClInclude Include="HornclauseTokens.h" />
     <ClInclude Include="InputHandler.h" />
@@ -107,7 +107,7 @@
   <ItemGroup>
     <ClCompile Include="CommandProcessor.cpp" />
     <ClCompile Include="Commands.cpp" />
-    <ClCompile Include="DeductiveDatabase.cpp" />
+    <ClCompile Include="HornclauseDatabase.cpp" />
     <ClCompile Include="HornclauseASTNodes.cpp" />
     <ClCompile Include="HornclauseTokens.cpp" />
     <ClCompile Include="InputHandler.cpp" />

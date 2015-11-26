@@ -1,33 +1,38 @@
-﻿#include "stdafx.h"
-#include "DeductiveDatabase.h"
+﻿// HornclauseDatabase.cpp -- This file defines a HornclauseDatabase and Entry classes
+// used to store, retrieve display horn clauses.
+// Created by Anqi Zhang, Yu Xiao, copyright preserved.
+//
+#include "stdafx.h"
+#include "HornclauseDatabase.h"
 #include "HornclauseASTNodes.h"
 #include "Utils.h"
 #include <algorithm>
 #include "ProgramException.h"
 
-std::shared_ptr<DeductiveDatabase> DeductiveDatabase::deductive_database_ = nullptr;
+// Initializes class singleton.
+std::shared_ptr<HornclauseDatabase> HornclauseDatabase::deductive_database_ = nullptr;
 
-std::shared_ptr<DeductiveDatabase> DeductiveDatabase::instance() {
+std::shared_ptr<HornclauseDatabase> HornclauseDatabase::instance() {
     if (deductive_database_ == nullptr)
-        throw ProgramException("DeductiveDatabase not initialized.", 
+        throw ProgramException("HornclauseDatabase not initialized.", 
                                 ProgramException::kFatalError);
     return deductive_database_;
 }
 
-void DeductiveDatabase::init(SymbolTable& symbol_table) {
+void HornclauseDatabase::init(SymbolTable& symbol_table) {
     if (deductive_database_ == nullptr)
-        deductive_database_ = std::shared_ptr<DeductiveDatabase>(new DeductiveDatabase(symbol_table));
+        deductive_database_ = std::shared_ptr<HornclauseDatabase>(new HornclauseDatabase(symbol_table));
 }
 
-DeductiveDatabase::DeductiveDatabase(SymbolTable& symbol_table) :
+HornclauseDatabase::HornclauseDatabase(SymbolTable& symbol_table) :
     symbol_table_(symbol_table), new_hornclause_(nullptr)
 {}
 
-void DeductiveDatabase::FillHornclauseFromTree(std::shared_ptr<RootNode> root) {
-    root->Accept(*this);
+void HornclauseDatabase::FillHornclauseFromTree(std::shared_ptr<RootNode> root) {
+    root->Accept(*this);  // Apply Visitor pattern.
 }
 
-void DeductiveDatabase::AddHornclauseEntry(HornclauseDatabaseEntry& entry) {
+void HornclauseDatabase::AddHornclauseEntry(Entry& entry) {
     if (IsHornclauseEntryDup_(entry)) { return; }
 
     // Update: Before add hornclause into this database, populate all PredicateEntry to symbol table first.
@@ -43,49 +48,50 @@ void DeductiveDatabase::AddHornclauseEntry(HornclauseDatabaseEntry& entry) {
     hornclause_entries_.push_back(entry);
 }
 
-bool DeductiveDatabase::RetrieveHornclauseEntry(HornclauseDatabaseEntry& result, const unsigned& idx) {
+bool HornclauseDatabase::RetrieveHornclauseEntry(Entry& result, const unsigned& idx) {
     if (idx >= size()) { return false; }
     result = hornclause_entries_[idx];
     return true;
 }
 
-void DeductiveDatabase::OnPreVisit(HornclauseNode*) {
-    new_hornclause_ = new HornclauseDatabaseEntry();
+void HornclauseDatabase::OnPreVisit(HornclauseNode*) {
+    new_hornclause_ = new Entry();
 }
 
-void DeductiveDatabase::OnPostVisit(HornclauseNode*) {
+void HornclauseDatabase::OnPostVisit(HornclauseNode*) {
     AddHornclauseEntry(*new_hornclause_);
     delete new_hornclause_;
 }
 
-void DeductiveDatabase::OnPreVisit(HeadNode*) {
+void HornclauseDatabase::OnPreVisit(HeadNode*) {
     predicate_buffer_.clear();
 }
 
-void DeductiveDatabase::OnPostVisit(HeadNode*) {
+void HornclauseDatabase::OnPostVisit(HeadNode*) {
     new_hornclause_->head = predicate_buffer_;
 }
 
-void DeductiveDatabase::OnPreVisit(BodyNode*) {
+void HornclauseDatabase::OnPreVisit(BodyNode*) {
     predicate_buffer_.clear();
 }
 
-void DeductiveDatabase::OnPostVisit(BodyNode*) {
+void HornclauseDatabase::OnPostVisit(BodyNode*) {
     new_hornclause_->body = predicate_buffer_;
 }
 
-void DeductiveDatabase::OnVisit(PredicateNode* node) {
-    predicate_buffer_.push_back(std::shared_ptr<PredicateEntry>(symbol_table_.FindPredicateEntryByNode(*node)));
+void HornclauseDatabase::OnVisit(PredicateNode* node) {
+    predicate_buffer_.push_back(  // The predicate to push back should come from symbol table.
+        std::shared_ptr<PredicateEntry>(symbol_table_.FindPredicateEntryByNode(*node)));
 }
 
-bool DeductiveDatabase::IsHornclauseEntryDup_(const HornclauseDatabaseEntry& me) const {
+bool HornclauseDatabase::IsHornclauseEntryDup_(const Entry& me) const {
     return std::find_if(hornclause_entries_.begin(), hornclause_entries_.end(), 
-            [&me](const HornclauseDatabaseEntry& other) -> bool {
-        return me.EqualsTo(other);
+            [&me](const Entry& other) -> bool {
+        return me.EqualsTo(other);  // Uses encapsulated determine method inside {Entry}.
     }) != hornclause_entries_.end();
 }
 
-int DeductiveDatabase::Display(const unsigned& offset, const unsigned& num_entries) const {
+int HornclauseDatabase::Display(const unsigned& offset, const unsigned& num_entries) const {
     size_t upper_bound = std::min(offset + num_entries, size());
     for (size_t i = offset; i < upper_bound; ++i) {
         std::ostringstream oss;
@@ -95,11 +101,11 @@ int DeductiveDatabase::Display(const unsigned& offset, const unsigned& num_entri
 	return upper_bound - offset;  // Returns the number of lines that in fact prints out.
 }
 
-size_t DeductiveDatabase::size() const {
+size_t HornclauseDatabase::size() const {
     return hornclause_entries_.size();
 }
 
-void HornclauseDatabaseEntry::operator=(const HornclauseDatabaseEntry& other) {
+HornclauseDatabase::Entry& HornclauseDatabase::Entry::operator=(const Entry& other) {
     head.clear();
     body.clear();
     for (std::shared_ptr<PredicateEntry> head_entry : other.head) {
@@ -116,24 +122,24 @@ void HornclauseDatabaseEntry::operator=(const HornclauseDatabaseEntry& other) {
         }
         body.push_back(new_entry);
     }
+    return *this;
 }
 
-bool HornclauseDatabaseEntry::IsFact() const {
+bool HornclauseDatabase::Entry::IsFact() const {
     return !head.empty() && body.empty();
 }
 
-HornclauseDatabaseEntry::PredicateEntryIterator HornclauseDatabaseEntry::EraseBodyAt(const unsigned& idx) {
+HornclauseDatabase::Entry::PredicateEntryIterator HornclauseDatabase::Entry::EraseBodyAt(const unsigned& idx) {
     PredicateEntryIterator it = body.begin();
     return body.erase(it + idx);
-
 }
 
-void HornclauseDatabaseEntry::InsertBodyAt(const unsigned& idx, PredicateEntryIterator first, PredicateEntryIterator last) {
+void HornclauseDatabase::Entry::InsertBodyAt(const unsigned& idx, PredicateEntryIterator first, PredicateEntryIterator last) {
     PredicateEntryIterator it = EraseBodyAt(idx);
     body.insert(it, first, last);
 }
 
-bool HornclauseDatabaseEntry::EqualsTo(const HornclauseDatabaseEntry& other) const {
+bool HornclauseDatabase::Entry::EqualsTo(const Entry& other) const {
     if (head.size() != other.head.size() || body.size() != other.body.size()) { return false; }
 
     // Create a PredicateEntry labda, though I really want to compare the address, but somehow insert predicate is buggy.
@@ -144,7 +150,7 @@ bool HornclauseDatabaseEntry::EqualsTo(const HornclauseDatabaseEntry& other) con
            equal(body.begin(), body.end(), other.body.begin(), PredicateEntryComparator);
 }
 
-std::ostream& operator<<(std::ostream& os, const HornclauseDatabaseEntry& entry) {
+std::ostream& operator<<(std::ostream& os, const HornclauseDatabase::Entry& entry) {
     os << Encode("(");
     if (entry.head.size() == 1)  // single predicate head
         os << *entry.head.front();

@@ -10,7 +10,7 @@
 #include "parser.h"
 #include "ProgramException.h"
 #include "SymbolTable.h"
-#include "DeductiveDatabase.h"
+#include "HornclauseDatabase.h"
 #include "Unifier.h"
 #include "Utils.h"
 
@@ -40,7 +40,7 @@ void CommandProcessor::init(const int& num_hornclauses) {
 
 CommandProcessor::CommandProcessor(int num) : 
     symbol_table_(*SymbolTable::instance()),
-    database_(*DeductiveDatabase::instance()), 
+    database_(*HornclauseDatabase::instance()), 
     display_counter_(0), display_num_(num)
 {}
 
@@ -100,8 +100,8 @@ void CommandProcessor::Resolve(const unsigned& num_first_hornclause, const unsig
     const unsigned kIndexOffset = 1;
 
     Unifier unifier(symbol_table_);
-    HornclauseDatabaseEntry first_hornclause;
-    HornclauseDatabaseEntry second_hornclause;
+    HornclauseDatabase::Entry first_hornclause;
+    HornclauseDatabase::Entry second_hornclause;
     if (!database_.RetrieveHornclauseEntry(first_hornclause, num_first_hornclause - kIndexOffset) ||
         !database_.RetrieveHornclauseEntry(second_hornclause, num_second_hornclause - kIndexOffset)) {
         throw ProgramException(
@@ -109,11 +109,11 @@ void CommandProcessor::Resolve(const unsigned& num_first_hornclause, const unsig
             ProgramException::kInvalidHornclauseIndex
         );
     }
-    std::vector<HornclauseDatabaseEntry> res;
+    std::vector<HornclauseDatabase::Entry> res;
     unifier.UnifyHornclauses(res, first_hornclause, second_hornclause);
     
     // Add Hornclause to database.
-    for (HornclauseDatabaseEntry hornclause : res) {
+    for (HornclauseDatabase::Entry hornclause : res) {
         database_.AddHornclauseEntry(hornclause);
     }
 

@@ -108,9 +108,6 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="DeductiveDatabase.h">
-      <Filter>Header Files\Database</Filter>
-    </ClInclude>
     <ClInclude Include="PredicateEntry.h">
       <Filter>Header Files\SymbolTable</Filter>
     </ClInclude>
@@ -131,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="HornclauseTokens.h">
       <Filter>Header Files\HornClauseTree</Filter>
+    </ClInclude>
+    <ClInclude Include="HornclauseDatabase.h">
+      <Filter>Header Files\Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +161,6 @@
     <ClCompile Include="SymbolTable.cpp">
       <Filter>Source Files\SymbolTableImp</Filter>
     </ClCompile>
-    <ClCompile Include="DeductiveDatabase.cpp">
-      <Filter>Source Files\DatabaseImp</Filter>
-    </ClCompile>
     <ClCompile Include="PredicateEntry.cpp">
       <Filter>Source Files\SymbolTableImp</Filter>
     </ClCompile>
@@ -184,6 +181,9 @@
     </ClCompile>
     <ClCompile Include="HornclauseTokens.cpp">
       <Filter>Source Files\HornClauseTreeImp</Filter>
+    </ClCompile>
+    <ClCompile Include="HornclauseDatabase.cpp">
+      <Filter>Source Files\DatabaseImp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

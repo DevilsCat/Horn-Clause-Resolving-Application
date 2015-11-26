@@ -74,10 +74,10 @@ public:
     virtual void Excecute(CommandProcessor& processor) override;
 
 private:
-    // Stores number of first horn clause in {DeductiveDatabase}.
+    // Stores number of first horn clause in {HornclauseDatabase}.
     unsigned num_first_hornclause_;
 
-    // Stores number of second horn clause in {DeductiveDatabase}.
+    // Stores number of second horn clause in {HornclauseDatabase}.
     unsigned num_second_hornclause_;
 };
 

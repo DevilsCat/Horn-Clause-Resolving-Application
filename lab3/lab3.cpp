@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 
     // Initialize some necessary stuffs here.
     SymbolTable::init();
-    DeductiveDatabase::init(*SymbolTable::instance());
+    HornclauseDatabase::init(*SymbolTable::instance());
     InputHandler::init(std::cin);
     CommandProcessor::init(num_hornclauses);
 

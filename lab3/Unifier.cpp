@@ -10,9 +10,9 @@ Unifier::Unifier(SymbolTable& symbol_table) :
 {}
 
 size_t Unifier::UnifyHornclauses(
-        std::vector<HornclauseDatabaseEntry>& hornclause_entries,
-        const HornclauseDatabaseEntry& first_hornclause, 
-        const HornclauseDatabaseEntry& second_hornclause) {
+    std::vector<HornclauseDatabase::Entry>& hornclause_entries,
+        const HornclauseDatabase::Entry& first_hornclause,
+        const HornclauseDatabase::Entry& second_hornclause) {
     // Updated to extra credits.
     for (size_t i = 0; i < first_hornclause.head.size(); ++i) {
         for (size_t j = 0; j < second_hornclause.body.size(); ++j) {
@@ -37,7 +37,7 @@ size_t Unifier::UnifyHornclauses(
     return hornclause_entries.size();
 }
 
-void Unifier::ApplyAllSubstitutionsToHornclause(HornclauseDatabaseEntry& hornclause) {
+void Unifier::ApplyAllSubstitutionsToHornclause(HornclauseDatabase::Entry& hornclause) {
     for (std::pair<const BaseToken*, const BaseToken*> token_token_pair : token_substitutions_) {
         // Substitute the head.
         for (std::shared_ptr<PredicateEntry> head_pe : hornclause.head) {

@@ -1,15 +1,13 @@
-﻿// DeductiveDatabase.h -- This file declares a DeductiveDatabase and HornclauseDatabaseEntry classes
+﻿// HornclauseDatabase.h -- This file declares a HornclauseDatabase and Entry classes
 // used to store, retrieve display horn clauses.
 // Created by Anqi Zhang, Yu Xiao, copyright preserved.
 //
-#ifndef DEDUCTIVE_DATABASE_H
-#define DEDUCTIVE_DATABASE_H
+#ifndef HORNCLAUSE_DATABASE_H
+#define HORNCLAUSE_DATABASE_H
 #include "Visitor.h"
 #include <vector>
 #include "PredicateEntry.h"
 #include "SymbolTable.h"
-
-struct HornclauseDatabaseEntry;
 
 // Stores stores, retrieves and displays the horn clauses. It can parse a
 // horn clause AST tree and insert horn clauses into itself.
@@ -19,32 +17,64 @@ struct HornclauseDatabaseEntry;
 //
 // Usage Example:
 //      SymbolTable::init();
-//      DeductiveDatabase::init(*SymbolTable::instance());
+//      HornclauseDatabase::init(*SymbolTable::instance());
 //      // ... Obtains a tree from "process" or "assert" commands.
 //      // ... updates a {SymbolTable} singleton.
-//      DeductiveDatabase::instance()->FillHornclauseFromTree(root);
-//      DeductiveDatabase::instance()->Display();
-class DeductiveDatabase : public Visitor {
+//      HornclauseDatabase::instance()->FillHornclauseFromTree(root);
+//      HornclauseDatabase::instance()->Display();
+class HornclauseDatabase : public Visitor {
 public:
+    // Represents a horn clause entry in {HornclauseDatabase}, encapsulate attribute function
+    // such as determining if is fact horn clause, or if two entries are equal.
+    struct Entry {
+        typedef std::vector<std::shared_ptr<PredicateEntry>>::iterator PredicateEntryIterator;
+
+        // Stores predicates of horn clause head.
+        std::vector<std::shared_ptr<PredicateEntry>> head;
+
+        // Stores predicates of horn clause body.
+        std::vector<std::shared_ptr<PredicateEntry>> body;
+
+        // Deeply copies from passed in Entry.
+        Entry& operator= (const Entry&);
+
+        // Returns true if this horn clause entry is a fact (only contains head).
+        bool IsFact() const;
+
+        // Returns true if this horn clause entry euqals to passed in horn clause.
+        bool EqualsTo(const Entry&) const;
+
+        // Erases the predicate at given index position in body. Returns iterator pointing to 
+        // erased position plus one. 
+        PredicateEntryIterator EraseBodyAt(const unsigned& idx);
+
+        // Inserts ranges of {PredicateEntry}s from first to last {PredicateEntryIterator} at
+        // given index position.
+        void InsertBodyAt(const unsigned& idx, PredicateEntryIterator first, PredicateEntryIterator last);
+        
+        // Prints this horn clause entry.
+        friend std::ostream& operator<<(std::ostream& os, const Entry& entry);
+    };
+
     // Returns the singleton of this class.
-    static std::shared_ptr<DeductiveDatabase> instance();
+    static std::shared_ptr<HornclauseDatabase> instance();
 
     // Takes reference of the SymbolTable singleton and initializes this singleton. 
     static void init(SymbolTable& symbol_table);
 
     // Deletes copy constructor and operator.
-    DeductiveDatabase(const DeductiveDatabase&) = delete;
-    DeductiveDatabase& operator= (const DeductiveDatabase&) = delete;
+    HornclauseDatabase(const HornclauseDatabase&) = delete;
+    HornclauseDatabase& operator= (const HornclauseDatabase&) = delete;
 
     // Takes a horn clause tree and adds all horn clause to database.
     void FillHornclauseFromTree(std::shared_ptr<RootNode>);
 
-    // Takes a reference of {HornclauseDatabaseEntry} and adds to database.
-    void AddHornclauseEntry(HornclauseDatabaseEntry&);
+    // Takes a reference of {Entry} and adds to database.
+    void AddHornclauseEntry(Entry&);
 
     // Retrieves database entry to passed in result given index. Returns true if retrieve
     // success (means index is in bound).
-    bool RetrieveHornclauseEntry(HornclauseDatabaseEntry& result, const unsigned& idx);
+    bool RetrieveHornclauseEntry(Entry& result, const unsigned& idx);
 
     // Print horn clause entries in the database given offset and numbers of entries to
     // print. Prints from offset to the rest entries if the size of database is less than
@@ -58,65 +88,46 @@ public:
 
     // Traverses the horn clause AST tree and stores horn clause.
     //
-    // Allocates a {HornclauseDatabaseEntry} to fill in.
+    // Allocates a {Entry} to fill in.
     // Should release the allocated resource manually. 
     virtual void OnPreVisit(HornclauseNode*) override;
-    // Adds a copy of filled {HornclauseDatabaseEntry} to database, and release
+    // Adds a copy of filled {Entry} to database, and release
     // allocated buffer.
     virtual void OnPostVisit(HornclauseNode*) override;
     // Clears the predicate temporary buffer.
     virtual void OnPreVisit(HeadNode*) override;
-    // Copies the predicate temporary buffer to head of {HornclauseDatabaseEntry}.  
+    // Copies the predicate temporary buffer to head of {Entry}.  
     virtual void OnPostVisit(HeadNode*) override;
     // Clears the predicate temporary buffer.
     virtual void OnPreVisit(BodyNode*) override;
-    // Copies the predicate temporary buffer to body of {HornclauseDatabaseEntry}.
+    // Copies the predicate temporary buffer to body of {Entry}.
     virtual void OnPostVisit(BodyNode*) override;
     // Stores the {PredicateEntry} reference from {SymbolTable} singleton.
     virtual void OnVisit(PredicateNode*) override;
     
 private:
     // Takes a reference to a SymbolTable singleton, and initalizes this singleton.
-    DeductiveDatabase(SymbolTable& symbol_table);
+    HornclauseDatabase(SymbolTable& symbol_table);
 
     // Returns true if given hornclause already exists in this database.
-    bool IsHornclauseEntryDup_(const HornclauseDatabaseEntry&) const;
+    bool IsHornclauseEntryDup_(const Entry&) const;
 
     // Stores the reference to {SymbolTable} singleton.
     SymbolTable& symbol_table_;
 
     // Stores all horn clauses entries in this database.
-    std::vector<HornclauseDatabaseEntry> hornclause_entries_;
+    std::vector<Entry> hornclause_entries_;
 
     // Temporarily stores newly allocated horn clause entry to fill in. 
     // Being deleted after stores its copy to database.
-    HornclauseDatabaseEntry* new_hornclause_;
+    Entry* new_hornclause_;
 
     // Temporaily stroes newly occurred predicates, being cleared
     // before {Visitor} visiting {HeadNode} and {BodyNode}.
     std::vector<std::shared_ptr<PredicateEntry>> predicate_buffer_;
 
     // Stores the singleton of this class.
-    static std::shared_ptr<DeductiveDatabase> deductive_database_;
-};
-
-struct HornclauseDatabaseEntry {
-    typedef std::vector<std::shared_ptr<PredicateEntry>>::iterator PredicateEntryIterator;
-
-    std::vector<std::shared_ptr<PredicateEntry>> head;
-    std::vector<std::shared_ptr<PredicateEntry>> body;
-
-    void operator= (const HornclauseDatabaseEntry&);
-
-    bool IsFact() const;
-
-    PredicateEntryIterator EraseBodyAt(const unsigned& idx);
-
-    void InsertBodyAt(const unsigned& idx, PredicateEntryIterator first, PredicateEntryIterator last);
-
-    bool EqualsTo(const HornclauseDatabaseEntry&) const;
-
-    friend std::ostream& operator<<(std::ostream& os, const HornclauseDatabaseEntry& entry);
+    static std::shared_ptr<HornclauseDatabase> deductive_database_;
 };
 
 #endif

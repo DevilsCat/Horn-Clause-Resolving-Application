@@ -26,7 +26,7 @@
 //
 class SymbolTable : public Visitor {
     typedef std::map<std::string, std::list<struct PredicateEntry>> MapType;
-    friend class DeductiveDatabase;
+    friend class HornclauseDatabase;
 public:
     static std::shared_ptr<SymbolTable> instance();
     static void init();
