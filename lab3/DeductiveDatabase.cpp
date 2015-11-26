@@ -20,7 +20,7 @@ void DeductiveDatabase::init(SymbolTable& symbol_table) {
 }
 
 DeductiveDatabase::DeductiveDatabase(SymbolTable& symbol_table) :
-    symbol_table_(symbol_table), hornclause_buffer_ptr_(nullptr)
+    symbol_table_(symbol_table), new_hornclause_(nullptr)
 {}
 
 void DeductiveDatabase::FillHornclauseFromTree(std::shared_ptr<RootNode> root) {
@@ -28,7 +28,7 @@ void DeductiveDatabase::FillHornclauseFromTree(std::shared_ptr<RootNode> root) {
 }
 
 void DeductiveDatabase::AddHornclauseEntry(HornclauseDatabaseEntry& entry) {
-    if (IsHornclauseEntryDup(entry)) { return; }
+    if (IsHornclauseEntryDup_(entry)) { return; }
 
     // Update: Before add hornclause into this database, populate all PredicateEntry to symbol table first.
     for (std::shared_ptr<PredicateEntry>& pe : entry.head) {
@@ -50,11 +50,12 @@ bool DeductiveDatabase::RetrieveHornclauseEntry(HornclauseDatabaseEntry& result,
 }
 
 void DeductiveDatabase::OnPreVisit(HornclauseNode*) {
-    hornclause_buffer_ptr_ = new HornclauseDatabaseEntry();
+    new_hornclause_ = new HornclauseDatabaseEntry();
 }
 
 void DeductiveDatabase::OnPostVisit(HornclauseNode*) {
-    AddHornclauseEntry(*hornclause_buffer_ptr_);
+    AddHornclauseEntry(*new_hornclause_);
+    delete new_hornclause_;
 }
 
 void DeductiveDatabase::OnPreVisit(HeadNode*) {
@@ -62,7 +63,7 @@ void DeductiveDatabase::OnPreVisit(HeadNode*) {
 }
 
 void DeductiveDatabase::OnPostVisit(HeadNode*) {
-    hornclause_buffer_ptr_->head = predicate_buffer_;
+    new_hornclause_->head = predicate_buffer_;
 }
 
 void DeductiveDatabase::OnPreVisit(BodyNode*) {
@@ -70,14 +71,14 @@ void DeductiveDatabase::OnPreVisit(BodyNode*) {
 }
 
 void DeductiveDatabase::OnPostVisit(BodyNode*) {
-    hornclause_buffer_ptr_->body = predicate_buffer_;
+    new_hornclause_->body = predicate_buffer_;
 }
 
 void DeductiveDatabase::OnVisit(PredicateNode* node) {
     predicate_buffer_.push_back(std::shared_ptr<PredicateEntry>(symbol_table_.FindPredicateEntryByNode(*node)));
 }
 
-bool DeductiveDatabase::IsHornclauseEntryDup(const HornclauseDatabaseEntry& me) const {
+bool DeductiveDatabase::IsHornclauseEntryDup_(const HornclauseDatabaseEntry& me) const {
     return std::find_if(hornclause_entries_.begin(), hornclause_entries_.end(), 
             [&me](const HornclauseDatabaseEntry& other) -> bool {
         return me.EqualsTo(other);
