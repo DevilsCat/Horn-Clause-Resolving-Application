@@ -1,3 +1,6 @@
+// HornclauseTokens.cpp -- This file defines horn clause token class family.
+// Created by Anqi Zhang, Yu Xiao, copyright preserved.
+//
 #include "stdafx.h"
 #include "HornclauseTokens.h"
 #include <sstream>
@@ -44,11 +47,11 @@ bool BaseToken::operator!=(const BaseToken& other) const {
 
 // struct LabelToken implementation.
 LabelToken::LabelToken(const std::string& s) :
-BaseToken(LABEL, s)
+    BaseToken(LABEL, s)
 {}
 
 LabelToken::LabelToken(const TokenType& type, const std::string& s) :
-BaseToken(type, s)
+    BaseToken(type, s)
 {}
 
 // struct BoundToken implementation.
@@ -83,7 +86,7 @@ BaseToken(NUMBER, s), number(atoi(s.c_str()))
 
 // struct TokenComparator/TokenFinder implemenation.
 bool TokenComparator::operator()(const BaseToken& lhs, const BaseToken& rhs) const {
-    return lhs.label < rhs.label; // compare the Tokens label.
+    return lhs.label < rhs.label;  // compare the Tokens label.
 }
 
 TokenFinder::TokenFinder(const BaseToken& t) : t_(t) {}

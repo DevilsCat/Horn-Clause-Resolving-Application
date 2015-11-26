@@ -1,4 +1,7 @@
-﻿#include "stdafx.h"
+﻿// PrintVisitor.cpp -- This file defines a PrintVisitor class to print contents in horn clause AST tree.
+// Created by Yu Xiao, Anqi Zhang, copyright preserved.
+//
+#include "stdafx.h"
 #include "Utils.h"
 #include "PrintVisitor.h"
 #include "HornclauseASTNodes.h"

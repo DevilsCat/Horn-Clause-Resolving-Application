@@ -1,5 +1,5 @@
 // scanner.h : Declares scanner class extracting string from ifstream and interpreting it as semantic token struct
-// Created by Anqi Zhang (439754), and Yu Xiao (439734)
+// Created by Anqi Zhang (439754), and Yu Xiao (439734) copyright preserved.
 //
 #include "stdafx.h"
 #include "scanner.h"
@@ -16,7 +16,7 @@
 Scanner::Scanner(std::istream& is) : 
     is_(is) 
 {
-    for (size_t i = 0; i < kMaxQueueSize; ++i) {
+    for (size_t i = 0; i < kMaxQueueSize; ++i) {  // pre-scan the {istream} and obtains two tokens.
         if (*this) {
             std::shared_ptr<BaseToken> token;
             *this >> token;
@@ -49,7 +49,7 @@ std::shared_ptr<BaseToken> Scanner::NextToken() {
 bool Scanner::is_good() const { return is_.good(); }
 
 Scanner& Scanner::operator>> (std::shared_ptr<BaseToken>& ptr){
-    if (*this){
+    if (*this){  // {istream} still has tokens left.
 
         std::string token_str;
         is_ >> token_str;
