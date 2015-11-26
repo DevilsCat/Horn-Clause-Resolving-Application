@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "PredicateEntry.h"
 #include "Utils.h"
-#include "BoundToken.h"
+#include "HornclauseTokens.h"
 #include <ctype.h>
 
 /////////////////// Here is For PredicateEntry. /////////////////////////

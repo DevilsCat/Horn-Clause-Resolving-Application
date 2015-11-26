@@ -7,12 +7,8 @@
 #include <iostream>
 #include <memory>
 #include "scanner.h"
-#include "BaseToken.h"
-#include "RootNode.h"
-#include "HeadNode.h"
-#include "BodyNode.h"
-#include "PredicateNode.h"
-#include "HornclauseNode.h"
+#include "HornclauseASTNodes.h"
+#include "HornclauseTokens.h"
 
 //
 // class Parser

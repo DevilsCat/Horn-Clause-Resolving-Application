@@ -3,10 +3,7 @@
 //
 #include "stdafx.h"
 #include "scanner.h"
-#include "NumberToken.h"
-#include "LabelToken.h"
-#include "UnBoundToken.h"
-#include "BoundToken.h"
+#include "HornclauseTokens.h"
 #include <regex>
 
 #define REG_LABEL       "^[a-zA-Z]*$"

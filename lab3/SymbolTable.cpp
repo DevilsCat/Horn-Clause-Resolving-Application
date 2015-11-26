@@ -4,14 +4,11 @@
 //
 #include "stdafx.h"
 #include "SymbolTable.h"
-#include "RootNode.h"
-#include "SymbolNode.h"
-#include "PredicateNode.h"
-#include "NameNode.h"
-#include <iostream>
-#include <algorithm>
+#include "HornclauseASTNodes.h"
 #include "ProgramException.h"
 #include "Utils.h"
+#include <iostream>
+#include <algorithm>
 
 SymbolTable::SymbolTable() :
     entry_buffer_pointer_(nullptr)

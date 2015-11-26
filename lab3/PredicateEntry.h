@@ -1,8 +1,8 @@
 ﻿#ifndef PREDICATE_ENTRY_H
 #define PREDICATE_ENTRY_H
 #include <iostream>
-#include "BaseToken.h"
-#include "LabelToken.h"
+#include <vector>
+#include "HornclauseTokens.h"
 
 struct PredicateEntry {
     std::string name;

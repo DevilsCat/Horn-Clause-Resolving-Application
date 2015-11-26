@@ -1,9 +1,6 @@
 ﻿#include "stdafx.h"
 #include "DeductiveDatabase.h"
-#include "RootNode.h"
-#include "HeadNode.h"
-#include "BodyNode.h"
-#include "PredicateNode.h"
+#include "HornclauseASTNodes.h"
 #include "Utils.h"
 #include <algorithm>
 

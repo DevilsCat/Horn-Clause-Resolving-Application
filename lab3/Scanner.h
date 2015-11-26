@@ -6,8 +6,8 @@
 
 #include <istream>
 #include <memory>
-#include "BaseToken.h"
 #include <deque>
+#include "HornclauseTokens.h"
 
 class Scanner {
     const size_t kMaxQueueSize = 2;

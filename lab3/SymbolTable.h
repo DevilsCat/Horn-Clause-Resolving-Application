@@ -10,10 +10,7 @@
 #include <vector>
 #include <memory>
 #include "Visitor.h"
-#include "TokenOperator.h"
-#include "NumberToken.h"
-#include "BoundToken.h"
-#include "UnBoundToken.h"
+#include "HornclauseTokens.h"
 #include "PredicateEntry.h"
 #include <list>
 

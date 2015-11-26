@@ -1,9 +1,9 @@
 ﻿#include "stdafx.h"
-#include "PrintVisitor.h"
-#include "NameNode.h"
-#include "SymbolNode.h"
-#include <iostream>
 #include "Utils.h"
+#include "PrintVisitor.h"
+#include "HornclauseASTNodes.h"
+#include "HornclauseTokens.h"
+#include <iostream>
 
 void PrintVisitor::OnPreVisit(HornclauseNode*) {
     std::cout << Encode("(");
