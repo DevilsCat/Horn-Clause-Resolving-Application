@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 
     // Initialize some necessary stuffs here.
     CommandProcessor::init(num_hornclauses);
-    InputHandler input_handler(std::cin);
+    InputHandler::init(std::cin);
 
     // Read input and make command
     int error_code;
@@ -43,10 +43,10 @@ int main(int argc, char** argv)
     while (true) {
         try {
             output_handler.DisplayPrompt();
-            std::string cmd_str = input_handler.GetInputFromStream();
-            std::shared_ptr<Command> command_ptr = input_handler.MakeCommand(cmd_str);
-            if (command_ptr)
-                command_ptr->Excecute(*CommandProcessor::instance());
+            std::string cmd_str = InputHandler::instance()->GetInputFromStream();
+            std::shared_ptr<Command> command = InputHandler::instance()->MakeCommand(cmd_str);
+            if (command)
+                command->Excecute(*CommandProcessor::instance());
         }
         catch (ProgramException& e) {
             output_handler.DisplayHint(e.what());
@@ -55,7 +55,6 @@ int main(int argc, char** argv)
                 error_code = e.code();
                 break;
             }
-                
         }
     }
     return error_code;
