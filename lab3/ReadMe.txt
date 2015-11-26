@@ -1,5 +1,5 @@
 ========================================================================
-    CONSOLE APPLICATION : lab3 Project Overview
+    CSE 425 Lab 3: Resolving Horn Clauses in C++
 ========================================================================
 
 AppWizard has created this lab3 application for you.

@@ -1,4 +1,7 @@
-﻿#include "stdafx.h"
+﻿// CommandProcessor.h -- This file defines CommandProcessor class {CommandProcessor Pattern}.
+// Created by Yu Xiao, Anqi Zhang, Copyright preserved.
+//
+#include "stdafx.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -19,6 +22,7 @@
 #define MIN(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
 
+// first chance initializes static member function in CommandProcessor class.
 std::shared_ptr<CommandProcessor> CommandProcessor::cmd_processor_ = nullptr;
 std::once_flag CommandProcessor::init_flag_;
 
@@ -35,10 +39,8 @@ void CommandProcessor::init(const int& num_hornclauses) {
 }
 
 CommandProcessor::CommandProcessor(int num) : 
-database_(symbol_table_), display_counter_(0), display_num_(num)
+    database_(symbol_table_), display_counter_(0), display_num_(num)
 {}
-
-CommandProcessor::~CommandProcessor() {}
 
 void CommandProcessor::Process(const std::string& filename) {
     std::ifstream ifs(filename);
@@ -51,12 +53,9 @@ void CommandProcessor::Process(const std::string& filename) {
         );
     }
     std::shared_ptr<RootNode> root = parser.root();
-    
     symbol_table_.FillEntriesFromTree(root);
-    
     database_.FillHornclauseFromTree(root);
-
-    DisplayDatabaseEntries(display_counter_ = 0);  // Re-display the database entries start from top.
+    DisplayDatabaseEntries_(display_counter_ = 0);  // Re-display the database entries start from top.
 }
 
 void CommandProcessor::Assert(const std::string& hornclauses) {
@@ -70,32 +69,29 @@ void CommandProcessor::Assert(const std::string& hornclauses) {
             );
     }
     std::shared_ptr<RootNode> root = parser.root();
-
     symbol_table_.FillEntriesFromTree(root);
-
     database_.FillHornclauseFromTree(root);
-    
-    DisplayDatabaseEntries(display_counter_ = 0);
+    DisplayDatabaseEntries_(display_counter_ = 0);
 }
 
 void CommandProcessor::Up(const unsigned& nlines) {
     int begin;
-    unsigned scroll_lines = nlines ? nlines : GetDefaultDisplayNum();
-    
-    begin = MAX(int(display_counter_ - scroll_lines), 0);
+    unsigned scroll_lines = nlines ? nlines : GetMaxDisplayNum();  // in nlines is not given, 
+                                                                   // display as many as possible.
+    begin = MAX(int(display_counter_ - scroll_lines), 0);  // updated begin should be non-negative.
 
-    DisplayDatabaseEntries(display_counter_ = begin);  // By Yu, I refract this Database Display method, so that we can
-                                                       // reuse it in other place, as well as seal the format building procedure.
+    DisplayDatabaseEntries_(display_counter_ = begin);  // By Yu, I refract this Database Display method, so that we can
+                                                        // reuse it in other place, as well as seal the format building procedure.
 }
 
 void CommandProcessor::Down(const unsigned& nlines) {
     int begin;
-    unsigned scroll_lines = nlines ? nlines : GetDefaultDisplayNum();
+    unsigned scroll_lines = nlines ? nlines : GetMaxDisplayNum();
 
-    begin = display_counter_ + scroll_lines >= int(database_.size()) ?  // Scrolling out of database size bound? 
-        display_counter_ : display_counter_ + scroll_lines;
+    begin = display_counter_ + scroll_lines >= int(database_.size()) ?  // Scrolling out of database size bound.
+            display_counter_ : display_counter_ + scroll_lines;
     
-    DisplayDatabaseEntries(display_counter_ = begin);
+    DisplayDatabaseEntries_(display_counter_ = begin);
 }
 
 void CommandProcessor::Resolve(const unsigned& num_first_hornclause, const unsigned& num_second_hornclause) {
@@ -120,7 +116,7 @@ void CommandProcessor::Resolve(const unsigned& num_first_hornclause, const unsig
     }
 
     // Print out the database
-    DisplayDatabaseEntries(display_counter_ = 0);
+    DisplayDatabaseEntries_(display_counter_ = 0);
 }
 
 void CommandProcessor::Randomize(std::string& variable, const unsigned& max) {
@@ -140,20 +136,21 @@ void CommandProcessor::Set(std::string& variable, const int& value) {
 }
 
 void CommandProcessor::Print() {
-    auto Predicate = [this](const short&) {
-        symbol_table_.PrintSt();
+    auto Predicate = [this](const short&) {  // Print out the symbol table regardless 
+        symbol_table_.PrintSt();             // the available height of windows.
     };
     output_handler.DisplayProgram(Predicate, "Symbol Table Entries");
 }
 
-void CommandProcessor::DisplayDatabaseEntries(const unsigned& begin) { 
+void CommandProcessor::DisplayDatabaseEntries_(const unsigned& begin) { 
     auto Predicate = [&begin, this](const short& max_nlines) {
-        unsigned nlines_display = display_num_ == DEFAULT_NUM_HORNCLAUSE ? max_nlines : display_num_;
+        unsigned nlines_display =   // actual lines to display, print the full available height if DEFAULT_NUM_HORNCLAUSE set.
+            display_num_ == DEFAULT_NUM_HORNCLAUSE ? max_nlines : display_num_;
         database_.Display(begin, nlines_display);
     };
     output_handler.DisplayProgram(Predicate, "Horn Clause Database");
 }
 
-short CommandProcessor::GetDefaultDisplayNum() const {
+short CommandProcessor::GetMaxDisplayNum() const {
     return display_num_ != DEFAULT_NUM_HORNCLAUSE ? display_num_ : output_handler.GetPrintableZoneHeight();
 }
