@@ -1,14 +1,14 @@
 ﻿#ifndef COMMAND_PROCESSOR_H
 #define COMMAND_PROCESSOR_H
-#include <string>
 #include "SymbolTable.h"
 #include "DeductiveDatabase.h"
+#include <mutex>
 
 class CommandProcessor {
 public:
-    explicit CommandProcessor();
-    CommandProcessor(int);
-
+    static std::shared_ptr<CommandProcessor> instance();
+    static void init(const int&);
+    
     virtual ~CommandProcessor();
 
     CommandProcessor(const CommandProcessor&) = delete;
@@ -24,6 +24,8 @@ public:
     void Print();
 
 private:
+    CommandProcessor(int);
+
     void DisplayDatabaseEntries(const unsigned& begin);
     short GetDefaultDisplayNum() const;
 
@@ -31,6 +33,9 @@ private:
     DeductiveDatabase database_;
     int display_counter_;
     int display_num_;
+
+    static std::shared_ptr<CommandProcessor> cmd_processor_;
+    static std::once_flag init_flag_;
 };
 
 #endif

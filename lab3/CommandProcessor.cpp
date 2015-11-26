@@ -19,9 +19,20 @@
 #define MIN(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
 
-CommandProcessor::CommandProcessor() :
-database_(symbol_table_), display_counter_(0), display_num_(DEFAULT_NUM_HORNCLAUSE)
-{}
+std::shared_ptr<CommandProcessor> CommandProcessor::cmd_processor_ = nullptr;
+std::once_flag CommandProcessor::init_flag_;
+
+std::shared_ptr<CommandProcessor> CommandProcessor::instance() {
+    if (!cmd_processor_) 
+        throw ProgramException("CommandProcessor uninitialized.", ProgramException::kFatalError);
+    return cmd_processor_;
+}
+
+void CommandProcessor::init(const int& num_hornclauses) {
+    std::call_once(init_flag_, [&num_hornclauses]() {
+        cmd_processor_ = std::shared_ptr<CommandProcessor>(new CommandProcessor(num_hornclauses));
+    });
+}
 
 CommandProcessor::CommandProcessor(int num) : 
 database_(symbol_table_), display_counter_(0), display_num_(num)

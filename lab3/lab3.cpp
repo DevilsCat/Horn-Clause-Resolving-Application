@@ -35,7 +35,7 @@ int main(int argc, char** argv)
     }
 
     // Initialize some necessary stuffs here.
-    CommandProcessor cmd_processor(num_hornclauses);
+    CommandProcessor::init(num_hornclauses);
     InputHandler input_handler(std::cin);
 
     // Read input and make command
@@ -47,7 +47,7 @@ int main(int argc, char** argv)
             std::string cmd_str = input_handler.GetInputFromStream();
             std::shared_ptr<Command> command_ptr = input_handler.MakeCommand(cmd_str);
             if (command_ptr)
-                command_ptr->Excecute(cmd_processor);
+                command_ptr->Excecute(*CommandProcessor::instance());
         }
         catch (ProgramException& e) {
             output_handler.DisplayHint(e.what());
