@@ -85,14 +85,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AssertCommand.h" />
     <ClInclude Include="BaseNode.h" />
     <ClInclude Include="BodyNode.h" />
     <ClInclude Include="BoundToken.h" />
-    <ClInclude Include="Command.h" />
     <ClInclude Include="CommandProcessor.h" />
+    <ClInclude Include="Commands.h" />
     <ClInclude Include="DeductiveDatabase.h" />
-    <ClInclude Include="DownCommand.h" />
     <ClInclude Include="HeadNode.h" />
     <ClInclude Include="HornclauseNode.h" />
     <ClInclude Include="InputHandler.h" />
@@ -103,15 +101,10 @@
     <ClInclude Include="Parser.h" />
     <ClInclude Include="PredicateEntry.h" />
     <ClInclude Include="PredicateNode.h" />
-    <ClInclude Include="PrintCommand.h" />
     <ClInclude Include="PrintVisitor.h" />
-    <ClInclude Include="ProcessCommand.h" />
     <ClInclude Include="ProgramException.h" />
-    <ClInclude Include="RandomizeCommand.h" />
-    <ClInclude Include="ResolveCommand.h" />
     <ClInclude Include="RootNode.h" />
     <ClInclude Include="Scanner.h" />
-    <ClInclude Include="SetCommand.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SymbolNode.h" />
     <ClInclude Include="SymbolTable.h" />
@@ -121,19 +114,16 @@
     <ClInclude Include="UnBoundToken.h" />
     <ClInclude Include="Unifier.h" />
     <ClInclude Include="UnknownNode.h" />
-    <ClInclude Include="UpCommand.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Visitor.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssertCommand.cpp" />
     <ClCompile Include="BaseNode.cpp" />
     <ClCompile Include="BodyNode.cpp" />
     <ClCompile Include="BoundToken.cpp" />
-    <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandProcessor.cpp" />
+    <ClCompile Include="Commands.cpp" />
     <ClCompile Include="DeductiveDatabase.cpp" />
-    <ClCompile Include="DownCommand.cpp" />
     <ClCompile Include="HeadNode.cpp" />
     <ClCompile Include="HornclauseNode.cpp" />
     <ClCompile Include="InputHandler.cpp" />
@@ -145,15 +135,10 @@
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="PredicateEntry.cpp" />
     <ClCompile Include="PredicateNode.cpp" />
-    <ClCompile Include="PrintCommand.cpp" />
     <ClCompile Include="PrintVisitor.cpp" />
-    <ClCompile Include="ProcessCommand.cpp" />
     <ClCompile Include="ProgramException.cpp" />
-    <ClCompile Include="RandomizeCommand.cpp" />
-    <ClCompile Include="ResolveCommand.cpp" />
     <ClCompile Include="RootNode.cpp" />
     <ClCompile Include="Scanner.cpp" />
-    <ClCompile Include="SetCommand.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -165,7 +150,6 @@
     <ClCompile Include="UnBoundToken.cpp" />
     <ClCompile Include="Unifier.cpp" />
     <ClCompile Include="UnknownNode.cpp" />
-    <ClCompile Include="UpCommand.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

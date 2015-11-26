@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <istream>
-#include "Command.h"
+#include "Commands.h"
 #include <memory>
 
 class InputHandler {

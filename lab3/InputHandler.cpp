@@ -1,16 +1,8 @@
 ﻿#include "stdafx.h"
 #include "InputHandler.h"
-#include "UpCommand.h"
 #include "Utils.h"
-#include "AssertCommand.h"
-#include "ProcessCommand.h"
 #include <sstream>
-#include "DownCommand.h"
-#include "ResolveCommand.h"
 #include "ProgramException.h"
-#include "RandomizeCommand.h"
-#include "SetCommand.h"
-#include "PrintCommand.h"
 
 InputHandler::InputHandler(std::istream& is) :
     is_(is)

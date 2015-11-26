@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include <iostream>
 #include "Utils.h"
-#include "Command.h"
 #include "InputHandler.h"
 #include "ProgramException.h"
 
