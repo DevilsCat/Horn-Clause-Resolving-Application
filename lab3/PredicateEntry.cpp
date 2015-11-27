@@ -1,10 +1,11 @@
-﻿#include "stdafx.h"
+﻿// PredicateEntry.cpp -- This file defines PredicateEntry class which stores inside the Symbol Table.
+// Created by Yu Xiao, Anqi Zhang, all right reserved.
+//
+#include "stdafx.h"
 #include "PredicateEntry.h"
 #include "Utils.h"
 #include "HornclauseTokens.h"
 #include <sstream>
-
-/////////////////// Here is For PredicateEntry. /////////////////////////
 
 PredicateEntry::PredicateEntry() {}
 
@@ -20,7 +21,7 @@ bool PredicateEntry::EqualsTo(const PredicateEntry& that) const{
     std::vector<const BaseToken*>::const_iterator that_it = that.symbols.begin();
 
     for (; this_it != symbols.end(); ++this_it, ++that_it) {
-        if (**this_it != **that_it) { return false; }
+        if (**this_it != **that_it) { return false; }  // looks nice, right?
     }
 
     return true;
