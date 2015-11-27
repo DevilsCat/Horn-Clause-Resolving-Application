@@ -3,8 +3,8 @@
 //
 #include "stdafx.h"
 #include "parser.h"
-#include "Utils.h"
 #include "HornclauseTokens.h"
+#include "OutputHandler.h"
 
 Parser::Parser(std::istream& is):
     is_(is), scanner_(is_), root_(new RootNode())
@@ -20,9 +20,9 @@ int Parser::Parse(){
             root_->AddNode(ParseHornclause());
         }
         catch(std::invalid_argument &e){
-            output_handler.LogError(e.what());
+            OutputHandler::instance()->LogError(e.what());
         } catch (std::bad_alloc& e) { // make_shared might failed.
-            output_handler.LogError(e.what());
+            OutputHandler::instance()->LogError(e.what());
             throw; // re-throw this exception. Main function should handle (possibly force quit).
         }
     }

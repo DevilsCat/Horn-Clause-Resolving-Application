@@ -1,5 +1,5 @@
 ﻿// CommandProcessor.h -- This file defines CommandProcessor class {CommandProcessor Pattern}.
-// Created by Yu Xiao, Anqi Zhang, Copyright preserved.
+// Created by Yu Xiao, Anqi Zhang, all right reserved.
 //
 #include "stdafx.h"
 #include <iostream>
@@ -13,6 +13,7 @@
 #include "HornclauseDatabase.h"
 #include "Unifier.h"
 #include "Utils.h"
+#include "OutputHandler.h"
 
 #ifndef MAX
 #define MAX(a,b)  (((a) > (b)) ? (a) : (b))
@@ -141,7 +142,7 @@ void CommandProcessor::Print() {
     auto Predicate = [this](const short&) {  // Print out the symbol table regardless 
         symbol_table_.Print();             // the available height of windows.
     };
-    output_handler.DisplayProgram(Predicate, "Symbol Table Entries");
+    OutputHandler::instance()->DisplayProgram(Predicate, "Symbol Table Entries");
 }
 
 void CommandProcessor::DisplayDatabaseEntries_(const unsigned& begin) { 
@@ -150,9 +151,9 @@ void CommandProcessor::DisplayDatabaseEntries_(const unsigned& begin) {
             display_num_ == DEFAULT_NUM_HORNCLAUSE ? max_nlines : display_num_;
         database_.Display(begin, nlines_display);
     };
-    output_handler.DisplayProgram(Predicate, "Horn Clause Database");
+    OutputHandler::instance()->DisplayProgram(Predicate, "Horn Clause Database");
 }
 
 short CommandProcessor::GetMaxDisplayNum() const {
-    return display_num_ != DEFAULT_NUM_HORNCLAUSE ? display_num_ : output_handler.GetPrintableZoneHeight();
+    return display_num_ != DEFAULT_NUM_HORNCLAUSE ? display_num_ : OutputHandler::instance()->GetPrintableZoneHeight();
 }

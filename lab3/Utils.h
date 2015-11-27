@@ -2,9 +2,6 @@
 #define UTILS_H
 #include <string>
 #include <vector>
-#include "OutputHandler.h"
-
-extern OutputHandler output_handler;
 
 #define DEFAULT_NUM_HORNCLAUSE  -1
 

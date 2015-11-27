@@ -6,6 +6,7 @@
 #include "Utils.h"
 #include "InputHandler.h"
 #include "ProgramException.h"
+#include "OutputHandler.h"
 
 #define MAX_ARGS                2
 #define PROGRAM_POS             0
@@ -34,24 +35,25 @@ int main(int argc, char** argv)
     }
 
     // Initialize some necessary stuffs here.
+    InputHandler::init(std::cin);
+    OutputHandler::init(std::cout);
     SymbolTable::init();
     HornclauseDatabase::init(*SymbolTable::instance());
-    InputHandler::init(std::cin);
     CommandProcessor::init(num_hornclauses);
 
     // Read input and make command
     int error_code;
-    output_handler.DisplayProgram([](const short&){});  // Print out the empty template.
+    OutputHandler::instance()->DisplayProgram([](const short&){});  // Print out the empty template.
     while (true) {
         try {
-            output_handler.DisplayPrompt();
+            OutputHandler::instance()->DisplayPrompt();
             std::string cmd_str = InputHandler::instance()->GetInputFromStream();
             std::shared_ptr<Command> command = InputHandler::instance()->MakeCommand(cmd_str);
             if (command)
                 command->Excecute(*CommandProcessor::instance());
         }
         catch (ProgramException& e) {
-            output_handler.DisplayHint(e.what());
+            OutputHandler::instance()->DisplayHint(e.what());
             // Unrecoverable error
             if (e.code() == ProgramException::kFatalError) {
                 error_code = e.code();

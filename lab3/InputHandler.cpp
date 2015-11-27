@@ -1,6 +1,6 @@
 ﻿// InputHanlder.cpp -- this file defines Inputhandler Class for {Command Processor Pattern} 
 // which receives and process command
-// Created by Yu Xiao, Anqi Zhang, copyright preserved.
+// Created by Yu Xiao, Anqi Zhang, all right reserved.
 #include "stdafx.h"
 #include "InputHandler.h"
 #include "Utils.h"

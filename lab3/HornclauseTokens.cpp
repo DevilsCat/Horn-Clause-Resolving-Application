@@ -1,5 +1,5 @@
 // HornclauseTokens.cpp -- This file defines horn clause token class family.
-// Created by Anqi Zhang, Yu Xiao, copyright preserved.
+// Created by Anqi Zhang, Yu Xiao, all right reserved.
 //
 #include "stdafx.h"
 #include "HornclauseTokens.h"

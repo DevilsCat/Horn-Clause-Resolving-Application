@@ -1,5 +1,5 @@
 ﻿// HornclauseASTNodes.h -- This files declares ASTNode family classes used to represent a horn clause AST tree.
-// Created by Anqi Zhang, Yu Xiao, copyright preserved.
+// Created by Anqi Zhang, Yu Xiao, all right reserved.
 //
 #ifndef HORNCLAUSE_AST_NODES_H
 #define HORNCLAUSE_AST_NODES_H

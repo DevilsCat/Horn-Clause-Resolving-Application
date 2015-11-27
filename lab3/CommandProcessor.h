@@ -1,5 +1,5 @@
 ﻿// CommandProcessor.h -- This file declares CommandProcessor class {CommandProcessor Pattern}.
-// Created by Yu Xiao, Anqi Zhang, Copyright preserved.
+// Created by Yu Xiao, Anqi Zhang, all right reserved.
 //
 #ifndef COMMAND_PROCESSOR_H
 #define COMMAND_PROCESSOR_H

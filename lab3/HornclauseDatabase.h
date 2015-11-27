@@ -1,6 +1,6 @@
 ﻿// HornclauseDatabase.h -- This file declares a HornclauseDatabase and Entry classes
 // used to store, retrieve display horn clauses.
-// Created by Anqi Zhang, Yu Xiao, copyright preserved.
+// Created by Anqi Zhang, Yu Xiao, all right reserved.
 //
 #ifndef HORNCLAUSE_DATABASE_H
 #define HORNCLAUSE_DATABASE_H

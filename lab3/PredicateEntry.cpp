@@ -2,7 +2,7 @@
 #include "PredicateEntry.h"
 #include "Utils.h"
 #include "HornclauseTokens.h"
-#include <ctype.h>
+#include <sstream>
 
 /////////////////// Here is For PredicateEntry. /////////////////////////
 

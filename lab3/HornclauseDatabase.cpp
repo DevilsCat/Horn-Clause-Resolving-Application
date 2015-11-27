@@ -1,6 +1,6 @@
 ﻿// HornclauseDatabase.cpp -- This file defines a HornclauseDatabase and Entry classes
 // used to store, retrieve display horn clauses.
-// Created by Anqi Zhang, Yu Xiao, copyright preserved.
+// Created by Anqi Zhang, Yu Xiao, all right reserved.
 //
 #include "stdafx.h"
 #include "HornclauseDatabase.h"
@@ -8,6 +8,8 @@
 #include "Utils.h"
 #include <algorithm>
 #include "ProgramException.h"
+#include <sstream>
+#include "OutputHandler.h"
 
 // Initializes class singleton.
 std::shared_ptr<HornclauseDatabase> HornclauseDatabase::deductive_database_ = nullptr;
@@ -96,7 +98,7 @@ int HornclauseDatabase::Display(const unsigned& offset, const unsigned& num_entr
     for (size_t i = offset; i < upper_bound; ++i) {
         std::ostringstream oss;
         oss << i + 1 << Encode(":") << hornclause_entries_[i];
-        output_handler << oss.str() << std::endl;
+        *OutputHandler::instance() << oss.str() << std::endl;
     }
 	return upper_bound - offset;  // Returns the number of lines that in fact prints out.
 }

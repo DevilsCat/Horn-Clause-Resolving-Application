@@ -1,5 +1,5 @@
 // HornclauseTokens.h -- This file declares horn clause token class family.
-// Created by Anqi Zhang, Yu Xiao, copyright preserved.
+// Created by Anqi Zhang, Yu Xiao, all right reserved.
 //
 #ifndef HORNCLAUSE_TOKENS_H
 #define HORNCLAUSE_TOKENS_H

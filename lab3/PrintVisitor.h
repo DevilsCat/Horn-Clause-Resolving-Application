@@ -1,5 +1,5 @@
 ﻿// PrintVisitor.h -- This file declares a PrintVisitor class to print contents in horn clause AST tree.
-// Created by Yu Xiao, Anqi Zhang, copyright preserved.
+// Created by Yu Xiao, Anqi Zhang, all right reserved.
 #ifndef PRINT_VISITOR_H
 #define PRINT_VISITOR_H
 #include "Visitor.h"

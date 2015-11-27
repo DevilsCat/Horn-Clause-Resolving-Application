@@ -1,5 +1,5 @@
 // Commands.cpp -- This file defines Command family for {Command Processor Pattern}.
-// Created by Yu Xiao, Anqi Zhang, copyright preserved.
+// Created by Yu Xiao, Anqi Zhang, all right reserved.
 #include "stdafx.h"
 #include "Commands.h"
 

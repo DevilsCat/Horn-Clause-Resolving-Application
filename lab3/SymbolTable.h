@@ -1,6 +1,6 @@
 // SymbolTable.h -- Declares a Symbol Table class that stores variables, constants and predicates showing up
 // in the input file.
-// Created by Yu Xiao, Anqi Zhang, copyright preserved.
+// Created by Yu Xiao, Anqi Zhang, all right reserved.
 //
 #ifndef SYMBOL_TABLE_H
 #define SYMBOL_TABLE_H

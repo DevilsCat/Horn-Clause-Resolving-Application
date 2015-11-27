@@ -1,6 +1,6 @@
 ﻿// InputHanlder.h -- this file declares Inputhandler Class for {Command Processor Pattern} 
 // which receives and process command
-// Created by Yu Xiao, Anqi Zhang, copyright preserved.
+// Created by Yu Xiao, Anqi Zhang, all right reserved.
 #ifndef INPUT_HANDLER_H
 #define INPIT_HANDLER_H
 #include <istream>

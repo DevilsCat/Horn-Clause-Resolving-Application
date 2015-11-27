@@ -1,5 +1,5 @@
 // Parser.h : Declares a Parser class performing parsing for one layer formatted output horn clause
-// Created by Anqi Zhang (439754), and Yu Xiao (439734), copyright preserved.
+// Created by Anqi Zhang (439754), and Yu Xiao (439734), all right reserved.
 //
 #ifndef PARSER_H
 #define PARSER_H

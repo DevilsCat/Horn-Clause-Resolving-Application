@@ -1,5 +1,5 @@
 ﻿// PrintVisitor.cpp -- This file defines a PrintVisitor class to print contents in horn clause AST tree.
-// Created by Yu Xiao, Anqi Zhang, copyright preserved.
+// Created by Yu Xiao, Anqi Zhang, all right reserved.
 //
 #include "stdafx.h"
 #include "Utils.h"

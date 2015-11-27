@@ -8,6 +8,7 @@
 #include "ProgramException.h"
 #include "Utils.h"
 #include <algorithm>
+#include "OutputHandler.h"
 
 std::shared_ptr<SymbolTable> SymbolTable::symbol_table_ = nullptr;
 
@@ -94,13 +95,13 @@ bool SymbolTable::ISPredicateEntryDup(const PredicateEntry& p) {
 }
 
 void SymbolTable::Print() const {
-	output_handler << "Bound Label : " << std::endl;
+	*OutputHandler::instance() << "Bound Label : " << std::endl;
 	for (const BoundToken& bound : bounds_) {
-		output_handler << Encode(bound);
+        *OutputHandler::instance() << Encode(bound);
 	}
-    output_handler << std::endl << "Predicate : " << std::endl;
+    *OutputHandler::instance() << std::endl << "Predicate : " << std::endl;
     for (const PredicateEntry* entry_ptr : predicates_trace_) {
-		output_handler << *entry_ptr << std::endl;
+        *OutputHandler::instance() << *entry_ptr << std::endl;
 	}
 }
 

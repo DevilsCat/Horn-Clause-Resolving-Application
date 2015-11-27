@@ -1,5 +1,5 @@
 // scanner.h : Declares scanner class extracting string from ifstream and interpreting it as semantic token struct
-// Created by Anqi Zhang (439754), and Yu Xiao (439734) copyright preserved.
+// Created by Anqi Zhang (439754), and Yu Xiao (439734) all right reserved.
 //
 #include "stdafx.h"
 #include "scanner.h"

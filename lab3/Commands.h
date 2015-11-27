@@ -1,5 +1,5 @@
 ﻿// Commands.h -- This file declares Command family for {Command Processor Pattern}.
-// Created by Yu Xiao, Anqi Zhang, copyright preserved.
+// Created by Yu Xiao, Anqi Zhang, all right reserved.
 #ifndef COMMNADS_H
 #define COMMANDS_H
 #include "CommandProcessor.h"
