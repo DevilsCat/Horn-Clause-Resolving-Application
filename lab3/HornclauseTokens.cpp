@@ -65,7 +65,7 @@ LabelToken(BOUND, s), value(i)
 
 BoundToken::operator const std::string() const {
     std::ostringstream oss;
-    oss << label << "{" << value << "}";
+    oss << label;
     return oss.str();
 }
 
