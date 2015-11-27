@@ -60,6 +60,7 @@ bool Unifier::Unify(PredicateEntry*& head_pe, PredicateEntry*& body_pe) {
         const BaseToken* body_token_ptr = *body_token_ptr_it;
         std::pair<const BaseToken*, const BaseToken*> substitute_pair;
         if (CanPerformSubstitution(substitute_pair, head_token_ptr, body_token_ptr)) {
+            if (substitute_pair.first == nullptr && substitute_pair.second == nullptr) { continue; }  // Hotfix on unifying two same numbers.
             SubstituteTokensInPredicateEntry(head_pe->symbols, substitute_pair);
             SubstituteTokensInPredicateEntry(body_pe->symbols, substitute_pair);
             token_substitutions_.push_back(substitute_pair);
