@@ -1,4 +1,4 @@
-// symbol_table.h -- Implements a Symbol Table class that stores variables, constants and predicates showing up
+// symbol_table.cpp -- Implements a Symbol Table class that stores variables, constants and predicates showing up
 // in the input file.
 // Created by Yu Xiao, Anqi Zhang
 //
@@ -24,7 +24,7 @@ void SymbolTable::init() {
 }
 
 SymbolTable::SymbolTable() :
-    entry_buffer_pointer_(nullptr)
+    new_pred_entry_(nullptr)
 {}
 
 SymbolTable::~SymbolTable() {}
@@ -93,7 +93,7 @@ bool SymbolTable::ISPredicateEntryDup(const PredicateEntry& p) {
     return false;
 }
 
-void SymbolTable::PrintSt() const {
+void SymbolTable::Print() const {
 	output_handler << "Bound Label : " << std::endl;
 	for (const BoundToken& bound : bounds_) {
 		output_handler << Encode(bound);
@@ -106,11 +106,11 @@ void SymbolTable::PrintSt() const {
 
 
 void SymbolTable::OnPreVisit(PredicateNode*) {
-    entry_buffer_pointer_ = std::make_shared<PredicateEntry>();
+    new_pred_entry_ = std::make_shared<PredicateEntry>();
 }
 
 void SymbolTable::OnPostVisit(PredicateNode*) {
-    InsertPredicate(*entry_buffer_pointer_);
+    InsertPredicate(*new_pred_entry_);
 }
 
 bool SymbolTable::CheckBound(const std::string& s) {
@@ -136,9 +136,9 @@ void SymbolTable::OnVisit(SymbolNode* node_ptr) {
 }
 
 void SymbolTable::OnPostVisit(SymbolNode* node_ptr) {
-    entry_buffer_pointer_->symbols.push_back(&FindIdentifierByToken(*node_ptr->symbol_ptr_));
+    new_pred_entry_->symbols.push_back(&FindIdentifierByToken(*node_ptr->symbol_ptr_));
 }
 
 void SymbolTable::OnVisit(NameNode* node_ptr) {
-    entry_buffer_pointer_->name = static_cast<std::string>(*(node_ptr->label_ptr_));
+    new_pred_entry_->name = static_cast<std::string>(*(node_ptr->label_ptr_));
 }

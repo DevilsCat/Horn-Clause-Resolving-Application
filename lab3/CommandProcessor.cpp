@@ -139,7 +139,7 @@ void CommandProcessor::Set(std::string& variable, const int& value) {
 
 void CommandProcessor::Print() {
     auto Predicate = [this](const short&) {  // Print out the symbol table regardless 
-        symbol_table_.PrintSt();             // the available height of windows.
+        symbol_table_.Print();             // the available height of windows.
     };
     output_handler.DisplayProgram(Predicate, "Symbol Table Entries");
 }
