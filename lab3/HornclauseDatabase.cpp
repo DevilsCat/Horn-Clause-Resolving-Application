@@ -62,7 +62,6 @@ void HornclauseDatabase::OnPreVisit(HornclauseNode*) {
 
 void HornclauseDatabase::OnPostVisit(HornclauseNode*) {
     AddHornclauseEntry(*new_hornclause_);
-    delete new_hornclause_;
 }
 
 void HornclauseDatabase::OnPreVisit(HeadNode*) {

@@ -1,40 +1,19 @@
 ========================================================================
     CSE 425 Lab 3: Resolving Horn Clauses in C++
+    Team Members: Anqi Zhang(zhanganqi@wustl.edu), Yu Xiao(xiao.y@wustl.edu)
 ========================================================================
 
-AppWizard has created this lab3 application for you.
-
-This file contains a summary of what you will find in each of the files that
-make up your lab3 application.
-
-
-lab3.vcxproj
-    This is the main project file for VC++ projects generated using an Application Wizard.
-    It contains information about the version of Visual C++ that generated the file, and
-    information about the platforms, configurations, and project features selected with the
-    Application Wizard.
-
-lab3.vcxproj.filters
-    This is the filters file for VC++ projects generated using an Application Wizard. 
-    It contains information about the association between the files in your project 
-    and the filters. This association is used in the IDE to show grouping of files with
-    similar extensions under a specific node (for e.g. ".cpp" files are associated with the
-    "Source Files" filter).
-
-lab3.cpp
-    This is the main application source file.
-
-/////////////////////////////////////////////////////////////////////////////
-Other standard files:
-
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named lab3.pch and a precompiled types file named StdAfx.obj.
-
-/////////////////////////////////////////////////////////////////////////////
-Other notes:
-
-AppWizard uses "TODO:" comments to indicate parts of the source code you
-should add to or customize.
+This lab is intended to continue to broaden your experience with programming 
+language features and design approaches in C++, and with expression parsing, 
+representation, matching, and transformation techniques (again using Horn 
+clauses from logic programming as a specific example), including:
+    (1) Again parsing and storing representations of Horn clauses;
+    (2) Again unifying predicates but this time doing so based on bound and 
+        unbound variables as well as numeric constants, this time within the 
+        context of a copy of a pair of Horn clauses that are to be resolved;
+    (3) Performing resolution of the two Horn clause copies to produce 
+        another Horn clause that is added to the deductive database (in 
+        addition to the previously existing Horn clauses, which should remain 
+        in the deductive databased unmodified).
 
 /////////////////////////////////////////////////////////////////////////////
