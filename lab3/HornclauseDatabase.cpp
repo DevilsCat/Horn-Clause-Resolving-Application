@@ -35,7 +35,7 @@ void HornclauseDatabase::FillHornclauseFromTree(std::shared_ptr<RootNode> root) 
 }
 
 void HornclauseDatabase::AddHornclauseEntry(Entry& entry) {
-    if (IsHornclauseEntryDup_(entry)) { return; }
+    //if (IsHornclauseEntryDup_(entry)) { return; }
 
     // Update: Before add hornclause into this database, populate all PredicateEntry to symbol table first.
     for (std::shared_ptr<PredicateEntry>& pe : entry.head) {
@@ -62,7 +62,7 @@ void HornclauseDatabase::OnPreVisit(HornclauseNode*) {
 
 void HornclauseDatabase::OnPostVisit(HornclauseNode*) {
     AddHornclauseEntry(*new_hornclause_);
-    delete new_hornclause_;
+    //delete new_hornclause_;
 }
 
 void HornclauseDatabase::OnPreVisit(HeadNode*) {

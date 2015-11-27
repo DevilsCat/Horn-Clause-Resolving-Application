@@ -110,6 +110,12 @@ void CommandProcessor::Resolve(const unsigned& num_first_hornclause, const unsig
             ProgramException::kInvalidHornclauseIndex
         );
     }
+	if (num_first_hornclause == num_second_hornclause) {
+		throw ProgramException(
+			"Same number is given twice.",
+			ProgramException::kInvalidHornclauseIndex
+		);
+	}
     std::vector<HornclauseDatabase::Entry> res;
     unifier.UnifyHornclauses(res, first_hornclause, second_hornclause);
     

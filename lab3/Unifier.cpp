@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include "Unifier.h"
+#include "OutputHandler.h"
 
 Unifier::Unifier(SymbolTable& symbol_table) :
     symbol_table_(symbol_table)
@@ -13,6 +14,11 @@ size_t Unifier::UnifyHornclauses(
     std::vector<HornclauseDatabase::Entry>& hornclause_entries,
         const HornclauseDatabase::Entry& first_hornclause,
         const HornclauseDatabase::Entry& second_hornclause) {
+	//Two hornclauses are identical
+	if (first_hornclause.EqualsTo(second_hornclause)) {
+		OutputHandler::instance()->LogError("Unificaiton failed: Two horn clauses are identical.");
+		return hornclause_entries.size();
+	}
     // Updated to extra credits.
     for (size_t i = 0; i < first_hornclause.head.size(); ++i) {
         for (size_t j = 0; j < second_hornclause.body.size(); ++j) {
@@ -65,6 +71,7 @@ bool Unifier::Unify(PredicateEntry*& head_pe, PredicateEntry*& body_pe) {
             SubstituteTokensInPredicateEntry(body_pe->symbols, substitute_pair);
             token_substitutions_.push_back(substitute_pair);
         } else {
+			OutputHandler::instance()->LogError("Unification failed: head cannot be unified with body.");
             return false;
         }
     }
