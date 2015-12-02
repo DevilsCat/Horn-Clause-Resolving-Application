@@ -97,7 +97,7 @@ bool SymbolTable::ISPredicateEntryDup(const PredicateEntry& p) {
 void SymbolTable::Print() const {
 	*OutputHandler::instance() << "Bound Label : " << std::endl;
 	for (const BoundToken& bound : bounds_) {
-        *OutputHandler::instance() << Encode(bound);
+        *OutputHandler::instance() << bound.label << "{" << bound.value << "} ";
 	}
     *OutputHandler::instance() << std::endl << "Predicate : " << std::endl;
     for (const PredicateEntry* entry_ptr : predicates_trace_) {

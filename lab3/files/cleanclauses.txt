@@ -6,7 +6,7 @@
 ( ( sametoo q q ) )                                
 ( ( lesser X Y ) ( ( lesser x z ) ( lesser z y ) ) )  
 ( ( lesser z 3 ) )                                
-( ( unifyme one two ) ( ( unifyme 1 2 ) ) )                  
+( ( unifyme 1 2 ) ( ( unifyme 1 2 ) ) )                  
 ( ( notsame a 1 ) )                                
 ( ( notsame 2 b ) )
 ( ( notsame c 3 ) )
