@@ -17,7 +17,7 @@
 //      OutputHandler::instance()->LogError(error_string);
 class OutputHandler {
     // Defines the header and footer of program.
-    const std::string sTitleInfo =        "CSE 425 Lab 3: Resolving Horn Clause in C++";
+    const std::string sTitleInfo =        "Console Application: Resolving Horn Clause in C++";
     const std::string sCopyRight =        "By Anqi Zhang, Yu Xiao. ALL RIGHTS RESERVED";
     const std::string sDefaultTableName = "Default Table Name";
     const std::string sCommandWindow =    "Command Window";

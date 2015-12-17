@@ -35,7 +35,7 @@ int main(int argc, char** argv)
     }
 
     // Initialize some necessary stuffs here.
-	srand(time(nullptr));
+	srand(unsigned(time(nullptr)));
     InputHandler::init(std::cin);
     OutputHandler::init(std::cout);
     SymbolTable::init();
